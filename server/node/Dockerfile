@@ -4,7 +4,8 @@ WORKDIR /app
 
 COPY . .
 
+RUN npm init -y
 RUN npm install elliptic crypto-js debug
 
-CMD ["npm", "start"]
+CMD ["node", "app.js"]
 
