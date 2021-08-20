@@ -1,8 +1,9 @@
 FROM node:10.10
 
-WORKDIR /app
 
-COPY . .
+COPY . /
+
+WORKDIR /
 
 RUN npm init -y
 RUN npm install elliptic crypto-js debug
