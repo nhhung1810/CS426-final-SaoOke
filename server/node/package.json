@@ -12,6 +12,7 @@
   "dependencies": {
     "crypto-js": "^4.1.1",
     "debug": "^4.3.2",
-    "elliptic": "^6.5.4"
+    "elliptic": "^6.5.4",
+    "express": "^4.17.1"
   }
 }
