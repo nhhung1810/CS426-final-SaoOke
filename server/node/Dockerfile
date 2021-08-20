@@ -1,12 +1,13 @@
-FROM node:10.10
+FROM node:10.10-alpine
 
 
-COPY . /
+COPY . /app
 
-WORKDIR /
+WORKDIR /app
 
-RUN npm init -y
-RUN npm install elliptic crypto-js debug
+# RUN npm init -y
+RUN npm install --save elliptic crypto-js debug
+RUN npm install -g nodemon
 
-CMD ["node", "app.js"]
+CMD ["nodemon", "app.js"]
 
