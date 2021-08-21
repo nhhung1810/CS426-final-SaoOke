@@ -25,18 +25,21 @@ app.listen(port, () => {
   console.log(`Example app listening at http://localhost:${port}`)
   test()
 })
+
+
 // Route: /balance
 // Method: POST
-// param: address = publicKey
-app.post("/balance", function(req, res){
-  if(!req.body || !req.body.address || req.body.address.length === 0){
+// params: address = publicKey
+app.post("/balance/:address", function(req, res){
+  if(!req.params.address || req.params.address === 0){
     res.sendStatus(404)
   }
   else {
     //remember fix this pls, this should be accept an public key
-    tmp = mCoin.getBalanceOfAddress(myWalletAddress)
+    tmp = mCoin.getBalanceOfAddress(req.params.address)
     res.send(200, {"amount" : `${JSON.stringify(tmp)}`})
   }
+
 })
 
 // Route: /transaction
