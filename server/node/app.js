@@ -28,13 +28,14 @@ app.listen(port, () => {
 
 //param: address = publicKey
 app.post("/balance", function(req, res){
+  // console.log(req);
   if(!req.body || !req.body.address || req.body.address.length === 0){
     res.sendStatus(404)
   }
   else {
     //remerber fix this pls, this should be accept an public key
     tmp = mCoin.getBalanceOfAddress(myWalletAddress)
-    res.send(200, {"amount" : `${JSON.stringify(tmp)}`})
+    res.send(200, tmp)
   }
 })
 
