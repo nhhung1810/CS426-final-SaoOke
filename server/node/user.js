@@ -10,6 +10,14 @@ class User{
         //Really dangerous, this is not practical and by no mean can be use in real life. Plz don't judge :(((((
         this.key = ec.genKeyPair()
     }
+
+    verify(username, hashedPass){
+        if(this.username !== username) return false
+        else{
+            if(this.hashedPass !== hashedPass) return false 
+        }
+        return true
+    }
 }
 
 class UserFactory{
@@ -53,6 +61,14 @@ class UserFactory{
     freeMoney(username, blockchain, amount){
         key = this.getKey(username)
         blockchain.freeMoney(key.getPublic('hex'), amount)
+    }
+
+    authenticate(username, hashedPass){
+        this.userList.forEach(function(value){
+            if(value.verify(username, hashedPass))
+                return true;
+        })
+        return false;
     }
 
 }

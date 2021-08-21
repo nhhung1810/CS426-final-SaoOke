@@ -105,12 +105,36 @@ app.post('/register', function(req, res){
   } catch(err) {
     console.log(err)
   }
-  if(key === null) res.send(404, 'Invalid register process')
+  if(key === null) res.send(404, {
+    "error" : "Invalid register process. Check your params"
+  })
   res.send(200, {
     "publicKey": key.getPublic('hex'),
     "privateKey": key.getPrivate('hex')
   })
 
+})
+
+
+//add free money for further test, pass 
+app.post('/free', function(req, res){
+  const trans = (req) => {
+    if(!req || !req.body || !req.body.username || !req.body.amount)
+      return null
+    userFactory.freeMoney(req.body.username, mCoin, req.body.amount)
+    return true
+  }
+
+  tmp = trans(req)
+  if(tmp === true){
+    res.send(200, {
+      "status" : "success"
+    })
+  } else {
+    res.send(404, {
+      "error" : "Invalid, check your params"
+    })
+  }
 })
 
 
