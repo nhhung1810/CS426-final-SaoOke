@@ -59,13 +59,13 @@
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
                     android:paddingHorizontal="15dp"
+                    android:paddingTop="20dp"
                     android:paddingBottom="20dp"
                     >
 
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="20dp"
                         android:text="Username"
                         android:textSize="18sp"
                         android:textColor="#6f6f6f"
@@ -82,9 +82,15 @@
                         />
 
                     <TextView
+                        android:id="@+id/tv_notiUsername"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="20dp"
+                        android:textSize="15sp"
+                        />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
                         android:text="Password"
                         android:textSize="18sp"
                         android:textColor="#6f6f6f"
@@ -101,9 +107,15 @@
                         />
 
                     <TextView
+                        android:id="@+id/tv_notiPassword"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="20dp"
+                        android:textSize="15sp"
+                        />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
                         android:text="Confirm Password"
                         android:textSize="18sp"
                         android:textColor="#6f6f6f"
@@ -119,11 +131,17 @@
                         android:textColor="#6f6f6f"
                         />
 
+                    <TextView
+                        android:id="@+id/tv_notiConfirmPassword"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textSize="15sp"
+                        />
+
                     <Button
                         android:id="@+id/btn_register"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="20dp"
                         android:gravity="center"
                         android:layout_gravity="center"
                         android:text="Register Now!"
