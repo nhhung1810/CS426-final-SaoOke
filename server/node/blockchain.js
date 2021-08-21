@@ -295,6 +295,16 @@ class Block {
   
       return true;
     }
+
+    getTransactionsLog() {
+      const txs = []
+      for (const block of this.chain) {
+        for (const tx of block.transactions) {
+          txs.push(tx);
+        }
+      }
+      return txs;
+    }
   }
   
   module.exports.Blockchain = Blockchain;
