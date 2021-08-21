@@ -157,10 +157,10 @@ app.post('/free', function(req, res){
 
 app.post('/login', function(req, res){
   const check = (req) =>{
-    if(!req || !req.body || !req.body.username || !req.body.hashedPass)
+    if(!req || !req.body || !req.body.username || !req.body.password)
       return null
     else {
-      return userFactory.authenticate(req.body.username, req.body.hashedPass)
+      return userFactory.authenticate(req.body.username, req.body.password)
     }
   }
 
