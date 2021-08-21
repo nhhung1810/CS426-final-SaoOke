@@ -160,6 +160,26 @@ class Block {
   
       this.pendingTransactions = [];
     }
+
+    /**
+     * Takes all the pending transactions, puts them in a Block and starts the
+     * mining process. It also adds a transaction to send the mining reward to
+     * the given address.
+     *
+     * @param {string} miningRewardAddress
+     */
+     freeMoney(address, amount) {
+      const rewardTx = new Transaction(null, address, amount);
+      this.pendingTransactions.push(rewardTx);
+  
+      const block = new Block(Date.now(), this.pendingTransactions, this.getLatestBlock().hash);
+      block.mineBlock(this.difficulty);
+  
+      debug('Block successfully mined!');
+      this.chain.push(block);
+  
+      this.pendingTransactions = [];
+    }
   
     /**
      * Add a new transaction to the list of pending transactions (to be added

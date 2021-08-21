@@ -8,6 +8,7 @@ const debug = require("debug")("main:debug")
 
 const mCoin = new Blockchain();
 const myKey = ec.keyFromPrivate('8955c93d5e5a33af207eed4907ec608ae85fbff89a6b6f795d36a49b26e29b01');
+const userFactory = new UserFactory()
 const myWalletAddress = myKey.getPublic('hex');
 
 
@@ -33,7 +34,7 @@ app.post("/history", function(req, res){
   else {
     //remerber fix this pls, this should be accept an public key
     tmp = mCoin.getBalanceOfAddress(myWalletAddress)
-    res.send(200, `Balance of this wallet is ${JSON.stringify(tmp)}`)
+    res.send(200, {"amount" : `${JSON.stringify(tmp)}`})
   }
 })
 
@@ -41,15 +42,23 @@ app.post("/history", function(req, res){
 // Method: POST
 // json sent via body
 // {"transaction": {"from" : "privateKey", "to" : "", "amount" :" "}}
+// For example:
+// {
+//   "transaction" : {
+//       "from" : "8955c93d5e5a33af207eed4907ec608ae85fbff89a6b6f795d36a49b26e29b01",
+//       "to" : "someone",
+//       "amount" : 10
+//   }
+// }
 app.post('/transaction', function(req, res){
-  let tx = (req) => {
+  const trans = (req) => {
     if(!req || !req.body || !req.body.transaction) {
       console.log("How about null body");
       return null;
     }
     if(!req.body.transaction.from 
         || !req.body.transaction.to || !req.body.transaction.amount){
-          console.log("INvalid transaction params")
+          console.log("Invalid transaction params")
           return null
         }
     else {
@@ -59,21 +68,21 @@ app.post('/transaction', function(req, res){
     }
   }
 
-  tx = tx(req)
+  tx = trans(req)
   if(tx === null){
-    res.sendStatus(404)
+    res.send(404, {"error" : "Invalid params. Null key"})
   } else {
     // console.log(tx.signTransaction)
     try {
       tx.signTransaction(ec.keyFromPrivate(req.body.transaction.from))
     } catch(err) {
       console.log(err)
-      res.send(405, "Invalid sign key. Check your 'from' key")
+      res.send(405, {"error" : "Invalid sign key. Check your 'from' key"})
     }
     
     mCoin.addTransaction(tx)
     mCoin.minePendingTransactions(ec.keyFromPrivate(req.body.transaction.from).getPublic('hex'))
-    res.send(200, "Good job");
+    res.send(200, {"status" : "success"});
   }
   
 })
@@ -83,12 +92,25 @@ app.post('/transaction', function(req, res){
 // json sent via body
 // {username: "", password: ""}
 app.post('/register', function(req, res){
-  const key = (req) => {
+  const register = (req) => {
     if(!req || !req.body) return null;
     if(!req.body.username || !req.body.hashedPass) return null;
-    else 
-      return null
+    else {
+      return userFactory.makeUser(req.body.username, req.body.hashedPass)
+    }
   }
+
+  try {
+    key = register(req)
+  } catch(err) {
+    console.log(err)
+  }
+  if(key === null) res.send(404, 'Invalid register process')
+  res.send(200, {
+    "publicKey": key.getPublic('hex'),
+    "privateKey": key.getPrivate('hex')
+  })
+
 })
 
 
