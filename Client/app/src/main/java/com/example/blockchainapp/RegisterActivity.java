@@ -49,11 +49,13 @@ public class RegisterActivity extends AppCompatActivity {
         TextView tv_notiConfirmPassword = findViewById(R.id.tv_notiConfirmPassword);
 
         // handle EditText of username
-        // dev note: when pasting a sequence of char with invalid ones, the whole current will be delete
         InputFilter filter = new InputFilter() {
+            // dev note: behaviour of param source is kinda weird sometimes :/ gotta research it later
             @Override
             public CharSequence filter(CharSequence source, int start, int end, Spanned dest, int dstart, int dend) {
-                for (int i = 0; i < source.length(); ++i) {
+                if (source.length() + dest.length() > 20)
+                    return "";
+                for (int i = start; i < end; ++i) {
                     char ch = source.charAt(i);
                     if (!(('A' <= ch && ch <= 'Z') || ('a' <= ch && ch <= 'z')
                             || ('0' <= ch && ch <= '9') || ch == '_' || ch == '.'))
