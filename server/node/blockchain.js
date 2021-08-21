@@ -166,7 +166,8 @@ class Block {
      * mining process. It also adds a transaction to send the mining reward to
      * the given address.
      *
-     * @param {string} miningRewardAddress
+     * @param {string} address -- a publicKey
+     * @param {string} amount
      */
      freeMoney(address, amount) {
       const rewardTx = new Transaction(null, address, amount);
@@ -294,6 +295,16 @@ class Block {
       }
   
       return true;
+    }
+
+    getTransactionsLog() {
+      const txs = []
+      for (const block of this.chain) {
+        for (const tx of block.transactions) {
+          txs.push(tx);
+        }
+      }
+      return txs;
     }
   }
   
