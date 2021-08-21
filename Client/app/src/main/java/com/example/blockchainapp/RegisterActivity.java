@@ -1,8 +1,10 @@
 package com.example.blockchainapp;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.text.Editable;
@@ -16,14 +18,21 @@ import android.text.style.ClickableSpan;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class RegisterActivity extends AppCompatActivity {
-    public String username;
-    public String password;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
+public class RegisterActivity extends AppCompatActivity {
+    public UserKey user;
+    public UserAccount account;
+    private EditText edt_username;
+    private EditText edt_password;
+    private EditText edt_confirmPassword;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,17 +41,12 @@ public class RegisterActivity extends AppCompatActivity {
         handleAlreadyHaveAccountButton();
         initializeTypingNotifications();
 
-
-
-        username = new String();
-        password = new String();
-
     }
 
     private void initializeTypingNotifications() {
-        EditText edt_username = findViewById(R.id.edt_username);
-        EditText edt_password = findViewById(R.id.edt_password);
-        EditText edt_confirmPassword = findViewById(R.id.edt_confirmPassword);
+        edt_username = findViewById(R.id.edt_username);
+        edt_password = findViewById(R.id.edt_password);
+        edt_confirmPassword = findViewById(R.id.edt_confirmPassword);
 
         TextView tv_notiUsername = findViewById(R.id.tv_notiUsername);
         TextView tv_notiPassword = findViewById(R.id.tv_notiPassword);
@@ -128,4 +132,44 @@ public class RegisterActivity extends AppCompatActivity {
         textView.setMovementMethod(LinkMovementMethod.getInstance());
         textView.setHighlightColor(Color.TRANSPARENT);
     }
+
+    private boolean CheckValidCredential() {
+        return true;
+    }
+
+    public void HandleRegister(View view) {
+        if (!CheckValidCredential()) return;
+        account = new UserAccount(edt_username.getText().toString(), edt_password.getText().toString());
+        Call<UserKey> keyCall =  RetrofitUtils.blockchainInterface.ExecutePostRegister(account);
+        keyCall.enqueue(new Callback<UserKey>() {
+            @Override
+            public void onResponse(Call<UserKey> call, Response<UserKey> response) {
+                if (response.code() == 200) {
+                    user = response.body();
+                    Constants.PRIVATE_KEY = user.getPrivateKey();
+                    Constants.PUBLIC_KEY = user.getPublicKey();
+                    Constants.SESSION_ACTIVE = true;
+
+                    AlertDialog.Builder builder = new AlertDialog.Builder(RegisterActivity.this);
+                    builder.setTitle("Successfully registered!");
+                    builder.setMessage("Your private key is: " + user.getPrivateKey()
+                            + " | Your public key is: " + user.getPublicKey());
+                    builder.show();
+
+                    Intent intent = new Intent(RegisterActivity.this, MainActivity.class);
+                    startActivity(intent);
+                }
+                else if (response.code() == 404) {
+                    Toast.makeText(RegisterActivity.this, "Invalid credentials", Toast.LENGTH_LONG).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<UserKey> call, Throwable t) {
+                Toast.makeText(RegisterActivity.this, t.getMessage(), Toast.LENGTH_LONG).show();
+            }
+        });
+
+    }
+
 }

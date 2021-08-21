@@ -94,7 +94,7 @@ app.post('/transaction', function(req, res){
 app.post('/register', function(req, res){
   const register = (req) => {
     if(!req || !req.body) return null;
-    if(!req.body.username || !req.body.hashedPass) return null;
+    if(!req.body.username || !req.body.password) return null;
     else {
       return userFactory.makeUser(req.body.username, req.body.hashedPass)
     }

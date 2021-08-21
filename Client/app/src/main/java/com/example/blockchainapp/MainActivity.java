@@ -18,8 +18,11 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Intent intent = new Intent(this, RegisterActivity.class);
-        startActivity(intent);
+        if (!Constants.SESSION_ACTIVE) {
+            Intent intent = new Intent(this, RegisterActivity.class);
+            startActivity(intent);
+        }
+
     }
 
     public void TransactionTab(View view) {

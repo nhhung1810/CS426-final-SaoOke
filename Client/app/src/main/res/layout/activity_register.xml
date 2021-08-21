@@ -148,6 +148,7 @@
                         android:textColor="@color/white"
                         android:backgroundTint="#FF333333"
                         android:textSize="18sp"
+                        android:onClick="HandleRegister"
                         />
 
                 </LinearLayout>
