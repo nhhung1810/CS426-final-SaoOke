@@ -27,7 +27,7 @@ app.listen(port, () => {
 })
 
 //param: address = publicKey
-app.post("/history", function(req, res){
+app.post("/balance", function(req, res){
   if(!req.body || !req.body.address || req.body.address.length === 0){
     res.sendStatus(404)
   }
@@ -104,15 +104,15 @@ app.post('/register', function(req, res){
     key = register(req)
     if(key === null) res.send(404, {
       "error" : "Invalid register process. Check your params"
-    })
-    res.send(200, {
+    })  
+    else res.send(200, {
       "publicKey": key.getPublic('hex'),
       "privateKey": key.getPrivate('hex')
     })
   } catch(err) {
     //case: error at the makeUser, maybe the username is existed
     console.log(err)
-    res.send(404, {
+    res.send(405, {
       "error" : "Check your username. It may existed"
     })
   }
