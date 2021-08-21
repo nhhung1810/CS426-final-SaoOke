@@ -115,6 +115,14 @@ app.post('/register', function(req, res){
 
 })
 
+app.get('/transactionsLog', function(req, res) {
+  var transactions = mCoin.getTransactionsLog()
+  res.send(200, 
+    {
+      "logs": transactions
+    }  
+  )
+})
 
 //add free money for further test, pass 
 app.post('/free', function(req, res){
