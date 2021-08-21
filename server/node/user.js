@@ -27,8 +27,8 @@ class UserFactory{
     }
 
     makeUser(username, hashedPass){
-        this.userList.forEach(function(value, index) {
-            if(username == value.username){
+        this.userList.forEach(function(element) {
+            if(username == element.username){
                 throw new Error("Existed this member")
             }
         })
@@ -41,7 +41,7 @@ class UserFactory{
     initUser(){
         const hashed = (password) => {return crypto.createHash("sha256").update(password).digest('hex')}
         //admin
-        this.makeUser('admin', hashed('admin'))
+        this.makeUser('admin', "admin")
 
         //some bots
         this.makeUser('bot1', hashed('bot1'))
@@ -51,29 +51,32 @@ class UserFactory{
 
     //get key from username. Again, this is a bad idea, only fit for testing and demo
     getKey(username){
-        this.userList.forEach(function(value) {
-            if(value.username == username) return value.key
+        let key = null
+        this.userList.forEach((element) => {
+            if(element.username === username) 
+                key = (element.key)
         })
-        return null
+        return key
     }
 
     //init some money for testing
     freeMoney(username, blockchain, amount){
-        key = this.getKey(username)
+        let key = this.getKey(username)
         blockchain.freeMoney(key.getPublic('hex'), amount)
     }
 
     authenticate(username, hashedPass){
-        this.userList.forEach(function(value){
-            if(value.verify(username, hashedPass))
-                return true;
+        let flag = false;
+        this.userList.forEach(function(element){
+            if(element.verify(username, hashedPass))
+                flag = true;
         })
-        return false;
+        return flag;
     }
 
 }
 
-new UserFactory()
+// let tmp = new UserFactory()
 
 
 module.exports.UserFactory = UserFactory

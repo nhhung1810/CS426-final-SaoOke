@@ -26,16 +26,20 @@ app.listen(port, () => {
   test()
 })
 
-//param: address = publicKey
-app.post("/balance", function(req, res){
-  if(!req.body || !req.body.address || req.body.address.length === 0){
+
+// Route: /balance
+// Method: POST
+// params: address = publicKey
+app.post("/balance/:address", function(req, res){
+  if(!req.params.address || req.params.address === 0){
     res.sendStatus(404)
   }
   else {
-    //remerber fix this pls, this should be accept an public key
-    tmp = mCoin.getBalanceOfAddress(myWalletAddress)
+    //remember fix this pls, this should be accept an public key
+    tmp = mCoin.getBalanceOfAddress(req.params.address)
     res.send(200, {"amount" : `${JSON.stringify(tmp)}`})
   }
+
 })
 
 // Route: /transaction
@@ -151,17 +155,31 @@ app.post('/free', function(req, res){
 })
 
 
+app.post('/login', function(req, res){
+  const check = (req) =>{
+    if(!req || !req.body || !req.body.username || !req.body.hashedPass)
+      return null
+    else {
+      return userFactory.authenticate(req.body.username, req.body.hashedPass)
+    }
+  }
 
-
-
-
-
-
-
-
-
-
-
+  flag = check(req)
+  if(flag === null){
+    res.send(404, {
+      "error" : "Invalid request. Check your params"
+    })
+  } else {
+    if(flag === true) res.send(200, {
+      "status" : "success"
+    }) 
+    else {
+      res.send(405, {
+        "error" : "Invalid Login. Check your username and password"
+      })
+    }
+  }
+})
 
 
 
