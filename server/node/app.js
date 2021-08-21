@@ -14,8 +14,6 @@ const app = express()
 const port = 5000
 
 app.use(express.json()) // for parsing application/json
-app.use(express.urlencoded({ extended: true })) // for parsing application/x-www-form-urlencoded
-
 
 app.get('/', (req, res) => {
   res.send('Hello World!')
@@ -26,18 +24,32 @@ app.listen(port, () => {
   test()
 })
 
+//param: address = publicKey
 app.post("/history", function(req, res){
   if(!req.body || !req.body.address || req.body.address.length === 0){
-    // if(req) console.log("Hmmm", req.body)
-    res.status(404).send("There are no such user")
+    res.sendStatus(404)
   }
   else {
     tmp = mCoin.getBalanceOfAddress(myWalletAddress)
-    // console.log(tmp, "wellll")
-    res.status(200).send(tmp)
+    res.send(`Balance of this wallet is ${JSON.stringify(tmp)}`)
   }
+})
 
-  
+// Route: /transaction
+// Method: POST
+// json sent via body
+// {"transaction": {"from" : "privateKey", "to" : "", "amount" :" "}}
+app.post('/transaction', function(req, res){
+  const tx = (req) => {
+    if(!req || !req.body || !req.body.transaction) return null;
+    if(!req.body.transaction.from 
+        || !req.body.transaction.to || !req.body.transaction.amount) return null;
+    else 
+      return new Transaction(req.body.transaction.from.getPublic('hex'), req.body.transaction.to, req.body.transaction.to)
+  }
+  tx.signTransaction(ec.keyFromPrivate(req.body.transaction.from))
+  mCoin.addTransaction(tx)
+  mCoin.minePendingTransactions()
 })
 
 /*

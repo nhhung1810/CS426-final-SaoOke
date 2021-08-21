@@ -35,7 +35,7 @@ class Transaction{
         
         const hashtx = this.calculateHash();
         const sig = signingKey.sign(hashtx, 'base64')
-
+        
         this.signature = sig.toDER('hex');
     }
 

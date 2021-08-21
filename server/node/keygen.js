@@ -14,3 +14,13 @@ console.log('Your public key (also your wallet address, freely shareable)\n', pu
 
 console.log();
 console.log('Your private key (keep this secret! To sign transactions)\n', privateKey);
+
+// check if pub can be derived from pri
+// tmp = ec.keyFromPrivate(privateKey).getPublic("hex")
+// console.log()
+// if(tmp == publicKey) console.log("Can be derived")
+// else {
+//     console.log("Something messed up")
+//     console.log("Public-1", publicKey)
+//     console.log("tmp: ", tmp)
+// }
