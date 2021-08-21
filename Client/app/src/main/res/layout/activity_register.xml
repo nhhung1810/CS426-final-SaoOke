@@ -69,6 +69,7 @@
                         android:text="Username"
                         android:textSize="18sp"
                         android:textColor="#6f6f6f"
+                        android:textStyle="bold"
                         />
 
                     <EditText
@@ -87,11 +88,12 @@
                         android:text="Password"
                         android:textSize="18sp"
                         android:textColor="#6f6f6f"
+                        android:textStyle="bold"
                         />
 
                     <EditText
                         android:id="@+id/edt_password"
-                        android:inputType="text"
+                        android:inputType="textPassword"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:textSize="18sp"
@@ -105,15 +107,29 @@
                         android:text="Confirm Password"
                         android:textSize="18sp"
                         android:textColor="#6f6f6f"
+                        android:textStyle="bold"
                         />
 
                     <EditText
                         android:id="@+id/edt_confirmPassword"
-                        android:inputType="text"
+                        android:inputType="textPassword"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:textSize="18sp"
                         android:textColor="#6f6f6f"
+                        />
+
+                    <Button
+                        android:id="@+id/btn_register"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp"
+                        android:gravity="center"
+                        android:layout_gravity="center"
+                        android:text="Register Now!"
+                        android:textColor="@color/white"
+                        android:backgroundTint="#FF333333"
+                        android:textSize="18sp"
                         />
 
                 </LinearLayout>
