@@ -73,5 +73,7 @@ class UserFactory{
 
 }
 
+new UserFactory()
+
 
 module.exports.UserFactory = UserFactory

@@ -104,6 +104,7 @@ app.post('/register', function(req, res){
     key = register(req)
   } catch(err) {
     console.log(err)
+    key = null
   }
   if(key === null) res.send(404, {
     "error" : "Invalid register process. Check your params"
