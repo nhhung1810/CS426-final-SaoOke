@@ -27,7 +27,7 @@ app.listen(port, () => {
 })
 
 //param: address = publicKey
-app.post("/history", function(req, res){
+app.post("/balance", function(req, res){
   if(!req.body || !req.body.address || req.body.address.length === 0){
     res.sendStatus(404)
   }
