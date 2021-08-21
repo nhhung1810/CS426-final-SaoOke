@@ -102,17 +102,21 @@ app.post('/register', function(req, res){
 
   try {
     key = register(req)
+    if(key === null) res.send(404, {
+      "error" : "Invalid register process. Check your params"
+    })
+    res.send(200, {
+      "publicKey": key.getPublic('hex'),
+      "privateKey": key.getPrivate('hex')
+    })
   } catch(err) {
+    //case: error at the makeUser, maybe the username is existed
     console.log(err)
-    key = null
+    res.send(404, {
+      "error" : "Check your username. It may existed"
+    })
   }
-  if(key === null) res.send(404, {
-    "error" : "Invalid register process. Check your params"
-  })
-  res.send(200, {
-    "publicKey": key.getPublic('hex'),
-    "privateKey": key.getPrivate('hex')
-  })
+  
 
 })
 
