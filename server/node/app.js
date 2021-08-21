@@ -37,6 +37,7 @@ app.post("/balance", function(req, res){
     tmp = mCoin.getBalanceOfAddress(myWalletAddress)
     res.send(200, tmp)
   }
+
 })
 
 // Route: /transaction
@@ -152,17 +153,31 @@ app.post('/free', function(req, res){
 })
 
 
+app.post('/login', function(req, res){
+  const check = (req) =>{
+    if(!req || !req.body || !req.body.username || !req.body.password)
+      return null
+    else {
+      return userFactory.authenticate(req.body.username, req.body.password)
+    }
+  }
 
-
-
-
-
-
-
-
-
-
-
+  flag = check(req)
+  if(flag === null){
+    res.send(404, {
+      "error" : "Invalid request. Check your params"
+    })
+  } else {
+    if(flag === true) res.send(200, {
+      "status" : "success"
+    }) 
+    else {
+      res.send(405, {
+        "error" : "Invalid Login. Check your username and password"
+      })
+    }
+  }
+})
 
 
 
