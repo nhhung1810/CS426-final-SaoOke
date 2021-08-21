@@ -42,6 +42,14 @@ app.post("/history", function(req, res){
 // Method: POST
 // json sent via body
 // {"transaction": {"from" : "privateKey", "to" : "", "amount" :" "}}
+// For example:
+// {
+//   "transaction" : {
+//       "from" : "8955c93d5e5a33af207eed4907ec608ae85fbff89a6b6f795d36a49b26e29b01",
+//       "to" : "someone",
+//       "amount" : 10
+//   }
+// }
 app.post('/transaction', function(req, res){
   const trans = (req) => {
     if(!req || !req.body || !req.body.transaction) {
