@@ -1,5 +1,6 @@
 const express = require('express')
 const { Blockchain, Transaction } = require('./blockchain');
+const { UserFactory } = require('./user')
 const EC = require('elliptic').ec;
 const ec = new EC('secp256k1');
 const debug = require("debug")("main:debug")
@@ -30,8 +31,9 @@ app.post("/history", function(req, res){
     res.sendStatus(404)
   }
   else {
+    //remerber fix this pls, this should be accept an public key
     tmp = mCoin.getBalanceOfAddress(myWalletAddress)
-    res.send(`Balance of this wallet is ${JSON.stringify(tmp)}`)
+    res.send(200, `Balance of this wallet is ${JSON.stringify(tmp)}`)
   }
 })
 
@@ -40,17 +42,71 @@ app.post("/history", function(req, res){
 // json sent via body
 // {"transaction": {"from" : "privateKey", "to" : "", "amount" :" "}}
 app.post('/transaction', function(req, res){
-  const tx = (req) => {
-    if(!req || !req.body || !req.body.transaction) return null;
+  let tx = (req) => {
+    if(!req || !req.body || !req.body.transaction) {
+      console.log("How about null body");
+      return null;
+    }
     if(!req.body.transaction.from 
-        || !req.body.transaction.to || !req.body.transaction.amount) return null;
-    else 
-      return new Transaction(req.body.transaction.from.getPublic('hex'), req.body.transaction.to, req.body.transaction.to)
+        || !req.body.transaction.to || !req.body.transaction.amount){
+          console.log("INvalid transaction params")
+          return null
+        }
+    else {
+      console.log("New transaction is been created")
+      return new Transaction(ec.keyFromPrivate(req.body.transaction.from).getPublic('hex'), 
+                            req.body.transaction.to, req.body.transaction.amount)
+    }
   }
-  tx.signTransaction(ec.keyFromPrivate(req.body.transaction.from))
-  mCoin.addTransaction(tx)
-  mCoin.minePendingTransactions()
+
+  tx = tx(req)
+  if(tx === null){
+    res.sendStatus(404)
+  } else {
+    // console.log(tx.signTransaction)
+    try {
+      tx.signTransaction(ec.keyFromPrivate(req.body.transaction.from))
+    } catch(err) {
+      console.log(err)
+      res.send(405, "Invalid sign key. Check your 'from' key")
+    }
+    
+    mCoin.addTransaction(tx)
+    mCoin.minePendingTransactions(ec.keyFromPrivate(req.body.transaction.from).getPublic('hex'))
+    res.send(200, "Good job");
+  }
+  
 })
+
+// Route: /register
+// Method: POST
+// json sent via body
+// {username: "", password: ""}
+app.post('/register', function(req, res){
+  const key = (req) => {
+    if(!req || !req.body) return null;
+    if(!req.body.username || !req.body.hashedPass) return null;
+    else 
+      return null
+  }
+})
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 /*
 TEST SPACE

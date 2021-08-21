@@ -173,7 +173,7 @@ class Block {
         throw new Error('Transaction must include from and to address');
       }
   
-      // Verify the transactiion
+      // Verify the transaction
       if (!transaction.isValid()) {
         throw new Error('Cannot add invalid transaction to chain');
       }
