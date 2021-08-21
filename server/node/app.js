@@ -96,7 +96,7 @@ app.post('/register', function(req, res){
     if(!req || !req.body) return null;
     if(!req.body.username || !req.body.password) return null;
     else {
-      return userFactory.makeUser(req.body.username, req.body.hashedPass)
+      return userFactory.makeUser(req.body.username, req.body.password)
     }
   }
 

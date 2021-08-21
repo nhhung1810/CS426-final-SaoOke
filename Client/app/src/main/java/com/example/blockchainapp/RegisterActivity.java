@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -19,6 +20,9 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -154,13 +158,26 @@ public class RegisterActivity extends AppCompatActivity {
                     builder.setTitle("Successfully registered!");
                     builder.setMessage("Your private key is: " + user.getPrivateKey()
                             + " | Your public key is: " + user.getPublicKey());
+                    builder.setPositiveButton("Confirm",
+                            new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    Intent intent = new Intent(RegisterActivity.this, MainActivity.class);
+                                    startActivity(intent);
+                                }
+                            });
                     builder.show();
 
-                    Intent intent = new Intent(RegisterActivity.this, MainActivity.class);
-                    startActivity(intent);
+
                 }
                 else if (response.code() == 404) {
-                    Toast.makeText(RegisterActivity.this, "Invalid credentials", Toast.LENGTH_LONG).show();
+                    try {
+                        JSONObject jObj = new JSONObject(response.body().toString());
+                        Toast.makeText(RegisterActivity.this, response.body().toString(), Toast.LENGTH_LONG).show();
+                    } catch (Exception e) {
+                        Toast.makeText(RegisterActivity.this, "Invalid credentials", Toast.LENGTH_LONG).show();
+                    }
+                    // Toast.makeText(RegisterActivity.this, "Invalid credentials", Toast.LENGTH_LONG).show();
                 }
             }
 
