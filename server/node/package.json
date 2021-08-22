@@ -1,0 +1,19 @@
+{
+  "name": "node",
+  "version": "1.0.0",
+  "description": "A simple Blockchain server with autorun-bots to simulate real transaction",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "MIT",
+  "keywords": [],
+  "dependencies": {
+    "crypto-js": "^4.1.1",
+    "debug": "^4.3.2",
+    "elliptic": "^6.5.4",
+    "express": "^4.17.1",
+    "nodemon": "^2.0.12"
+  }
+}

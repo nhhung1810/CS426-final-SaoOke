@@ -14,8 +14,11 @@ import android.text.TextWatcher;
 import android.text.method.LinkMovementMethod;
 import android.text.style.ClickableSpan;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+
+import org.w3c.dom.Text;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -29,14 +32,30 @@ public class RegisterActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
 
-        handleAlreadyHaveAccountButton();
-        initializeTypingNotifications();
-
-
-
         username = new String();
         password = new String();
 
+        handleAlreadyHaveAccountButton();
+        initializeTypingNotifications();
+        handleRegisterButton();
+    }
+
+    private void handleRegisterButton() {
+        Button btn = findViewById(R.id.btn_register);
+
+        EditText edt_username = findViewById(R.id.edt_username);
+        EditText edt_password = findViewById(R.id.edt_password);
+
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                username = edt_username.getText().toString();
+                password = edt_password.getText().toString();
+
+                System.out.println(username);
+                System.out.println(password);
+            }
+        });
     }
 
     private void initializeTypingNotifications() {
@@ -64,7 +83,6 @@ public class RegisterActivity extends AppCompatActivity {
                 return null;
             }
         };
-
         edt_username.setFilters(new InputFilter[] {filter});
 
         edt_username.addTextChangedListener(new TextWatcher() {
@@ -83,7 +101,7 @@ public class RegisterActivity extends AppCompatActivity {
 
             }
         });
-
+        // to-do
         edt_username.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
@@ -94,6 +112,7 @@ public class RegisterActivity extends AppCompatActivity {
 
                 }
                 else {
+                    username = edt_username.getText().toString();
                     tv_notiUsername.setText("");
                 }
             }
