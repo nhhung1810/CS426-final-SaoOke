@@ -50,8 +50,8 @@ public class LogAdapter extends RecyclerView.Adapter<LogAdapter.LogViewHolder> {
         TransactionLog log = transactionLogList.logs.get(position);
         holder.tv_fromAddress.setText(log.getFromAddress());
         holder.tv_toAddress.setText(log.getToAddress());
-        holder.tv_amount.setText(log.getAmount());
-        holder.tv_timestamp.setText(log.getTimestamp());
+        holder.tv_amount.setText(String.valueOf(log.getAmount()));
+        holder.tv_timestamp.setText(log.getTimestamp().toString());
         holder.tv_signature.setText(log.getSignature());
     }
 

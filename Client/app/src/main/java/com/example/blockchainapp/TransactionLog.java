@@ -1,15 +1,16 @@
 package com.example.blockchainapp;
 
+import java.util.Date;
 import java.util.List;
 
 public class TransactionLog {
     private String fromAddress;
     private String toAddress;
     private int amount;
-    private int timestamp;
+    private Object timestamp;
     private String signature;
 
-    public TransactionLog(String fromAddress, String toAddress, int amount, int timestamp, String signature) {
+    public TransactionLog(String fromAddress, String toAddress, int amount, Object timestamp, String signature) {
         this.fromAddress = fromAddress;
         this.toAddress = toAddress;
         this.amount = amount;
@@ -41,11 +42,11 @@ public class TransactionLog {
         this.amount = amount;
     }
 
-    public int getTimestamp() {
+    public Object getTimestamp() {
         return timestamp;
     }
 
-    public void setTimestamp(int timestamp) {
+    public void setTimestamp(Object timestamp) {
         this.timestamp = timestamp;
     }
 
