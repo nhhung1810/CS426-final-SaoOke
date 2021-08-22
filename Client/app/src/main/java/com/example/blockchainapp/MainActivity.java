@@ -33,6 +33,10 @@ public class MainActivity extends AppCompatActivity {
     public void AccountTab(View view) {
         Intent intent = new Intent(this, AccountActivity.class);
         startActivity(intent);
+    }
 
+    public void HistoryTab(View view) {
+        Intent intent = new Intent(this, HistoryActivity.class);
+        startActivity(intent);
     }
 }

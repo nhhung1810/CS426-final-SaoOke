@@ -175,7 +175,8 @@
                     android:layout_rowWeight="1"
                     app:cardElevation="6dp"
                     app:cardCornerRadius="12dp"
-                    android:layout_margin="12dp">
+                    android:layout_margin="12dp"
+                    android:onClick="HistoryTab">
 
                     <LinearLayout
                         android:gravity="center"

@@ -19,4 +19,10 @@ public interface BlockchainInterface {
     @POST("/register")
     Call<UserKey> ExecutePostRegister(@Body UserAccount account);
 
+    @POST("/login")
+    Call<UserKey> ExecutePostLogin(@Body UserAccount account);
+
+    @GET("/transactionsLog")
+    Call<TransactionLogList> ExecuteGetTransactionLog();
+
 }

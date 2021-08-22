@@ -32,11 +32,11 @@ public class LoginActivity extends AppCompatActivity {
     public UserAccount account;
     private EditText edt_username;
     private EditText edt_password;
-    private EditText edt_confirmPassword;
+    // private EditText edt_confirmPassword;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_register);
+        setContentView(R.layout.activity_login);
 
         handleAlreadyHaveAccountButton();
         initializeTypingNotifications();
@@ -46,7 +46,7 @@ public class LoginActivity extends AppCompatActivity {
     private void initializeTypingNotifications() {
         edt_username = findViewById(R.id.edt_username);
         edt_password = findViewById(R.id.edt_password);
-        edt_confirmPassword = findViewById(R.id.edt_confirmPassword);
+        // edt_confirmPassword = findViewById(R.id.edt_confirmPassword);
 
         TextView tv_notiUsername = findViewById(R.id.tv_notiUsername);
         TextView tv_notiPassword = findViewById(R.id.tv_notiPassword);
@@ -110,7 +110,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void handleAlreadyHaveAccountButton() {
-        SpannableString ss = new SpannableString("Already have an account? Log in");
+        SpannableString ss = new SpannableString("Don't have an account yet? Sign up");
 
         ClickableSpan clickableSpan = new ClickableSpan() {
             @Override
@@ -125,7 +125,7 @@ public class LoginActivity extends AppCompatActivity {
             }
         };
 
-        ss.setSpan(clickableSpan, 25, 31, Spanned.SPAN_INCLUSIVE_INCLUSIVE);
+        ss.setSpan(clickableSpan, 27, 34, Spanned.SPAN_INCLUSIVE_INCLUSIVE);
 
         TextView textView = findViewById(R.id.tv_login);
         textView.setText(ss);
@@ -140,7 +140,7 @@ public class LoginActivity extends AppCompatActivity {
     public void HandleLogin(View view) {
         if (!CheckValidCredential()) return;
         account = new UserAccount(edt_username.getText().toString(), edt_password.getText().toString());
-        Call<UserKey> keyCall =  RetrofitUtils.blockchainInterface.ExecutePostRegister(account);
+        Call<UserKey> keyCall =  RetrofitUtils.blockchainInterface.ExecutePostLogin(account);
         keyCall.enqueue(new Callback<UserKey>() {
             @Override
             public void onResponse(Call<UserKey> call, Response<UserKey> response) {
