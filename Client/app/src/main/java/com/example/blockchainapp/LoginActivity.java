@@ -16,51 +16,41 @@ import android.text.TextPaint;
 import android.text.TextWatcher;
 import android.text.method.LinkMovementMethod;
 import android.text.style.ClickableSpan;
-import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import org.json.JSONException;
 import org.json.JSONObject;
-
-import org.w3c.dom.Text;
-
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class RegisterActivity extends AppCompatActivity {
+public class LoginActivity extends AppCompatActivity {
     public UserKey user;
     public UserAccount account;
     private EditText edt_username;
     private EditText edt_password;
-    private EditText edt_confirmPassword;
+    // private EditText edt_confirmPassword;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_register);
-
-        username = new String();
-        password = new String();
+        setContentView(R.layout.activity_login);
 
         handleAlreadyHaveAccountButton();
         initializeTypingNotifications();
+
     }
 
     private void initializeTypingNotifications() {
         edt_username = findViewById(R.id.edt_username);
         edt_password = findViewById(R.id.edt_password);
-        edt_confirmPassword = findViewById(R.id.edt_confirmPassword);
+        // edt_confirmPassword = findViewById(R.id.edt_confirmPassword);
 
         TextView tv_notiUsername = findViewById(R.id.tv_notiUsername);
         TextView tv_notiPassword = findViewById(R.id.tv_notiPassword);
-        TextView tv_notiConfirmPassword = findViewById(R.id.tv_notiConfirmPassword);
+        // TextView tv_notiConfirmPassword = findViewById(R.id.tv_notiConfirmPassword);
 
         // handle EditText of username
         InputFilter filter = new InputFilter() {
@@ -78,6 +68,7 @@ public class RegisterActivity extends AppCompatActivity {
                 return null;
             }
         };
+
         edt_username.setFilters(new InputFilter[] {filter});
 
         edt_username.addTextChangedListener(new TextWatcher() {
@@ -96,7 +87,7 @@ public class RegisterActivity extends AppCompatActivity {
 
             }
         });
-        // to-do
+
         edt_username.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
@@ -107,7 +98,6 @@ public class RegisterActivity extends AppCompatActivity {
 
                 }
                 else {
-                    username = edt_username.getText().toString();
                     tv_notiUsername.setText("");
                 }
             }
@@ -120,12 +110,12 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     private void handleAlreadyHaveAccountButton() {
-        SpannableString ss = new SpannableString("Already have an account? Log in");
+        SpannableString ss = new SpannableString("Don't have an account yet? Sign up");
 
         ClickableSpan clickableSpan = new ClickableSpan() {
             @Override
             public void onClick(@NonNull View widget) {
-               startActivity(new Intent(RegisterActivity.this, LoginActivity.class));
+                startActivity(new Intent(LoginActivity.this, RegisterActivity.class));
             }
 
             @Override
@@ -135,7 +125,7 @@ public class RegisterActivity extends AppCompatActivity {
             }
         };
 
-        ss.setSpan(clickableSpan, 25, 31, Spanned.SPAN_INCLUSIVE_INCLUSIVE);
+        ss.setSpan(clickableSpan, 27, 34, Spanned.SPAN_INCLUSIVE_INCLUSIVE);
 
         TextView textView = findViewById(R.id.tv_login);
         textView.setText(ss);
@@ -147,10 +137,10 @@ public class RegisterActivity extends AppCompatActivity {
         return true;
     }
 
-    public void HandleRegister(View view) {
+    public void HandleLogin(View view) {
         if (!CheckValidCredential()) return;
         account = new UserAccount(edt_username.getText().toString(), edt_password.getText().toString());
-        Call<UserKey> keyCall =  RetrofitUtils.blockchainInterface.ExecutePostRegister(account);
+        Call<UserKey> keyCall =  RetrofitUtils.blockchainInterface.ExecutePostLogin(account);
         keyCall.enqueue(new Callback<UserKey>() {
             @Override
             public void onResponse(Call<UserKey> call, Response<UserKey> response) {
@@ -160,17 +150,15 @@ public class RegisterActivity extends AppCompatActivity {
                     Constants.PUBLIC_KEY = user.getPublicKey();
                     Constants.SESSION_ACTIVE = true;
 
-                    AlertDialog.Builder builder = new AlertDialog.Builder(RegisterActivity.this);
+                    AlertDialog.Builder builder = new AlertDialog.Builder(LoginActivity.this);
                     builder.setTitle("Successfully registered!");
                     builder.setMessage("Your private key is: " + user.getPrivateKey()
                             + " | Your public key is: " + user.getPublicKey());
-                    Log.d("Callback", "Your private key is: " + user.getPrivateKey()
-                                                        + "| Your public key is: " + user.getPublicKey());
                     builder.setPositiveButton("Confirm",
                             new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
-                                    Intent intent = new Intent(RegisterActivity.this, MainActivity.class);
+                                    Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                                     startActivity(intent);
                                 }
                             });
@@ -181,9 +169,9 @@ public class RegisterActivity extends AppCompatActivity {
                 else if (response.code() == 404) {
                     try {
                         JSONObject jObj = new JSONObject(response.body().toString());
-                        Toast.makeText(RegisterActivity.this, response.body().toString(), Toast.LENGTH_LONG).show();
+                        Toast.makeText(LoginActivity.this, response.body().toString(), Toast.LENGTH_LONG).show();
                     } catch (Exception e) {
-                        Toast.makeText(RegisterActivity.this, "Invalid credentials", Toast.LENGTH_LONG).show();
+                        Toast.makeText(LoginActivity.this, "Invalid credentials", Toast.LENGTH_LONG).show();
                     }
                     // Toast.makeText(RegisterActivity.this, "Invalid credentials", Toast.LENGTH_LONG).show();
                 }
@@ -191,7 +179,7 @@ public class RegisterActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<UserKey> call, Throwable t) {
-                Toast.makeText(RegisterActivity.this, t.getMessage(), Toast.LENGTH_LONG).show();
+                Toast.makeText(LoginActivity.this, t.getMessage(), Toast.LENGTH_LONG).show();
             }
         });
 

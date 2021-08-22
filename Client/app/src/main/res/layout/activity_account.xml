@@ -20,7 +20,7 @@
             android:textAlignment="center"
             android:textSize="20sp"/>
         <TextView
-            android:id="@+id/tv_balance"
+            android:id="@+id/tv_currentBalance"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"

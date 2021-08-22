@@ -3,10 +3,17 @@ package com.example.blockchainapp;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.text.NumberFormat;
+import java.util.Locale;
+
+import okhttp3.MediaType;
+import okhttp3.RequestBody;
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -23,25 +30,32 @@ public class AccountActivity extends AppCompatActivity {
     }
 
     private void Initialize() {
-        balanceTV = findViewById(R.id.tv_balance);
+        balanceTV = findViewById(R.id.tv_currentBalance);
         GetBalance();
     }
 
     private void GetBalance() {
         // TODO: Change private key
-        Call<Float> balanceCall = RetrofitUtils.blockchainInterface.ExecuteGetBalance(Constants.PRIVATE_KEY);
-        balanceCall.enqueue(new Callback<Float>() {
+        Log.d("Key", Constants.PUBLIC_KEY);
+        PublicKey key = new PublicKey(Constants.PUBLIC_KEY);
+        Call<Long> balanceCall = RetrofitUtils.blockchainInterface.ExecuteGetBalance(key);
+        balanceCall.enqueue(new Callback<Long>() {
             @Override
-            public void onResponse(Call<Float> call, Response<Float> response) {
+            public void onResponse(Call<Long> call, Response<Long> response) {
+
                 if (response.code() == 200) {
-                    balanceTV.setText(response.body().toString() + " VNĐ");
+                    Locale locale = new Locale("vi", "VN");
+                    NumberFormat currencyFormatter = NumberFormat.getCurrencyInstance(locale);
+                    balanceTV.setText(currencyFormatter.format(response.body()) + " VNĐ");
                 } else if (response.code() == 404) {
                     Toast.makeText(AccountActivity.this, "Invalid credentials", Toast.LENGTH_LONG).show();
+                } else {
+                    Toast.makeText(AccountActivity.this, "Unknown errors", Toast.LENGTH_LONG).show();
                 }
             }
 
             @Override
-            public void onFailure(Call<Float> call, Throwable t) {
+            public void onFailure(Call<Long> call, Throwable t) {
                 Toast.makeText(AccountActivity.this, t.getMessage(), Toast.LENGTH_LONG).show();
             }
         });

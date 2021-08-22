@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".RegisterActivity"
+    tools:context=".LoginActivity"
     android:background="@color/gold"
     >
 
@@ -113,42 +113,17 @@
                         android:textSize="15sp"
                         />
 
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Confirm Password"
-                        android:textSize="18sp"
-                        android:textColor="#6f6f6f"
-                        android:textStyle="bold"
-                        />
-
-                    <EditText
-                        android:id="@+id/edt_confirmPassword"
-                        android:inputType="textPassword"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:textSize="18sp"
-                        android:textColor="#6f6f6f"
-                        />
-
-                    <TextView
-                        android:id="@+id/tv_notiConfirmPassword"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:textSize="15sp"
-                        />
-
                     <Button
                         android:id="@+id/btn_register"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:gravity="center"
                         android:layout_gravity="center"
-                        android:text="Register Now!"
+                        android:text="Sign in"
                         android:textColor="@color/white"
                         android:backgroundTint="#FF333333"
                         android:textSize="18sp"
-                        android:onClick="HandleRegister"
+                        android:onClick="HandleLogin"
                         />
 
                 </LinearLayout>
