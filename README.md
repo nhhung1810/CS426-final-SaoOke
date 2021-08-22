@@ -3,7 +3,7 @@
 ## Deployment
 
 0. OS: Windows 10
-1. Intsalll docker-compose: https://docs.docker.com/compose/install/
+1. Install docker-compose: https://docs.docker.com/compose/install/
 2. cd to the directory, run command:
 ```
 $ docker-compose build
@@ -14,7 +14,7 @@ $ docker-compose up
 
 ### Error may occurs in deployment
 
-- In runtime, the server may run with missing dependency/lib error, you can change directory to server/node and run the following command to fix this
+- In runtime, the server may run with missing dependency/lib error, you can cd to server/node and run the following command to fix this
 ```
 $ npm install <missing-lib>
 ```
