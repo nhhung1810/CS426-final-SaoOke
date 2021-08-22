@@ -36,7 +36,7 @@ public class AccountActivity extends AppCompatActivity {
 
     private void GetBalance() {
         // TODO: Change private key
-        Log.d("Key", Constants.PUBLIC_KEY);
+        // Log.d("Key", Constants.PUBLIC_KEY);
         PublicKey key = new PublicKey(Constants.PUBLIC_KEY);
         Call<Long> balanceCall = RetrofitUtils.blockchainInterface.ExecuteGetBalance(key);
         balanceCall.enqueue(new Callback<Long>() {

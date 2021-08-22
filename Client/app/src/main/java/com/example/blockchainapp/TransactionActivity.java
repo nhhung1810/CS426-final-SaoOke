@@ -4,6 +4,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -35,6 +36,7 @@ public class TransactionActivity extends AppCompatActivity {
     }
 
     public void HandleTransaction(View view) {
+        if (TextUtils.isEmpty(toAddressET.getText()) || TextUtils.isEmpty(amountET.getText())) return;
         String toAddress = toAddressET.getText().toString();
         Float amount = Float.parseFloat(amountET.getText().toString());
         String message = messageET.getText().toString();
