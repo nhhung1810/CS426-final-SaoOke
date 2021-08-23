@@ -179,7 +179,21 @@ app.post('/login', function(req, res){
   }
 })
 
-
+app.post('/mine', (req, res) => {
+  console.log(req.body)
+  if (!req || !req.body || !req.body.address) {
+    res.send(404, {
+      "status" : "failed",
+      "error" : "Invalid request. Check your params"
+    })
+  } else {
+    address = req.body.address
+    mCoin.minePendingTransactions(address)
+    res.send(200, {
+      "status" : "success"
+    }) 
+  }
+})
 
 
 

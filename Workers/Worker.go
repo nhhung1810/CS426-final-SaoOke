@@ -7,7 +7,7 @@ import (
 func main() {
 	println("ok")
 	var bot = new(Bot.Bot)
-	bot.Test()
+	bot.Run()
 
 	// args := os.Args[1:]
 	// fmt.Print(args)
