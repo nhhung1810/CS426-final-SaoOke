@@ -26,18 +26,16 @@ app.listen(port, () => {
   test()
 })
 
-
-// Route: /balance
-// Method: POST
-// params: address = publicKey
-app.post("/balance/:address", function(req, res){
-  if(!req.params.address || req.params.address === 0){
+//param: address = publicKey
+app.post("/balance", function(req, res){
+  // console.log(req);
+  if(!req.body || !req.body.address || req.body.address.length === 0){
     res.sendStatus(404)
   }
   else {
-    //remember fix this pls, this should be accept an public key
-    tmp = mCoin.getBalanceOfAddress(req.params.address)
-    res.send(200, {"amount" : `${JSON.stringify(tmp)}`})
+    //remerber fix this pls, this should be accept an public key
+    tmp = mCoin.getBalanceOfAddress(myWalletAddress)
+    res.send(200, tmp)
   }
 
 })
@@ -98,9 +96,9 @@ app.post('/transaction', function(req, res){
 app.post('/register', function(req, res){
   const register = (req) => {
     if(!req || !req.body) return null;
-    if(!req.body.username || !req.body.hashedPass) return null;
+    if(!req.body.username || !req.body.password) return null;
     else {
-      return userFactory.makeUser(req.body.username, req.body.hashedPass)
+      return userFactory.makeUser(req.body.username, req.body.password)
     }
   }
 
@@ -157,10 +155,10 @@ app.post('/free', function(req, res){
 
 app.post('/login', function(req, res){
   const check = (req) =>{
-    if(!req || !req.body || !req.body.username || !req.body.hashedPass)
+    if(!req || !req.body || !req.body.username || !req.body.password)
       return null
     else {
-      return userFactory.authenticate(req.body.username, req.body.hashedPass)
+      return userFactory.authenticate(req.body.username, req.body.password)
     }
   }
 
