@@ -12,6 +12,8 @@ import (
 	"../Utils"
 )
 
+var BotAddress []string
+
 type Bot struct {
 	username   string
 	password   string
@@ -58,6 +60,7 @@ func (b *Bot) Register() {
 	}
 	b.publicKey, _ = responseParams["publicKey"].(string)
 	b.privateKey, _ = responseParams["privateKey"].(string)
+	BotAddress = append(BotAddress, b.publicKey)
 	// print(b.publicKey, b.privateKey)
 }
 
@@ -109,8 +112,44 @@ func (b *Bot) getBalance() float64 {
 	resp.Body.Close()
 	return 0
 }
+
+func (b *Bot) SendRandom() {
+	toAddress := BotAddress[Utils.RandIntInRange(0, len(BotAddress))]
+	fromAddress := b.publicKey
+	balance := b.getBalance()
+	amount := Utils.RandFloatInRange(0, balance)
+	println(fromAddress)
+	println(toAddress)
+	println(fmt.Sprintf("%f", balance))
+	println(fmt.Sprintf("%f", amount))
+
+	requestParams := map[string]map[string]string{
+		"transaction": map[string]string{
+			"from":   fromAddress,
+			"to":     toAddress,
+			"amount": fmt.Sprintf("%f", amount),
+		},
+	}
+
+	jsonValue, _ := json.Marshal(requestParams)
+	resp, err := http.Post("http://localhost:5000/transaction", "application/json", bytes.NewBuffer(jsonValue))
+
+	if err != nil {
+		println(err.Error())
+		return
+	}
+
+	body, err := io.ReadAll(resp.Body)
+	if err != nil {
+		println(err.Error())
+		return
+	}
+	bodyString := string(body)
+	println(bodyString)
+}
 func (b *Bot) Run() {
 	b.Register()
 	b.Mine()
 	b.getBalance()
+	b.SendRandom()
 }
