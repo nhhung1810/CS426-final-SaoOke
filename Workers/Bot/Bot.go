@@ -9,7 +9,7 @@ import (
 	"net/http"
 	"strconv"
 
-	"../Utils"
+	"worker/Utils"
 )
 
 var BotAddress []string
@@ -66,7 +66,7 @@ func (b *Bot) Register() {
 
 func (b *Bot) Mine() {
 	params := map[string]string{
-		"address": b.publicKey,
+		"address": b.privateKey,
 	}
 	jsonValue, _ := json.Marshal(params)
 	resp, err := http.Post("http://localhost:5000/mine", "application/json", bytes.NewBuffer(jsonValue))
@@ -115,13 +115,13 @@ func (b *Bot) getBalance() float64 {
 
 func (b *Bot) SendRandom() {
 	toAddress := BotAddress[Utils.RandIntInRange(0, len(BotAddress))]
-	fromAddress := b.publicKey
+	fromAddress := b.privateKey
 	balance := b.getBalance()
 	amount := Utils.RandFloatInRange(0, balance)
-	println(fromAddress)
-	println(toAddress)
-	println(fmt.Sprintf("%f", balance))
-	println(fmt.Sprintf("%f", amount))
+	// println(fromAddress)
+	// println(toAddress)
+	// println(fmt.Sprintf("%f", balance))
+	// println(fmt.Sprintf("%f", amount))
 
 	requestParams := map[string]map[string]string{
 		"transaction": map[string]string{

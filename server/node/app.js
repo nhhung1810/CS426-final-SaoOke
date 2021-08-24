@@ -50,11 +50,12 @@ app.post("/balance", function(req, res){
 //       "from" : "8955c93d5e5a33af207eed4907ec608ae85fbff89a6b6f795d36a49b26e29b01",
 //       "to" : "someone",
 //       "amount" : 10
-//   }
+//   },
+//   "signature" : "0xasdfsdf", ///Calculated by (from + to + amount) => HEX
 // }
 app.post('/transaction', function(req, res){
   const trans = (req) => {
-    if(!req || !req.body || !req.body.transaction) {
+    if(!req || !req.body || !req.body.transaction || !req.body.signature) {
       console.log("How about null body");
       return null;
     }
@@ -65,8 +66,10 @@ app.post('/transaction', function(req, res){
         }
     else {
       console.log("New transaction is been created")
-      return new Transaction(ec.keyFromPrivate(req.body.transaction.from).getPublic('hex'), 
-                            req.body.transaction.to, req.body.transaction.amount)
+      return new Transaction(req.body.transaction.from, 
+                            req.body.transaction.to, 
+                            req.body.transaction.amount,
+                            req.body.signature)
     }
   }
 
@@ -76,14 +79,15 @@ app.post('/transaction', function(req, res){
   } else {
     // console.log(tx.signTransaction)
     try {
-      tx.signTransaction(ec.keyFromPrivate(req.body.transaction.from))
+      if (!tx.isValid()) {
+        res.send(405, {"error" : "Invalid signature"})
+      }
     } catch(err) {
       console.log(err)
       res.send(405, {"error" : "Invalid sign key. Check your 'from' key"})
     }
     
     mCoin.addTransaction(tx)
-    mCoin.minePendingTransactions(ec.keyFromPrivate(req.body.transaction.from).getPublic('hex'))
     res.send(200, {"status" : "success"});
   }
   
@@ -230,3 +234,13 @@ test = () => {
   console.log();
   console.log('Blockchain valid?', mCoin.isChainValid() ? 'Yes' : 'No');
 };
+
+
+app.post('/testkey', (req, res) => {
+  // var publicKey = req.body.publicKey
+  // var signature = req.body.signature
+
+  // var key = ec.keyFromPublic(publicKey, "hex")
+  var a = 123
+  res.send(200, String("sdfsaf"))
+})

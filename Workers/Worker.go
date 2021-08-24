@@ -1,7 +1,7 @@
 package main
 
 import (
-	"./Bot"
+	"workerg/Bot"
 )
 
 func main() {
