@@ -4,15 +4,20 @@ const EC = require('elliptic').ec;
 const ec = new EC('secp256k1');
 
 class Transaction{
-    constructor(fromAddress, toAddress, amount){
+    constructor(fromAddress, toAddress, amount, signature = ""){
         this.fromAddress = fromAddress
         this.toAddress = toAddress
         this.amount = amount
+        this.signature = signature
         this.timestamp = Date.now()
     }
 
     calculateHash() {
         return crypto.createHash("sha256").update(this.fromAddress + this.toAddress + this.amount + this.timestamp).digest('hex')
+    }
+
+    calculateHex() {
+      return Buffer.from(this.fromAddress + this.toAddress + this.amount, 'utf-8').toString('hex')
     }
 
     /**
@@ -33,10 +38,10 @@ class Transaction{
             throw new Error('You can not sign transaction for other wallet');
         }
         
-        const hashtx = this.calculateHash();
-        const sig = signingKey.sign(hashtx, 'base64')
+        const hashtx = this.calculateHex();
+        const sig = signingKey.sign(hashtx, 'hex')
         
-        this.signature = sig.toDER('hex');
+        this.signature = sig;
     }
 
     //check signature
@@ -49,7 +54,8 @@ class Transaction{
         }
 
         const publicKey = ec.keyFromPublic(this.fromAddress, 'hex')
-        return publicKey.verify(this.calculateHash(), this.signature)
+        const msgHex = Buffer.from(this.fromAddress + this.toAddress + this.amount, 'utf-8')
+        return publicKey.verify(this.calculateHex(), this.signature)
     }
 }
 
