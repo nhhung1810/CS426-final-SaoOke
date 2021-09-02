@@ -8,12 +8,14 @@ const key = ec.genKeyPair();
 const publicKey = key.getPublic('hex');
 const privateKey = key.getPrivate('hex');
 
+
 // Print the keys to the console
 console.log();
-console.log('Your public key (also your wallet address, freely shareable)\n', publicKey);
+// console.log('Your public key (also your wallet address, freely shareable)\n', publicKey);
 
 console.log();
-console.log('Your private key (keep this secret! To sign transactions)\n', privateKey);
+// tmp = Buffer.from(key.getPrivate('hex')).toString('hex')
+console.log('Your private key (keep this secret! To sign transactions)\n', Buffer.from(key.getPrivate('hex'), 'hex').toString('base64'));
 // check if pub can be derived from pri
 // tmp = ec.keyFromPrivate(privateKey).getPublic("hex")
 // console.log()
@@ -24,5 +26,21 @@ console.log('Your private key (keep this secret! To sign transactions)\n', priva
 //     console.log("tmp: ", tmp)
 // }
 
+const base64key = 'G3M0b/LnQmNjrdVDH77HnhiV7aDpuzfk5x8twyyizMM=';
 
-console.log(ec.keyFromPrivate("8955c93d5e5a33af207eed4907ec608ae85fbff89a6b6f795d36a49b26e29b01").getPublic("hex"))
+const base64tohex = (base64key) => {
+    return Buffer.from(base64key, 'base64').toString('hex');
+}
+
+const keyPairGen = (base64key) => {
+    let resKey = ec.keyFromPrivate(base64tohex(base64key))
+    return resKey;
+}
+
+const hexto64 = (hexkey) => {
+    return Buffer.from(hexkey, 'hex').toString('base64')
+}
+
+
+
+console.log(hexto64(keyPairGen(base64key).getPrivate('hex')))

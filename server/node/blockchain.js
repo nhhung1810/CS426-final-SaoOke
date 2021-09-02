@@ -317,3 +317,11 @@ class Block {
   module.exports.Blockchain = Blockchain;
   module.exports.Block = Block;
   module.exports.Transaction = Transaction;
+
+
+  /*
+  - crypto -> Java: privatekey + msp => sign msg => signed-msg + public + raw-data => server -> verify 
+    > blockchain -> pendingTransaction ...> auto mine
+  - miner -> isPending? -> mine ->
+  - bot 
+  */
