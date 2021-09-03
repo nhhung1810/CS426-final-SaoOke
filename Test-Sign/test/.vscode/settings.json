@@ -1,0 +1,11 @@
+{
+    "java.project.sourcePaths": ["src"],
+    "java.project.outputPath": "bin",
+    "java.project.referencedLibraries": [
+        "lib/**/*.jar",
+        "c:\\CodeSpace\\cs426-final-Mcoin\\Test-Sign\\bcprov-ext-jdk14-169.jar",
+        "c:\\CodeSpace\\cs426-final-Mcoin\\Test-Sign\\jar_files\\crypto-4.8.7.jar",
+        "c:\\CodeSpace\\cs426-final-Mcoin\\Test-Sign\\json-20210307.jar",
+        "c:\\CodeSpace\\cs426-final-Mcoin\\Test-Sign\\core-1.58.0.0.jar"
+    ]
+}

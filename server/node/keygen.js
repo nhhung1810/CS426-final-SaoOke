@@ -1,34 +1,53 @@
-const EC = require('elliptic').ec;
-const crypto = require("crypto")
-
+// const EC = require('elliptic').ec;
+const rs = require('jsrsasign');
+const rsu = require('jsrsasign-util');
 // You can use any elliptic curve you want
-const ec = new EC('secp256k1');
+// const ec = new EC('secp256k1');
 
-// Generate a new key pair and convert them to hex-strings
-// const key = ec.genKeyPair();
-// const publicKey = key.getPublic('hex');
-// const privateKey = key.getPrivate('hex');
+// var keysize = 1024
+// console.log("generating RSA " + keysize + "bit key pair...");
+// kp = rs.KEYUTIL.generateKeypair("RSA", keysize);
+// var prvKey = kp.prvKeyObj;
+// var pubKey = kp.pubKeyObj;
 
-// Print the keys to the console
-// console.log();
-// console.log('Your public key (also your wallet address, freely shareable)\n', publicKey);
+// var prvKeyPEM, pubKeyPEM;
+// prvKeyPEM = rs.KEYUTIL.getPEM(prvKey, "PKCS8PRV");
+// pubKeyPEM = rs.KEYUTIL.getPEM(pubKey);
+// console.log('Private key: ', prvKeyPEM)
+// console.log('Public key: ', pubKeyPEM)
 
-// console.log();
-// console.log('Your private key (keep this secret! To sign transactions)\n', privateKey);
+// rsu.saveFile('private_key_pkcs8.pem', prvKeyPEM)
+// rsu.saveFile('public_key.pem', pubKeyPEM)
+// console.log("done.");
 
-// console.log(ec.keyFromPrivate("8955c93d5e5a33af207eed4907ec608ae85fbff89a6b6f795d36a49b26e29b01").getPublic("hex"))
-// console.log()
+var textOrFile = "Hello"
+var pubFile = "public_key.pem"
+var sigFile = "STY6EEVDf411GBxu7bhE3/t6m3tKNchC106U+JI8df0J756aLEUZGCA0xetPW5OEI+vt5CeS552FbdTV4IUz9IF9J2bV/yTU64eC1Pj+jp4pGuXpXQUz0Ew0dp9WOaJPC5IZ9or5RsnfHgiDNwI8bdVLl0etv4BR5O1y3NsoCAw="
+var hashAlg = "SHA256withRSA";
 
-//Research the method to parse signature
+// 1. public key
+var pubPEM = rsu.readFile(pubFile);
+var pub = rs.KEYUTIL.getKey(pubPEM);
+//console.log(pub);
 
-const key = ec.keyFromPrivate('8955c93d5e5a33af207eed4907ec608ae85fbff89a6b6f795d36a49b26e29b01')
-
-const signTransaction = (signingKey, msg) => {
-    msg = crypto.createHash('sha256').update(msg).digest('hex')
-
-    const sig = signingKey.sign(msg, 'base64')
-    console.log(sig)
-    console.log(sig.toDER("hex"))
+// 2. data to be verifid
+var text;
+try {
+  text = rsu.readFile(textOrFile);
+} catch(ex) {
+  text = textOrFile;
 }
 
-signTransaction(key, 'hung')
+// 3. load signature
+var sig = new rs.KJUR.crypto.Signature({alg: hashAlg});
+sig.init(pub);
+sig.updateString(text);
+var isValid = sig.verify(Buffer.from(sigFile, "base64").toString("hex"));
+
+if (isValid) {
+   console.log("signature is valid");
+} else {
+   console.log("signature is invalid");
+}
+
+
