@@ -21,18 +21,10 @@ import java.util.Base64;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import org.bouncycastle.crypto.generators.ECKeyPairGenerator;
-import org.bouncycastle.jcajce.provider.keystore.BC;
-import org.bouncycastle.jcajce.provider.symmetric.AES.KeyGen;
 import org.bouncycastle.util.encoders.Hex;
 import org.json.JSONObject;
 
-// import jdk.jfr.events.ErrorThrownEvent;
 
-/**
- *
- * @author metamug.com
- */
 public class SignUtil {
 
     private static final String SPEC = "secp256k1";
@@ -53,10 +45,10 @@ public class SignUtil {
     public static PrivateKey keyToValue(byte[] pkcs8key)
     throws NoSuchAlgorithmException, InvalidAlgorithmParameterException, 
     InvalidKeyException, UnsupportedEncodingException, InvalidKeySpecException, UnsupportedEncodingException {
-    PKCS8EncodedKeySpec spec = new PKCS8EncodedKeySpec(pkcs8key);
-    KeyFactory factory = KeyFactory.getInstance("EC");
-    PrivateKey privateKey = factory.generatePrivate(spec);
-    return privateKey;
+        PKCS8EncodedKeySpec spec = new PKCS8EncodedKeySpec(pkcs8key);
+        KeyFactory factory = KeyFactory.getInstance("EC");
+        PrivateKey privateKey = factory.generatePrivate(spec);
+        return privateKey;
     }
 
     public static PrivateKey stringToKey(String privatekey)
@@ -129,7 +121,7 @@ public class SignUtil {
             byte[] privateKeyBytes = keygen().getPrivate().getEncoded();
             String privKeyStr = new String(Base64.getEncoder().encode(privateKeyBytes));
             System.out.println(privKeyStr);
-            System.out.println(keygen().getPrivate().getFormat());
+            // System.out.println(keygen().getPrivate().getFormat());
             // PrivateKey pk = SignUtil.stringToKey(testPrivate);
             // System.out.println(testPrivate);
             // System.out.println(pk.toString());
