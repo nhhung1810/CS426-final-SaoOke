@@ -25,12 +25,11 @@ app.get('/', (req, res) => {
 
 app.listen(port, () => {
   console.log(`Example app listening at http://localhost:${port}`)
-  test()
+  // test()
 })
 
 //param: address = publicKey
 app.post("/balance", function(req, res){
-  // console.log(req);
   if(!req.body || !req.body.address || req.body.address.length === 0){
     res.sendStatus(404)
   }
@@ -53,7 +52,7 @@ app.post("/balance", function(req, res){
 //       "to" : "someone",
 //       "amount" : 10
 //   },
-//   "signature" : "0xasdfsdf", ///Calculated by (from + to + amount) => base64
+//   "signature" : "0xasdfsdf", ///Calculated by (from + to + amount) => base64/hex
 // }
 app.post('/transaction', function(req, res){
   const trans = (req) => {
@@ -95,6 +94,39 @@ app.post('/transaction', function(req, res){
   
 })
 
+// Route: /register
+// Method: POST
+// json sent via body
+// {username: "", password: ""}
+// app.post('/register', function(req, res){
+//   const register = (req) => {
+//     if(!req || !req.body) return null;
+//     if(!req.body.username || !req.body.password) return null;
+//     else {
+//       return userFactory.makeUser(req.body.username, req.body.password)
+//     }
+//   }
+
+//   try {
+//     key = register(req)
+//     if(key === null) res.send(404, {
+//       "error" : "Invalid register process. Check your params"
+//     })  
+//     else res.send(200, {
+//       "publicKey": key.getPublic('hex'),
+//       "privateKey": key.getPrivate('hex')
+//     })
+//   } catch(err) {
+//     //case: error at the makeUser, maybe the username is existed
+//     console.log(err)
+//     res.send(405, {
+//       "error" : "Check your username. It may existed"
+//     })
+//   }
+  
+
+// })
+
 app.get('/transactionsLog', function(req, res) {
   var transactions = mCoin.getTransactionsLog()
   res.send(200, 
@@ -104,30 +136,54 @@ app.get('/transactionsLog', function(req, res) {
   )
 })
 
-//add free money for further test
-//only for testing
-app.post('/free', function(req, res){
-  const trans = (req) => {
-    if(!req || !req.body || !req.body.username || !req.body.amount)
-      return null
-    userFactory.freeMoney(req.body.username, mCoin, req.body.amount)
-    return true
-  }
+//add free money for further test, pass 
+// app.post('/free', function(req, res){
+//   const trans = (req) => {
+//     if(!req || !req.body || !req.body.username || !req.body.amount)
+//       return null
+//     userFactory.freeMoney(req.body.username, mCoin, req.body.amount)
+//     return true
+//   }
 
-  tmp = trans(req)
-  if(tmp === true){
-    res.send(200, {
-      "status" : "success"
-    })
-  } else {
-    res.send(404, {
-      "error" : "Invalid, check your params"
-    })
-  }
-})
+//   tmp = trans(req)
+//   if(tmp === true){
+//     res.send(200, {
+//       "status" : "success"
+//     })
+//   } else {
+//     res.send(404, {
+//       "error" : "Invalid, check your params"
+//     })
+//   }
+// })
 
 
-//inactive
+// app.post('/login', function(req, res){
+//   const check = (req) =>{
+//     if(!req || !req.body || !req.body.username || !req.body.password)
+//       return null
+//     else {
+//       return userFactory.authenticate(req.body.username, req.body.password)
+//     }
+//   }
+
+//   flag = check(req)
+//   if(flag === null){
+//     res.send(404, {
+//       "error" : "Invalid request. Check your params"
+//     })
+//   } else {
+//     if(flag === true) res.send(200, {
+//       "status" : "success"
+//     }) 
+//     else {
+//       res.send(405, {
+//         "error" : "Invalid Login. Check your username and password"
+//       })
+//     }
+//   }
+// })
+
 app.post('/mine', (req, res) => {
   console.log(req.body)
   if (!req || !req.body || !req.body.address) {
@@ -149,43 +205,43 @@ app.post('/mine', (req, res) => {
 /*
 TEST SPACE
 */
-test = () => {
-    // Mine first block
-  mCoin.minePendingTransactions(myWalletAddress);
+// test = () => {
+//     // Mine first block
+//   mCoin.minePendingTransactions(myWalletAddress);
 
-  // Create a transaction & sign it with your key
-  const tx1 = new Transaction(myWalletAddress, 'address2', 100);
-  tx1.signTransaction(myKey);
-  mCoin.addTransaction(tx1);
+//   // Create a transaction & sign it with your key
+//   const tx1 = new Transaction(myWalletAddress, 'address2', 100);
+//   tx1.signTransaction(myKey);
+//   mCoin.addTransaction(tx1);
 
-  // Mine block
-  mCoin.minePendingTransactions(myWalletAddress);
+//   // Mine block
+//   mCoin.minePendingTransactions(myWalletAddress);
 
-  // Create second transaction
-  const tx2 = new Transaction(myWalletAddress, 'address1', 50);
-  tx2.signTransaction(myKey);
-  mCoin.addTransaction(tx2);
+//   // Create second transaction
+//   const tx2 = new Transaction(myWalletAddress, 'address1', 50);
+//   tx2.signTransaction(myKey);
+//   mCoin.addTransaction(tx2);
 
-  // Mine block
-  mCoin.minePendingTransactions(myWalletAddress);
+//   // Mine block
+//   mCoin.minePendingTransactions(myWalletAddress);
 
-  console.log();
-  console.log(`Balance of xavier is ${mCoin.getBalanceOfAddress(myWalletAddress)}`);
+//   console.log();
+//   console.log(`Balance of xavier is ${mCoin.getBalanceOfAddress(myWalletAddress)}`);
 
-  // Uncomment this line if you want to test tampering with the chain
-  // mCoin.chain[1].transactions[0].amount = 10;
+//   // Uncomment this line if you want to test tampering with the chain
+//   // mCoin.chain[1].transactions[0].amount = 10;
 
-  // Check if the chain is valid
-  console.log();
-  console.log('Blockchain valid?', mCoin.isChainValid() ? 'Yes' : 'No');
-};
+//   // Check if the chain is valid
+//   console.log();
+//   console.log('Blockchain valid?', mCoin.isChainValid() ? 'Yes' : 'No');
+// };
 
 
-app.post('/testkey', (req, res) => {
-  // var publicKey = req.body.publicKey
-  // var signature = req.body.signature
+// app.post('/testkey', (req, res) => {
+//   // var publicKey = req.body.publicKey
+//   // var signature = req.body.signature
 
-  // var key = ec.keyFromPublic(publicKey, "hex")
-  var a = 123
-  res.send(200, String("sdfsaf"))
-})
+//   // var key = ec.keyFromPublic(publicKey, "hex")
+//   var a = 123
+//   res.send(200, String("sdfsaf"))
+// })
