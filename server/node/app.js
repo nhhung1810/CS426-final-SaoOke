@@ -5,9 +5,6 @@ const debug = require("debug")("main:debug")
 const { Verification } = require("./verify")
 
 const mCoin = new Blockchain();
-// const myKey = ec.keyFromPrivate('8955c93d5e5a33af207eed4907ec608ae85fbff89a6b6f795d36a49b26e29b01');
-// const userFactory = new UserFactory()
-// const myWalletAddress = myKey.getPublic('hex');
 
 const verification = new Verification()
 
@@ -22,12 +19,11 @@ app.get('/', (req, res) => {
 
 app.listen(port, () => {
   console.log(`Example app listening at http://localhost:${port}`)
-  test()
+  // test()
 })
 
 //param: address = publicKey
 app.post("/balance", function(req, res){
-  // console.log(req);
   if(!req.body || !req.body.address || req.body.address.length === 0){
     res.sendStatus(404)
   }
@@ -50,7 +46,7 @@ app.post("/balance", function(req, res){
 //       "to" : "someone",
 //       "amount" : 10
 //   },
-//   "signature" : "0xasdfsdf", ///Calculated by (from + to + amount) => base64
+//   "signature" : "0xasdfsdf", ///Calculated by (from + to + amount) => base64/hex
 // }
 app.post('/transaction', function(req, res){
   const trans = (req) => {
