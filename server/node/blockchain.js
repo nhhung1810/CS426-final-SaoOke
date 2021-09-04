@@ -55,9 +55,9 @@ class Transaction{
         }
 
         // const publicKey = ec.keyFromPublic(this.fromAddress, 'hex')
-        const msgHex = Buffer.from(this.fromAddress + this.toAddress + this.amount, 'utf-8').toString('base64')
+        const msgHex = Buffer.from(this.fromAddress + this.toAddress + this.amount, 'utf-8').toString('hex')
 
-        return Verification.verify(msgHex, this.signature, this.fromAddress)
+        return Verification.verify(msgHex, this.signature, this.fromAddress, 'hex')
     }
 }
 
