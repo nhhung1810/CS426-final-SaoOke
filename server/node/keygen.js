@@ -20,40 +20,48 @@ const rsu = require('jsrsasign-util');
 // rsu.saveFile('public_key.pem', pubKeyPEM)
 // console.log("done.");
 
-var textOrFile = "Hello"
+var textOrFile = "hello"
 var pubFile = "public_key.pem"
-var sigFile = "STY6EEVDf411GBxu7bhE3/t6m3tKNchC106U+JI8df0J756aLEUZGCA0xetPW5OEI+vt5CeS552FbdTV4IUz9IF9J2bV/yTU64eC1Pj+jp4pGuXpXQUz0Ew0dp9WOaJPC5IZ9or5RsnfHgiDNwI8bdVLl0etv4BR5O1y3NsoCAw="
+var sigFile = "CRLxYTYa2vnNPsgyxhWYLcT+ubN+TWB8qnxpVIsa6O7ab7KeggUeUMlZNnrU1niKJYVozg4vz1bw94vULo/BYdE1Jou/akX1NSze1MiGErQcpMH5X21IuJdo6unI32nhto9jSISNR3gLNwbRLwokumhiuuDZyZ45A3VPSBxChXo="
 var hashAlg = "SHA256withRSA";
 
-// 1. public key
-var pubPEM = rsu.readFile(pubFile);
-var pub = rs.KEYUTIL.getKey(pubPEM);
-//console.log(pub);
+test = () => {
+  // 1. public key
+  var pubPEM = rsu.readFile(pubFile);
+  var pub = rs.KEYUTIL.getKey(pubPEM);
+  //console.log(pub);
 
-// 2. data to be verifid
-var text;
-try {
-  text = rsu.readFile(textOrFile);
-} catch(ex) {
-  text = textOrFile;
-}
+  // 2. data to be verifid
+  var text;
+  try {
+    text = rsu.readFile(textOrFile);
+  } catch(ex) {
+    text = textOrFile;
+  }
 
-// 3. load signature
-var sig = new rs.KJUR.crypto.Signature({alg: hashAlg});
-sig.init(pub);
-sig.updateString(text);
-var isValid = sig.verify(Buffer.from(sigFile, "base64").toString("hex"));
+  // 3. load signature
+  var sig = new rs.KJUR.crypto.Signature({alg: hashAlg});
+  sig.init(pub);
+  sig.updateString(text);
+  var isValid = sig.verify(Buffer.from(sigFile, "base64").toString("hex"));
 
-if (isValid) {
-   console.log("signature is valid");
-} else {
-   console.log("signature is invalid");
-}
-
-
-class KeyGenerator {
-  generateKeyPair() {
-    var sig = new rs.KJUR.crypto.Signature({alg: hashAlg});
-    return 
+  if (isValid) {
+    console.log("signature is valid");
+  } else {
+    console.log("signature is invalid");
   }
 }
+
+
+// class KeyGenerator {
+//   generateKeyPair() {
+//     var sig = new rs.KJUR.crypto.Signature({alg: hashAlg});
+//     return null
+//   }
+// }
+var fromAddress = "-----BEGIN PUBLIC KEY-----\nMIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDGOllTab/mVTMs3353mOBwjDp+\nM6LYYHi+ttH7/diA5PA7ZqJ2NtOzZXWjdaCGrqT/f0vkjWxCzhb1UOGZsSH+jVhK\niAsag+n2e+xzOPoe7xfWqOn3fI2Rt9yGswJcPP0mHUWsnlOuew9T+yyC7RFEFTX7\nRnD6gyYD8gbWvlFfuwIDAQAB\n-----END PUBLIC KEY-----"
+var toAddress = "hung"
+var amount = "10"
+
+console.log(Buffer.from(fromAddress + toAddress + amount, 'utf-8').toString('hex'))
+//ijA1JX6jnyd487Ba3ZsYCaan2XnuIqXkmx98HGpwFQkpzwzaZ3WskbJyFMGJkyogDYrnPqj+kCHL+qNJTEwE1gOsS3SWdG6+t78ce6eT0xFkJMS7N0Guu20ln9StCOio4pnKNz0ULH3epCn2VpfsDeS4/HcDJc4vKF2mUk1whM0= /
