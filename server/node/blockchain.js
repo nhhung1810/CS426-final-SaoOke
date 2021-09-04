@@ -1,6 +1,5 @@
 const crypto = require("crypto")
 const { Verification } = require("./verify")
-const { UserFactory } = require("./user.js")
 
 const verification = new Verification()
 
@@ -27,7 +26,7 @@ class Transaction{
             throw new Error('No signature in this transation');
         }
 
-        publicKey = verification.userFactory.getKey(this.fromAddress)
+        publicKey = verification.parseKey(this.fromAddress)
         console.log(publicKey)
         const msgHex = Buffer.from(this.fromAddress + this.toAddress + this.amount, 'utf-8').toString('hex')
 
@@ -261,9 +260,9 @@ class Block {
           return false;
         }
         
-        // if (!currentBlock.hasValidTransactions()) {
-        //   return false;
-        // }
+        if (!currentBlock.hasValidTransactions()) {
+          return false;
+        }
   
         if (currentBlock.hash !== currentBlock.calculateHash()) {
           return false;

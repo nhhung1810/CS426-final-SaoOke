@@ -9,7 +9,7 @@ const mCoin = new Blockchain();
 const userFactory = new UserFactory()
 
 //test
-const verification = new Verification();
+// const verification = new Verification()
 // pub = verification.parseKey("public_key.pem", true)
 // pri = verification.parseKey("private_key_pkcs8.pem", true)
 // myWalletAddress = ver.keyToString(pub)
@@ -46,11 +46,11 @@ app.post("/balance", function(req, res){
 // json sent via body
 // For example:
 // {
-//   
-    // "from" : "8955c93d5e5a33af207eed4907ec608ae85fbff89a6b6f795d36a49b26e29b01", (BASE64)
-    // "to" : "someone",
-    // "amount" : 10
-    // "signature" : "0xasdfsdf", ///Calculated by (from + to + amount) => base64/hex
+//   "from" : "admin",
+//   "to" : "hung",
+//   "amount" : 10,
+//   "signature" : "ijA1JX6jnyd487Ba3ZsYCaan2XnuIqXkmx98HGpwFQkpzwzaZ3WskbJyFMGJkyogDYrnPq
+//        j+kCHL+qNJTEwE1gOsS3SWdG6+t78ce6eT0xFkJMS7N0Guu20ln9StCOio4pnKNz0ULH3epCn2VpfsDeS4/HcDJc4vKF2mUk1whM0="
 // }
 app.post('/transaction', function(req, res){
   const trans = (req) => {
@@ -63,11 +63,19 @@ app.post('/transaction', function(req, res){
           return null
         }
     else {
-      console.log("New transaction is been created")
-      return new Transaction(req.body.from, 
-                            req.body.to, 
-                            req.body.amount,
-                            req.body.signature)
+      try{
+        publicKey = userFactory.getKey(req.body.from);
+        console.log(publicKey)
+        console.log("New transaction is been created")
+        return new Transaction(publicKey, 
+                                req.body.to, 
+                                req.body.amount,
+                                req.body.signature)
+      } catch(ex){
+        console.log(ex.toString())
+        return null
+      }
+      
     }
   }
 
@@ -99,7 +107,15 @@ app.post('/transaction', function(req, res){
 // Route: /register
 // Method: POST
 // json sent via body
-// {username: "", publicKey: "//The orinal PEM"}
+// {username: "", publicKey: "The original PEM"}
+// {
+//   "username" : "admin",
+//   "publicKey" : "-----BEGIN PUBLIC KEY-----\nMIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDGOll
+//    Tab/mVTMs3353mOBwjDp+\nM6LYYHi+ttH7/diA5PA7ZqJ2NtOzZXWjdaCGrqT/f0vkjWxCzhb1UOGZsSH+jVh
+//    K\niAsag+n2e+xzOPoe7xfWqOn3fI2Rt9yGswJcPP0mHUWsnlOuew9T+yyC7RFEFTX7\nRnD6gyYD8gbWvlFfu
+//    wIDAQAB\n-----END PUBLIC KEY-----"
+// }
+
 app.post('/register', function(req, res){
   const register = (req) => {
     if(!req || !req.body) return null;
@@ -110,13 +126,16 @@ app.post('/register', function(req, res){
   }
 
   try {
-    key = register(req)
-    if(key === null) res.send(404, {
+    flag = register(req)
+    if(flag === null) res.send(404, {
       "error" : "Invalid register process. Check your params"
     })  
-    else res.send(200, {
-      "status" : "success"
-    })
+    else{
+      userFactory.freeMoney(req.body.username, 1000, mCoin)
+      res.send(200, {
+        "status" : "success"
+      })
+    } 
   } catch(err) {
     //case: error at the makeUser, maybe the username is existed
     console.log(err)
@@ -124,8 +143,6 @@ app.post('/register', function(req, res){
       "error" : "Check your username. It may existed"
     })
   }
-  
-
 })
 
 app.get('/transactionsLog', function(req, res) {

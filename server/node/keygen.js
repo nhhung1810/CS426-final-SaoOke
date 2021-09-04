@@ -59,9 +59,9 @@ test = () => {
 //     return null
 //   }
 // }
-var fromAddress = "admin"
+var fromAddress = "-----BEGIN PUBLIC KEY-----\nMIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDGOllTab/mVTMs3353mOBwjDp+\nM6LYYHi+ttH7/diA5PA7ZqJ2NtOzZXWjdaCGrqT/f0vkjWxCzhb1UOGZsSH+jVhK\niAsag+n2e+xzOPoe7xfWqOn3fI2Rt9yGswJcPP0mHUWsnlOuew9T+yyC7RFEFTX7\nRnD6gyYD8gbWvlFfuwIDAQAB\n-----END PUBLIC KEY-----"
 var toAddress = "hung"
 var amount = "10"
 
 console.log(Buffer.from(fromAddress + toAddress + amount, 'utf-8').toString('hex'))
-// WvNTdJpmAH5rctxl9mgF4q1GNqtwLGlkO2/XLBY10AKZJOnij2nODZ2IkXQCkwIF9ZdeqOgqKMY41Rr+F/akbiVh2Fs7wbHV9exP9CTajcbWiITLj5S8e06cQdlR4cAk2XdCOA7iWqxpSQFjhr7Bxnyxw2WWQRdgrwMIdFS+AUs=
+//ijA1JX6jnyd487Ba3ZsYCaan2XnuIqXkmx98HGpwFQkpzwzaZ3WskbJyFMGJkyogDYrnPqj+kCHL+qNJTEwE1gOsS3SWdG6+t78ce6eT0xFkJMS7N0Guu20ln9StCOio4pnKNz0ULH3epCn2VpfsDeS4/HcDJc4vKF2mUk1whM0= /

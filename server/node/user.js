@@ -22,7 +22,6 @@ class UserFactory{
         }
         })
         let tmp = new User(username, publicKey)
-        console.log("\n//User section\n", tmp)
         this.userList.push(tmp)
         return true
     }
@@ -34,9 +33,17 @@ class UserFactory{
         this.userList.forEach((element) => {
             if(element.username === username) 
                 key = element.publicKey
-                console.log("\n//Key section\n", key)
         })
         return key
+    }
+
+    freeMoney(username, amount, blockchain){
+        let key = null
+        this.userList.forEach((element) => {
+            if(element.username === username) 
+                key = element.publicKey
+        })
+        blockchain.freeMoney(key, 100)
     }
 
 }
