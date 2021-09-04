@@ -12,6 +12,8 @@ import com.example.blockchainapp.Constants;
 import com.example.blockchainapp.R;
 import com.example.blockchainapp.Utils.RetrofitUtils;
 
+import java.security.PublicKey;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -38,12 +40,12 @@ public class TransactionActivity extends AppCompatActivity {
 
     public void HandleTransaction(View view) {
         if (TextUtils.isEmpty(toAddressET.getText()) || TextUtils.isEmpty(amountET.getText())) return;
-        String toAddress = toAddressET.getText().toString();
+        String toUser = toAddressET.getText().toString();
         Float amount = Float.parseFloat(amountET.getText().toString());
         String message = messageET.getText().toString();
 
         // TODO: change private key to user's current session
-        Transaction transaction = new Transaction(Constants.PRIVATE_KEY, toAddress, amount, message);
+        Transaction transaction = new Transaction(Constants.PRIVATE_KEY, toUser, amount, message);
         Call<Boolean> transactionCall = RetrofitUtils.blockchainInterface.ExecutePostTransaction(transaction);
         transactionCall.enqueue(new Callback<Boolean>() {
             @Override

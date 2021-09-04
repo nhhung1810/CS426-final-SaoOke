@@ -37,7 +37,9 @@ public class AccountActivity extends AppCompatActivity {
     private void GetBalance() {
         // TODO: Change private key
         // Log.d("Key", Constants.PUBLIC_KEY);
-        PublicKey key = new PublicKey(Constants.PUBLIC_KEY);
+        // PublicKey key = new PublicKey(Constants.PUBLIC_KEY);
+
+        /*
         Call<Long> balanceCall = RetrofitUtils.blockchainInterface.ExecuteGetBalance(key);
         balanceCall.enqueue(new Callback<Long>() {
             @Override
@@ -59,6 +61,8 @@ public class AccountActivity extends AppCompatActivity {
                 Toast.makeText(AccountActivity.this, t.getMessage(), Toast.LENGTH_LONG).show();
             }
         });
+
+         */
     }
 
     public void HandleRefreshBalance(View view) {

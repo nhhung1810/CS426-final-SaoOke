@@ -34,6 +34,7 @@ import org.bouncycastle.jcajce.provider.asymmetric.RSA;
 import org.json.JSONObject;
 
 import java.security.KeyPair;
+import java.security.MessageDigest;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -155,9 +156,36 @@ public class RegisterActivity extends AppCompatActivity {
         KeyPair kp = null;
         try {
             kp = RSAKey.generateKeyPair();
+
+            MessageDigest md = MessageDigest.getInstance("SHA");
+            SecurityManager.HashMethod hashMethod = SecurityManager.getAppropriateHash();
+            String hashedPassword = SecurityManager.getHashedPassword( hashMethod, account.getPassword() );
+
+            RSAKey.writePemFile(getApplicationContext(), kp, account.getUsername() + "-" + hashedPassword.substring(0,10));
+            Constants.PRIVATE_KEY = kp.getPrivate();
+            Constants.PUBLIC_KEY = kp.getPublic();
+            Constants.SESSION_ACTIVE = true;
+
+            AlertDialog.Builder builder = new AlertDialog.Builder(RegisterActivity.this);
+            builder.setTitle("Successfully registered!");
+            builder.setMessage("Your private key saved: " + kp.getPrivate()
+                    + " | Your public key saved: " + kp.getPublic());
+
+            builder.setPositiveButton("Confirm",
+                    new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            Intent intent = new Intent(RegisterActivity.this, MainActivity.class);
+                            startActivity(intent);
+                        }
+                    });
+            builder.show();
+
+
         } catch (Exception e) {
             //TODO: handle exception
             System.out.println(e.toString());
+            Toast.makeText(RegisterActivity.this, e.toString(), Toast.LENGTH_LONG).show();
         }
 
 
