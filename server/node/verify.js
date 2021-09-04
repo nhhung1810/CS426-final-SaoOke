@@ -62,7 +62,7 @@ class Verification{
 
     keyToString(key){
         try{
-            if(key.isPublic & !key.isPrivate) {
+            if(key.isPublic && !key.isPrivate) {
                 var pubKeyPEM = rs.KEYUTIL.getPEM(key);
                 return pubKeyPEM;
             } else if (key.isPrivate) {

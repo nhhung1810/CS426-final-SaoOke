@@ -44,32 +44,30 @@ app.post("/balance", function(req, res){
 // Route: /transaction
 // Method: POST
 // json sent via body
-// {"transaction": {"from" : "privateKey", "to" : "", "amount" :" "}}
 // For example:
 // {
-//   "transaction" : {
-//       "from" : "8955c93d5e5a33af207eed4907ec608ae85fbff89a6b6f795d36a49b26e29b01", (BASE64)
-//       "to" : "someone",
-//       "amount" : 10
-//   },
-//   "signature" : "0xasdfsdf", ///Calculated by (from + to + amount) => base64/hex
+//   
+    // "from" : "8955c93d5e5a33af207eed4907ec608ae85fbff89a6b6f795d36a49b26e29b01", (BASE64)
+    // "to" : "someone",
+    // "amount" : 10
+    // "signature" : "0xasdfsdf", ///Calculated by (from + to + amount) => base64/hex
 // }
 app.post('/transaction', function(req, res){
   const trans = (req) => {
-    if(!req || !req.body || !req.body.transaction || !req.body.signature) {
+    if(!req || !req.body) {
       console.log("How about null body");
       return null;
     }
-    if(!req.body.transaction.from 
-        || !req.body.transaction.to || !req.body.transaction.amount){
+    if(!req.body.from 
+        || !req.body.to || !req.body.amount || !req.body.signature){
           console.log("Invalid transaction params")
           return null
         }
     else {
       console.log("New transaction is been created")
-      return new Transaction(req.body.transaction.from, 
-                            req.body.transaction.to, 
-                            req.body.transaction.amount,
+      return new Transaction(req.body.from, 
+                            req.body.to, 
+                            req.body.amount,
                             req.body.signature)
     }
   }
