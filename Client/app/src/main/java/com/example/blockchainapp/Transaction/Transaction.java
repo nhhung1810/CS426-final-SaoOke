@@ -5,19 +5,19 @@ import java.security.PublicKey;
 
 public class Transaction {
 
-    private PrivateKey fromAddress;
+    private PublicKey fromAddress;
     private String toUser;
     private Float amount;
     private String message;
 
-    public Transaction(PrivateKey fromAddress, String toUser, Float amount, String message) {
+    public Transaction(PublicKey fromAddress, String toUser, Float amount, String message) {
         this.fromAddress = fromAddress;
         this.toUser = toUser;
         this.amount = amount;
         this.message = message;
     }
 
-    public PrivateKey getFromAddress() {
+    public PublicKey getFromAddress() {
         return fromAddress;
     }
 
@@ -33,7 +33,7 @@ public class Transaction {
         return message;
     }
 
-    public void setFromAddress(PrivateKey fromAddress) {
+    public void setFromAddress(PublicKey fromAddress) {
         this.fromAddress = fromAddress;
     }
 

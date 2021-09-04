@@ -7,6 +7,7 @@ import android.util.Log;
 import androidx.annotation.RequiresApi;
 
 import com.example.blockchainapp.Constants;
+import com.example.blockchainapp.Transaction.Transaction;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -155,10 +156,12 @@ public class RSAKey{
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
-    private static String sign(String plainText, PrivateKey privateKey) throws Exception {
+    public static String sign(Transaction transaction, PrivateKey privateKey) throws Exception {
         Signature privateSignature = Signature.getInstance("SHA256withRSA");
         privateSignature.initSign(privateKey);
-        privateSignature.update(plainText.getBytes());
+        // from + to + amount
+        String toBeHashed = Constants.PUBLIC_KEY.toString() + transaction.getToUser() + transaction.getAmount();
+        privateSignature.update(toBeHashed.getBytes());
 
         byte[] signature = privateSignature.sign();
 
@@ -177,7 +180,8 @@ public class RSAKey{
         return publicSignature.verify(signatureBytes);
     }
 
-    //General signing function, return standard information 
+    //General signing function, return standard information
+    /*
     @RequiresApi(api = Build.VERSION_CODES.O)
     public static JSONObject sign(String plaintext, KeyPair keypair) throws Exception {
         JSONObject obj = new JSONObject();
@@ -187,6 +191,8 @@ public class RSAKey{
         obj.put("algo", "SHA256withRSA");
         return obj;
     }
+
+     */
 
     public static void main(String[] args){
         // KeyPair kp = null;

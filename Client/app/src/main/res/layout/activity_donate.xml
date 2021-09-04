@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Transaction.TransactionActivity">
+    tools:context=".Campaign.DonateActivity">
 
     <ImageView
         android:layout_width="match_parent"
@@ -13,7 +13,6 @@
         android:minHeight="200dp"
         android:background="#FF333333"
         android:scaleType="centerCrop"
-
         />
 
     <LinearLayout
@@ -28,22 +27,31 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:src="@drawable/helping_hand" />
+            app:tint="#FFFF5722"
+            android:src="@drawable/donate" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Specify which charity organization you want to donate to."
+            android:text="Specify your campaign and the account you want to grant the fund."
             android:textAlignment="center"
             android:textSize="20sp"
             android:textStyle="bold"
             android:layout_marginBottom="20dp"/>
 
+
         <AutoCompleteTextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Receiving campaign..."
+            android:hint="Campaign..."
             android:id="@+id/actv_campaign"
+            android:inputType="text"
+            android:singleLine="true"/>
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Target username..."
+            android:id="@+id/et_toUser"
             android:inputType="text"
             android:singleLine="true"/>
         <EditText
@@ -71,7 +79,7 @@
             android:textStyle="bold"
             android:textSize="20sp"
             android:layout_marginTop="20sp"
-            android:onClick="HandleTransaction"/>
+            android:onClick="HandleDonate"/>
 
     </LinearLayout>
 

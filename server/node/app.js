@@ -54,12 +54,8 @@ app.post("/balance", function(req, res){
 // }
 app.post('/transaction', function(req, res){
   const trans = (req) => {
-<<<<<<< HEAD
     console.log(req.body)
     if(!req || !req.body || !req.body.transaction || !req.body.signature) {
-=======
-    if(!req || !req.body) {
->>>>>>> origin/hung-api
       console.log("How about null body");
       return null;
     }

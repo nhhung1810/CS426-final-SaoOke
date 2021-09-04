@@ -18,7 +18,6 @@ import android.text.TextPaint;
 import android.text.TextWatcher;
 import android.text.method.LinkMovementMethod;
 import android.text.style.ClickableSpan;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -32,15 +31,8 @@ import com.example.blockchainapp.Utils.RetrofitUtils;
 import com.example.blockchainapp.Account.UserAccount;
 import com.example.blockchainapp.Account.UserKey;
 
-import org.json.JSONObject;
-
-import java.io.IOException;
 import java.security.KeyPair;
 import java.security.MessageDigest;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class LoginActivity extends AppCompatActivity {
     public UserKey user;
@@ -165,6 +157,7 @@ public class LoginActivity extends AppCompatActivity {
             kp = RSAKey.parseKey(getApplicationContext(), account.getUsername() + "-" + hashedPassword.substring(0,10));
 
             Constants.USERNAME = account.getUsername();
+            System.out.println(Constants.USERNAME);
             Constants.PRIVATE_KEY = kp.getPrivate();
             Constants.PUBLIC_KEY = kp.getPublic();
             Constants.SESSION_ACTIVE = true;
@@ -173,6 +166,8 @@ public class LoginActivity extends AppCompatActivity {
             builder.setTitle("Successfully registered!");
             builder.setMessage("Your private key saved: " + kp.getPrivate()
                     + " | Your public key saved: " + kp.getPublic());
+
+            RetrofitUtils.GetBalance();
 
             builder.setPositiveButton("Confirm",
                     new DialogInterface.OnClickListener() {

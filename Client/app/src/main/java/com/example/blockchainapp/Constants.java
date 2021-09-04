@@ -9,8 +9,9 @@ public class Constants {
     public static final String RESOURCE_LOCATION = "CharityBlockchain";
 
     // SESSION INFORMATION
-    public static int BALANCE;
-    public static String USERNAME;
+    public static String[] CAMPAIGNS = {"Cuu tro mien trung", "Vien tro COVID-19", "Quy co Hang"};
+    public static Long BALANCE = Long.valueOf(1000);
+    public static String USERNAME = "";
     public static PrivateKey PRIVATE_KEY;
     public static PublicKey PUBLIC_KEY;
     public static boolean SESSION_ACTIVE = false;

@@ -2,6 +2,7 @@ package com.example.blockchainapp.Utils;
 
 import com.example.blockchainapp.Transaction.Transaction;
 import com.example.blockchainapp.Log.TransactionLogList;
+import com.example.blockchainapp.Transaction.TransactionPackage;
 
 import java.security.PublicKey;
 
@@ -13,7 +14,7 @@ import retrofit2.http.POST;
 public interface BlockchainInterface {
 
     @POST("/transaction")
-    Call<Boolean> ExecutePostTransaction(@Body Transaction transaction);
+    Call<Boolean> ExecutePostTransaction(@Body TransactionPackage transactionPackage);
 
     @POST("/balance")
     Call<Long> ExecuteGetBalance(@Body PublicKey address);

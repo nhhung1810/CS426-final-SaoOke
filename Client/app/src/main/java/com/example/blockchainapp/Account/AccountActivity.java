@@ -5,7 +5,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.blockchainapp.Constants;
 import com.example.blockchainapp.R;
@@ -13,10 +12,6 @@ import com.example.blockchainapp.Utils.RetrofitUtils;
 
 import java.text.NumberFormat;
 import java.util.Locale;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class AccountActivity extends AppCompatActivity {
 
@@ -35,6 +30,10 @@ public class AccountActivity extends AppCompatActivity {
     }
 
     private void GetBalance() {
+        RetrofitUtils.GetBalance();
+        Locale locale = new Locale("vi", "VN");
+        NumberFormat currencyFormatter = NumberFormat.getCurrencyInstance(locale);
+        balanceTV.setText(currencyFormatter.format(Constants.BALANCE) + " VNĐ");
         // TODO: Change private key
         // Log.d("Key", Constants.PUBLIC_KEY);
         // PublicKey key = new PublicKey(Constants.PUBLIC_KEY);
