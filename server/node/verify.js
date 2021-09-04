@@ -2,21 +2,30 @@ const rs = require('jsrsasign');
 const rsu = require('jsrsasign-util');
 
 class Verification{
-    verify(msg, signature, publicKey, format = "base64"){
+    verify(msgHash, signature, publicKey, format = "base64"){
         var sig = new rs.KJUR.crypto.Signature({alg: "SHA256withRSA"});
-        sig.init(publicKey);
-        sig.updateString(msg);
         
-        var isvalid = null
-        if(format == "base64") isValid = sig.verify(Buffer.from(signature, "base64").toString("hex"));
-        else if (format == "hex") isvalid = sig.verify(signature);
+        var publicPem = rs.KEYUTIL.getKey(publicKey)
+
+        sig.init(publicPem);
+
+        sig.updateString(msgHash);
+        
+        console.log(Buffer.from(signature, "base64").toString("hex"))
+        
+        var isValid = false;
+        
+        if (format == "base64") 
+            isValid = sig.verify(Buffer.from(signature, "base64").toString("hex"));
+        else if (format == "hex") 
+            isValid = sig.verify(signature);
         
         if (isValid) {
            console.log("signature is valid");
         } else {
            console.log("signature is invalid");
         }
-        return isvalid
+        return isValid
     }
 
     parsePublicKey(path, isFile = false){
@@ -39,3 +48,5 @@ class Verification{
     }
 
 }
+
+module.exports.Verification = Verification

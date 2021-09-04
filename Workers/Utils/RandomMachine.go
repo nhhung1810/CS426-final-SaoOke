@@ -21,6 +21,9 @@ func RandFloatInRange(a float64, b float64) float64 {
 }
 
 func RandIntInRange(a int, b int) int {
+	if b == 0 || b < a {
+		return 0
+	}
 	rand.Seed(time.Now().UTC().UnixNano())
 	return rand.Intn(b-a) + a
 }
