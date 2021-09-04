@@ -1,4 +1,4 @@
-package com.example.blockchainapp;
+package com.example.blockchainapp.Transaction;
 
 public class Transaction {
 

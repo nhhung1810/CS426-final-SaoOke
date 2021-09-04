@@ -11,18 +11,19 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.BlockchainApp">
-        <activity android:name=".HistoryActivity"></activity>
-        <activity android:name=".LoginActivity" />
-        <activity android:name=".AccountActivity" />
-        <activity android:name=".TransactionActivity" />
-        <activity android:name=".RegisterActivity" />
-        <activity android:name=".MainActivity">
+        <activity android:name=".Campaign.CampaignActivity"></activity>
+        <activity android:name=".Log.HistoryActivity" />
+        <activity android:name=".Auth.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".Account.AccountActivity" />
+        <activity android:name=".Transaction.TransactionActivity" />
+        <activity android:name=".Auth.RegisterActivity" />
+        <activity android:name=".MainActivity"></activity>
     </application>
 
 </manifest>

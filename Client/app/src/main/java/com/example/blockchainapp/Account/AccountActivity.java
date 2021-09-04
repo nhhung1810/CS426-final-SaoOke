@@ -1,19 +1,19 @@
-package com.example.blockchainapp;
+package com.example.blockchainapp.Account;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.blockchainapp.Constants;
+import com.example.blockchainapp.R;
+import com.example.blockchainapp.Utils.RetrofitUtils;
+
 import java.text.NumberFormat;
 import java.util.Locale;
 
-import okhttp3.MediaType;
-import okhttp3.RequestBody;
-import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;

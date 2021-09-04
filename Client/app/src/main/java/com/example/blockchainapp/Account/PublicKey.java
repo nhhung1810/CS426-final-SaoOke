@@ -1,4 +1,4 @@
-package com.example.blockchainapp;
+package com.example.blockchainapp.Account;
 
 public class PublicKey {
     private String address;

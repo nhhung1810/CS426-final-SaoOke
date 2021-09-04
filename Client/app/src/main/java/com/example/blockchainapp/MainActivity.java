@@ -5,11 +5,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Toast;
 
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
+import com.example.blockchainapp.Account.AccountActivity;
+import com.example.blockchainapp.Auth.LoginActivity;
+import com.example.blockchainapp.Auth.RegisterActivity;
+import com.example.blockchainapp.Log.HistoryActivity;
+import com.example.blockchainapp.Transaction.TransactionActivity;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -19,7 +20,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         if (!Constants.SESSION_ACTIVE) {
-            Intent intent = new Intent(this, RegisterActivity.class);
+            Intent intent = new Intent(this, LoginActivity.class);
             startActivity(intent);
         }
 

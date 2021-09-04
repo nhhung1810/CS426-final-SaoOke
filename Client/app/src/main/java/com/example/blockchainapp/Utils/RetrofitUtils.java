@@ -1,4 +1,6 @@
-package com.example.blockchainapp;
+package com.example.blockchainapp.Utils;
+
+import com.example.blockchainapp.Constants;
 
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;

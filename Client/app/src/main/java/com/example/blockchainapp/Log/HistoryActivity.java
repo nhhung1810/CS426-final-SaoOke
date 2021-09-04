@@ -1,4 +1,4 @@
-package com.example.blockchainapp;
+package com.example.blockchainapp.Log;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -7,6 +7,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Toast;
+
+import com.example.blockchainapp.R;
+import com.example.blockchainapp.Utils.RetrofitUtils;
 
 import retrofit2.Call;
 import retrofit2.Callback;

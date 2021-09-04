@@ -1,6 +1,5 @@
-package com.example.blockchainapp;
+package com.example.blockchainapp.Transaction;
 
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
@@ -9,11 +8,13 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.blockchainapp.Constants;
+import com.example.blockchainapp.R;
+import com.example.blockchainapp.Utils.RetrofitUtils;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 public class TransactionActivity extends AppCompatActivity {
 

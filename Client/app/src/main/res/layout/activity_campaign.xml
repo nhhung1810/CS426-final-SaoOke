@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Transaction.TransactionActivity">
+    tools:context=".Campaign.CampaignActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -17,7 +17,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="START TRANSACTION"
+            android:text="NEW CAMPAIGN"
             android:textAlignment="center"
             android:textSize="30sp"
             android:layout_marginBottom="20dp"/>
@@ -25,21 +25,35 @@
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Receiving address..."
+            android:hint="Campaign name (Cuu tro mien trung,...)"
             android:id="@+id/et_address"
             android:inputType="text"
             android:singleLine="true"/>
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Transfer amount..."
+            android:hint="Leader name..."
             android:id="@+id/et_amount"
             android:inputType="numberDecimal"
             android:singleLine="true"/>
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Message (optional)"
+            android:hint="Target amount... (VND)"
+            android:id="@+id/et_targetAmount"
+            android:inputType="number"
+            android:singleLine="true"/>
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Target amount... (VND)"
+            android:id="@+id/et_startDate"
+            android:inputType="number"
+            android:singleLine="true"/>
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Propaganda (optional)"
             android:id="@+id/et_message"
             android:inputType="text"
             android:singleLine="true"/>
@@ -51,7 +65,7 @@
             android:textColor="@color/gold"
             android:textStyle="bold"
             android:layout_marginTop="20sp"
-            android:onClick="HandleTransaction"/>
+            android:onClick="HandleCampaignCreation"/>
 
     </LinearLayout>
 

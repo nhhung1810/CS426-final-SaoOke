@@ -1,4 +1,4 @@
-package com.example.blockchainapp;
+package com.example.blockchainapp.Log;
 
 import java.util.Date;
 import java.util.List;
