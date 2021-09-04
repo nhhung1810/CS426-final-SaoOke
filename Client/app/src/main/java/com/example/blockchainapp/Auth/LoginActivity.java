@@ -163,6 +163,8 @@ public class LoginActivity extends AppCompatActivity {
             String hashedPassword = SecurityManager.getHashedPassword( hashMethod, account.getPassword() );
 
             kp = RSAKey.parseKey(getApplicationContext(), account.getUsername() + "-" + hashedPassword.substring(0,10));
+
+            Constants.USERNAME = account.getUsername();
             Constants.PRIVATE_KEY = kp.getPrivate();
             Constants.PUBLIC_KEY = kp.getPublic();
             Constants.SESSION_ACTIVE = true;

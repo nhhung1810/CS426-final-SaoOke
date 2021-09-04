@@ -12,4 +12,7 @@ public class RetrofitUtils {
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
     public static BlockchainInterface blockchainInterface = retrofit.create(BlockchainInterface.class);
+
+    public static 
+
 }

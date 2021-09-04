@@ -9,6 +9,7 @@ public class Constants {
     public static final String RESOURCE_LOCATION = "CharityBlockchain";
 
     // SESSION INFORMATION
+    public static int BALANCE;
     public static String USERNAME;
     public static PrivateKey PRIVATE_KEY;
     public static PublicKey PUBLIC_KEY;

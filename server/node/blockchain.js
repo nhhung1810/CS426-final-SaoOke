@@ -23,33 +23,8 @@ class Transaction{
       return Buffer.from(this.fromAddress + this.toAddress + this.amount, 'utf-8').toString('hex')
     }
 
-    /**
-     * Signs a transaction with the given signingKey (which is an Elliptic keypair
-     * object that contains a private key). The signature is then stored inside the
-     * transaction object and later stored on the blockchain.
-     *
-     * @param {Elliptic keypair} signingKey
-    */
-
-    //take a look at this video about keys: https://www.youtube.com/watch?v=AQDCe585Lnc
-
-    //So, simply explain by HuuHung
-    //When B upload a transaction that A pay B 50$, it must be signed by A
-    //That is signingKey
-    signTransaction(signingKey) {
-        if(signingKey.getPublic('hex') !== this.fromAddress) {
-            throw new Error('You can not sign transaction for other wallet');
-        }
-        
-        const hashtx = this.calculateHex();
-        const sig = signingKey.sign(hashtx, 'hex')
-        
-        this.signature = sig;
-    }
-
     //check signature
     isValid(){
-        //mining reward
         if(this.fromAddress === null) return true;
 
         if(!this.signature || this.signature.length == 0){

@@ -1,12 +1,18 @@
 const express = require('express')
 const { Blockchain, Transaction } = require('./blockchain');
-// const { UserFactory } = require('./user')
-const debug = require("debug")("main:debug")
+const { UserFactory } = require('./user')
 const { Verification } = require("./verify")
+// const rs = require('jsrsasign');
+const rsu = require('jsrsasign-util');
 
 const mCoin = new Blockchain();
+const userFactory = new UserFactory()
 
-const verification = new Verification()
+//test
+ver = new Verification;
+pub = ver.parseKey("public_key.pem", true)
+pri = ver.parseKey("private_key_pkcs8.pem", true)
+myWalletAddress = ver.keyToString(pub)
 
 const app = express()
 const port = 5000
@@ -38,33 +44,35 @@ app.post("/balance", function(req, res){
 // Route: /transaction
 // Method: POST
 // json sent via body
-// {"transaction": {"from" : "privateKey", "to" : "", "amount" :" "}}
 // For example:
 // {
-//   "transaction" : {
-//       "from" : "8955c93d5e5a33af207eed4907ec608ae85fbff89a6b6f795d36a49b26e29b01",
-//       "to" : "someone",
-//       "amount" : 10
-//   },
-//   "signature" : "0xasdfsdf", ///Calculated by (from + to + amount) => base64/hex
+//   
+    // "from" : "8955c93d5e5a33af207eed4907ec608ae85fbff89a6b6f795d36a49b26e29b01", (BASE64)
+    // "to" : "someone",
+    // "amount" : 10
+    // "signature" : "0xasdfsdf", ///Calculated by (from + to + amount) => base64/hex
 // }
 app.post('/transaction', function(req, res){
   const trans = (req) => {
+<<<<<<< HEAD
     console.log(req.body)
     if(!req || !req.body || !req.body.transaction || !req.body.signature) {
+=======
+    if(!req || !req.body) {
+>>>>>>> origin/hung-api
       console.log("How about null body");
       return null;
     }
-    if(!req.body.transaction.from 
-        || !req.body.transaction.to || !req.body.transaction.amount){
+    if(!req.body.from 
+        || !req.body.to || !req.body.amount || !req.body.signature){
           console.log("Invalid transaction params")
           return null
         }
     else {
       console.log("New transaction is been created")
-      return new Transaction(req.body.transaction.from, 
-                            req.body.transaction.to, 
-                            req.body.transaction.amount,
+      return new Transaction(req.body.from, 
+                            req.body.to, 
+                            req.body.amount,
                             req.body.signature)
     }
   }
@@ -200,43 +208,43 @@ app.post('/mine', (req, res) => {
 /*
 TEST SPACE
 */
-// test = () => {
-//     // Mine first block
-//   mCoin.minePendingTransactions(myWalletAddress);
+test = () => {
+    // Mine first block
+  mCoin.minePendingTransactions(myWalletAddress);
 
-//   // Create a transaction & sign it with your key
-//   const tx1 = new Transaction(myWalletAddress, 'address2', 100);
-//   tx1.signTransaction(myKey);
-//   mCoin.addTransaction(tx1);
+  // Create a transaction & sign it with your key
+  const tx1 = new Transaction(myWalletAddress, 'address2', 100);
+  tx1.signTransaction(myKey);
+  mCoin.addTransaction(tx1);
 
-//   // Mine block
-//   mCoin.minePendingTransactions(myWalletAddress);
+  // Mine block
+  mCoin.minePendingTransactions(myWalletAddress);
 
-//   // Create second transaction
-//   const tx2 = new Transaction(myWalletAddress, 'address1', 50);
-//   tx2.signTransaction(myKey);
-//   mCoin.addTransaction(tx2);
+  // Create second transaction
+  const tx2 = new Transaction(myWalletAddress, 'address1', 50);
+  tx2.signTransaction(myKey);
+  mCoin.addTransaction(tx2);
 
-//   // Mine block
-//   mCoin.minePendingTransactions(myWalletAddress);
+  // Mine block
+  mCoin.minePendingTransactions(myWalletAddress);
 
-//   console.log();
-//   console.log(`Balance of xavier is ${mCoin.getBalanceOfAddress(myWalletAddress)}`);
+  console.log();
+  console.log(`Balance of xavier is ${mCoin.getBalanceOfAddress(myWalletAddress)}`);
 
-//   // Uncomment this line if you want to test tampering with the chain
-//   // mCoin.chain[1].transactions[0].amount = 10;
+  // Uncomment this line if you want to test tampering with the chain
+  // mCoin.chain[1].transactions[0].amount = 10;
 
-//   // Check if the chain is valid
-//   console.log();
-//   console.log('Blockchain valid?', mCoin.isChainValid() ? 'Yes' : 'No');
-// };
+  // Check if the chain is valid
+  console.log();
+  console.log('Blockchain valid?', mCoin.isChainValid() ? 'Yes' : 'No');
+};
 
 
-// app.post('/testkey', (req, res) => {
-//   // var publicKey = req.body.publicKey
-//   // var signature = req.body.signature
+app.post('/testkey', (req, res) => {
+  // var publicKey = req.body.publicKey
+  // var signature = req.body.signature
 
-//   // var key = ec.keyFromPublic(publicKey, "hex")
-//   var a = 123
-//   res.send(200, String("sdfsaf"))
-// })
+  // var key = ec.keyFromPublic(publicKey, "hex")
+  var a = 123
+  res.send(200, String("sdfsaf"))
+})
