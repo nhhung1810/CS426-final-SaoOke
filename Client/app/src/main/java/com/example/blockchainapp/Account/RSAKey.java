@@ -114,12 +114,33 @@ public class RSAKey{
         return new KeyPair(pubKey, privKey);
     }
 
+    public static String readPublicKey(Context context, String publicPath) throws Exception {
+        File file = new File(context.getFilesDir(), Constants.RESOURCE_LOCATION);
+        // Log.d("path", file.getAbsolutePath() + "/" + privatePath);
+        InputStreamReader isr = new InputStreamReader(new FileInputStream(file.getAbsolutePath() + "/" + publicPath));
+        BufferedReader bufferedReader = new BufferedReader(isr);
+        StringBuilder sb = new StringBuilder();
+        String line = "";
+        while ((line = bufferedReader.readLine()) != null) {
+            // Log.d("readline", line);
+            sb.append(line);
+            sb.append('\n');
+        }
+
+        String publicKeyContent = sb.toString();
+
+        bufferedReader.close();
+        isr.close();
+
+        return publicKeyContent;
+    }
+
     @RequiresApi(api = Build.VERSION_CODES.O)
     public static KeyPair parseKey(Context context, String name){
         String publicPath = name + "-public-key.pem";
         String privatePath = name + "-private-key.pem";
         try {
-            Log.d("Test", "Opened for input");
+            // Log.d("Test", "Opened for input");
             return parseKey(context, publicPath, privatePath);
         } catch (Exception e) {
             //TODO: handle exception

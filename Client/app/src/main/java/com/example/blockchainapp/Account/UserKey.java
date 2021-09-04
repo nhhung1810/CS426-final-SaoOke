@@ -1,27 +1,27 @@
 package com.example.blockchainapp.Account;
 
 public class UserKey {
-    private String privateKey;
+    private String username;
     private String publicKey;
 
-    public UserKey(String privateKey, String publicKey) {
-        this.privateKey = privateKey;
+    public UserKey(String username, String publicKey) {
+        this.username = username;
         this.publicKey = publicKey;
     }
 
-    public void setPrivateKey(String privateKey) {
-        this.privateKey = privateKey;
+    public String getUsername() {
+        return username;
     }
 
-    public void setPublicKey(String publicKey) {
-        this.publicKey = publicKey;
-    }
-
-    public String getPrivateKey() {
-        return privateKey;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getPublicKey() {
         return publicKey;
+    }
+
+    public void setPublicKey(String publicKey) {
+        this.publicKey = publicKey;
     }
 }

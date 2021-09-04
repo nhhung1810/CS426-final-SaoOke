@@ -1,5 +1,6 @@
 package com.example.blockchainapp.Utils;
 
+import com.example.blockchainapp.Account.UserKey;
 import com.example.blockchainapp.Transaction.Transaction;
 import com.example.blockchainapp.Log.TransactionLogList;
 import com.example.blockchainapp.Transaction.TransactionPackage;
@@ -19,8 +20,8 @@ public interface BlockchainInterface {
     @POST("/balance")
     Call<Long> ExecuteGetBalance(@Body PublicKey address);
 
-    //@POST("/register")
-    //Call<UserKey> ExecutePostRegister(@Body UserAccount account);
+    @POST("/register")
+    Call<Object> ExecutePostRegister(@Body UserKey account);
 
     //@POST("/login")
     //Call<UserKey> ExecutePostLogin(@Body UserAccount account);

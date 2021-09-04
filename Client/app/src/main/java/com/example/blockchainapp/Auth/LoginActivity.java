@@ -153,8 +153,8 @@ public class LoginActivity extends AppCompatActivity {
             MessageDigest md = MessageDigest.getInstance("SHA");
             SecurityManager.HashMethod hashMethod = SecurityManager.getAppropriateHash();
             String hashedPassword = SecurityManager.getHashedPassword( hashMethod, account.getPassword() );
-
-            kp = RSAKey.parseKey(getApplicationContext(), account.getUsername() + "-" + hashedPassword.substring(0,10));
+            hashedPassword = hashedPassword.replaceAll("[^a-zA-Z0-9]", "");
+            kp = RSAKey.parseKey(getApplicationContext(), account.getUsername() + "-" + hashedPassword);
 
             Constants.USERNAME = account.getUsername();
             System.out.println(Constants.USERNAME);
