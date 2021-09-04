@@ -1,7 +1,6 @@
-const crypto = require("crypto")
-const EC = require('elliptic').ec;
-const ec = new EC('secp256k1');
 const {Transaction, Blockchain} = require('./blockchain.js')
+
+const { Verification } = require("./verify")
 
 class User{
     constructor(username, hashedPass){

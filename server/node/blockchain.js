@@ -2,6 +2,7 @@ const crypto = require("crypto")
 const debug = require("debug")("blockchain:worker")
 const EC = require('elliptic').ec;
 const ec = new EC('secp256k1');
+const { Verification } = require("./verify")
 
 class Transaction{
     constructor(fromAddress, toAddress, amount, signature = ""){
@@ -53,9 +54,10 @@ class Transaction{
             throw new Error('No signature in this transation');
         }
 
-        const publicKey = ec.keyFromPublic(this.fromAddress, 'hex')
-        const msgHex = Buffer.from(this.fromAddress + this.toAddress + this.amount, 'utf-8')
-        return publicKey.verify(this.calculateHex(), this.signature)
+        // const publicKey = ec.keyFromPublic(this.fromAddress, 'hex')
+        const msgHex = Buffer.from(this.fromAddress + this.toAddress + this.amount, 'utf-8').toString('base64')
+
+        return Verification.verify(msgHex, this.signature, this.fromAddress)
     }
 }
 

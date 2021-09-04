@@ -39,3 +39,5 @@ class Verification{
     }
 
 }
+
+module.exports.Verification = Verification

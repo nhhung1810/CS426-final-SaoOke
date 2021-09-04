@@ -1,10 +1,8 @@
 const express = require('express')
 const { Blockchain, Transaction } = require('./blockchain');
 const { UserFactory } = require('./user')
-const EC = require('elliptic').ec;
-const ec = new EC('secp256k1');
 const debug = require("debug")("main:debug")
-
+const { Verification } = require("./verify")
 
 const mCoin = new Blockchain();
 const myKey = ec.keyFromPrivate('8955c93d5e5a33af207eed4907ec608ae85fbff89a6b6f795d36a49b26e29b01');
@@ -51,7 +49,7 @@ app.post("/balance", function(req, res){
 //       "to" : "someone",
 //       "amount" : 10
 //   },
-//   "signature" : "0xasdfsdf", ///Calculated by (from + to + amount) => HEX
+//   "signature" : "0xasdfsdf", ///Calculated by (from + to + amount) => base64
 // }
 app.post('/transaction', function(req, res){
   const trans = (req) => {

@@ -51,3 +51,9 @@ if (isValid) {
 }
 
 
+class KeyGenerator {
+  generateKeyPair() {
+    var sig = new rs.KJUR.crypto.Signature({alg: hashAlg});
+    return 
+  }
+}
