@@ -20,6 +20,7 @@ class Verification{
         else if (format == "hex") 
             isValid = sig.verify(signature);
         
+        
         if (isValid) {
            console.log("signature is valid");
         } else {
