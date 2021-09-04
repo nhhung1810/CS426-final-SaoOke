@@ -26,14 +26,14 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Campaign name (Cuu tro mien trung,...)"
-            android:id="@+id/et_address"
+            android:id="@+id/et_campaignName"
             android:inputType="text"
             android:singleLine="true"/>
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Leader name..."
-            android:id="@+id/et_amount"
+            android:id="@+id/et_leaderName"
             android:inputType="numberDecimal"
             android:singleLine="true"/>
         <EditText
@@ -46,22 +46,22 @@
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Target amount... (VND)"
-            android:id="@+id/et_startDate"
+            android:hint="Expire date"
+            android:id="@+id/et_expireDate"
             android:inputType="number"
             android:singleLine="true"/>
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Propaganda (optional)"
-            android:id="@+id/et_message"
+            android:id="@+id/et_propaganda"
             android:inputType="text"
             android:singleLine="true"/>
 
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Add new transaction"
+            android:text="Add new campaign"
             android:textColor="@color/gold"
             android:textStyle="bold"
             android:layout_marginTop="20sp"

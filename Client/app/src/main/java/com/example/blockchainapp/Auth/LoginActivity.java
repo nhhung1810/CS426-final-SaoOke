@@ -148,57 +148,57 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void HandleLogin(View view) {
-        if (!CheckValidCredential()) return;
-        account = new UserAccount(edt_username.getText().toString(), edt_password.getText().toString());
-        Call<UserKey> keyCall =  RetrofitUtils.blockchainInterface.ExecutePostLogin(account);
-        Log.d("Test", "Login called");
-        keyCall.enqueue(new Callback<UserKey>() {
-            @Override
-            public void onResponse(Call<UserKey> call, Response<UserKey> response) {
-                if (response.code() == 200) {
-                    user = response.body();
-                    Constants.PRIVATE_KEY = user.getPrivateKey();
-                    Constants.PUBLIC_KEY = user.getPublicKey();
-                    Constants.SESSION_ACTIVE = true;
-
-                    AlertDialog.Builder builder = new AlertDialog.Builder(LoginActivity.this);
-                    builder.setTitle("Successfully registered!");
-                    builder.setMessage("Your private key is: " + user.getPrivateKey()
-                            + " | Your public key is: " + user.getPublicKey());
-                    builder.setPositiveButton("Confirm",
-                            new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                                    startActivity(intent);
-                                }
-                            });
-                    builder.show();
-
-
-                }
-                else {
-                    /*
-                    try {
-                        JSONObject jObj = new JSONObject(response.body().toString());
-                        Toast.makeText(LoginActivity.this, response.body().toString(), Toast.LENGTH_LONG).show();
-                    } catch (Exception e) {
-                        Toast.makeText(LoginActivity.this, "Invalid credentials", Toast.LENGTH_LONG).show();
-                    }
-                     */
-                    try {
-                        Toast.makeText(LoginActivity.this, response.errorBody().string(), Toast.LENGTH_LONG).show();
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                }
-            }
-
-            @Override
-            public void onFailure(Call<UserKey> call, Throwable t) {
-                Toast.makeText(LoginActivity.this, t.getMessage(), Toast.LENGTH_LONG).show();
-            }
-        });
+//        if (!CheckValidCredential()) return;
+//        account = new UserAccount(edt_username.getText().toString(), edt_password.getText().toString());
+//        Call<UserKey> keyCall =  RetrofitUtils.blockchainInterface.ExecutePostLogin(account);
+//        Log.d("Test", "Login called");
+//        keyCall.enqueue(new Callback<UserKey>() {
+//            @Override
+//            public void onResponse(Call<UserKey> call, Response<UserKey> response) {
+//                if (response.code() == 200) {
+//                    user = response.body();
+//                    Constants.PRIVATE_KEY = user.getPrivateKey();
+//                    Constants.PUBLIC_KEY = user.getPublicKey();
+//                    Constants.SESSION_ACTIVE = true;
+//
+//                    AlertDialog.Builder builder = new AlertDialog.Builder(LoginActivity.this);
+//                    builder.setTitle("Successfully registered!");
+//                    builder.setMessage("Your private key is: " + user.getPrivateKey()
+//                            + " | Your public key is: " + user.getPublicKey());
+//                    builder.setPositiveButton("Confirm",
+//                            new DialogInterface.OnClickListener() {
+//                                @Override
+//                                public void onClick(DialogInterface dialog, int which) {
+//                                    Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+//                                    startActivity(intent);
+//                                }
+//                            });
+//                    builder.show();
+//
+//
+//                }
+//                else {
+//                    /*
+//                    try {
+//                        JSONObject jObj = new JSONObject(response.body().toString());
+//                        Toast.makeText(LoginActivity.this, response.body().toString(), Toast.LENGTH_LONG).show();
+//                    } catch (Exception e) {
+//                        Toast.makeText(LoginActivity.this, "Invalid credentials", Toast.LENGTH_LONG).show();
+//                    }
+//                     */
+//                    try {
+//                        Toast.makeText(LoginActivity.this, response.errorBody().string(), Toast.LENGTH_LONG).show();
+//                    } catch (IOException e) {
+//                        e.printStackTrace();
+//                    }
+//                }
+//            }
+//
+//            @Override
+//            public void onFailure(Call<UserKey> call, Throwable t) {
+//                Toast.makeText(LoginActivity.this, t.getMessage(), Toast.LENGTH_LONG).show();
+//            }
+//        });
 
     }
 
