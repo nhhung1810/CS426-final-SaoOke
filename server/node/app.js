@@ -1,14 +1,18 @@
 const express = require('express')
 const { Blockchain, Transaction } = require('./blockchain');
 const { UserFactory } = require('./user')
-const debug = require("debug")("main:debug")
 const { Verification } = require("./verify")
+// const rs = require('jsrsasign');
+const rsu = require('jsrsasign-util');
 
 const mCoin = new Blockchain();
-const myKey = ec.keyFromPrivate('8955c93d5e5a33af207eed4907ec608ae85fbff89a6b6f795d36a49b26e29b01');
 const userFactory = new UserFactory()
-const myWalletAddress = myKey.getPublic('hex');
 
+//test
+ver = new Verification;
+pub = ver.parseKey("public_key.pem", true)
+pri = ver.parseKey("private_key_pkcs8.pem", true)
+myWalletAddress = ver.keyToString(pub)
 
 const app = express()
 const port = 5000
@@ -45,7 +49,7 @@ app.post("/balance", function(req, res){
 // For example:
 // {
 //   "transaction" : {
-//       "from" : "8955c93d5e5a33af207eed4907ec608ae85fbff89a6b6f795d36a49b26e29b01",
+//       "from" : "8955c93d5e5a33af207eed4907ec608ae85fbff89a6b6f795d36a49b26e29b01", (BASE64)
 //       "to" : "someone",
 //       "amount" : 10
 //   },
@@ -91,39 +95,6 @@ app.post('/transaction', function(req, res){
   
 })
 
-// Route: /register
-// Method: POST
-// json sent via body
-// {username: "", password: ""}
-app.post('/register', function(req, res){
-  const register = (req) => {
-    if(!req || !req.body) return null;
-    if(!req.body.username || !req.body.password) return null;
-    else {
-      return userFactory.makeUser(req.body.username, req.body.password)
-    }
-  }
-
-  try {
-    key = register(req)
-    if(key === null) res.send(404, {
-      "error" : "Invalid register process. Check your params"
-    })  
-    else res.send(200, {
-      "publicKey": key.getPublic('hex'),
-      "privateKey": key.getPrivate('hex')
-    })
-  } catch(err) {
-    //case: error at the makeUser, maybe the username is existed
-    console.log(err)
-    res.send(405, {
-      "error" : "Check your username. It may existed"
-    })
-  }
-  
-
-})
-
 app.get('/transactionsLog', function(req, res) {
   var transactions = mCoin.getTransactionsLog()
   res.send(200, 
@@ -133,7 +104,8 @@ app.get('/transactionsLog', function(req, res) {
   )
 })
 
-//add free money for further test, pass 
+//add free money for further test
+//only for testing
 app.post('/free', function(req, res){
   const trans = (req) => {
     if(!req || !req.body || !req.body.username || !req.body.amount)
@@ -155,32 +127,7 @@ app.post('/free', function(req, res){
 })
 
 
-app.post('/login', function(req, res){
-  const check = (req) =>{
-    if(!req || !req.body || !req.body.username || !req.body.password)
-      return null
-    else {
-      return userFactory.authenticate(req.body.username, req.body.password)
-    }
-  }
-
-  flag = check(req)
-  if(flag === null){
-    res.send(404, {
-      "error" : "Invalid request. Check your params"
-    })
-  } else {
-    if(flag === true) res.send(200, {
-      "status" : "success"
-    }) 
-    else {
-      res.send(405, {
-        "error" : "Invalid Login. Check your username and password"
-      })
-    }
-  }
-})
-
+//inactive
 app.post('/mine', (req, res) => {
   console.log(req.body)
   if (!req || !req.body || !req.body.address) {
