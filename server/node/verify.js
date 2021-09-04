@@ -12,6 +12,7 @@ class Verification{
         if(format == "base64") isValid = sig.verify(Buffer.from(signature, "base64").toString("hex"));
         else if (format == "hex") isValid = sig.verify(signature);
         
+        
         if (isValid) {
            return true;
         }

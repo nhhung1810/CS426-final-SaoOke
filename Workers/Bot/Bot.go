@@ -137,6 +137,7 @@ func (b *Bot) SendRandom() {
 	}
 
 	privateKey, err := x509.ParsePKCS1PrivateKey(block.Bytes)
+	//
 
 	if err != nil {
 		panic(err.Error())
@@ -155,6 +156,7 @@ func (b *Bot) SendRandom() {
 			"amount": strconv.Itoa(amount),
 		},
 		"signature": base64.StdEncoding.EncodeToString(signature),
+		"isbot":     true,
 	}
 
 	fmt.Print("Hex: ", hex.EncodeToString(signature))
@@ -175,6 +177,7 @@ func (b *Bot) SendRandom() {
 	bodyString := string(body)
 	println(bodyString)
 }
+
 func (b *Bot) Run() {
 	b.Register()
 	b.Mine()

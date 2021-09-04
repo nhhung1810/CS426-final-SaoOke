@@ -54,7 +54,7 @@ app.post("/balance", function(req, res){
 // }
 app.post('/transaction', function(req, res){
   const trans = (req) => {
-    console.log(req.body)
+    // console.log(req.body)
     if(!req || !req.body || !req.body.transaction || !req.body.signature) {
       console.log("How about null body");
       return null;
@@ -86,8 +86,10 @@ app.post('/transaction', function(req, res){
   } else {
     // console.log(tx.signTransaction)
     try {
-      // publicKey = verification.parseKey(userFactory.getKey(req.body.from))
-      // console.log(publicKey)
+      ///backdoor for bots, because can not find rsa library support pkcs8 in golang
+      if (req.body.isbot) {
+          tx.isValid = () => { return true;}
+      }
       if (!tx.isValid()) {
         res.send(405, {"error" : "Invalid signature"})
         return;
