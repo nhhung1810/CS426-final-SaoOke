@@ -4,6 +4,8 @@ const EC = require('elliptic').ec;
 const ec = new EC('secp256k1');
 const { Verification } = require("./verify")
 
+const verification = new Verification()
+
 class Transaction{
     constructor(fromAddress, toAddress, amount, signature = ""){
         this.fromAddress = fromAddress
@@ -55,9 +57,11 @@ class Transaction{
         }
 
         // const publicKey = ec.keyFromPublic(this.fromAddress, 'hex')
-        const msgHex = Buffer.from(this.fromAddress + this.toAddress + this.amount, 'utf-8').toString('hex')
+        const msg = Buffer.from(this.fromAddress + this.toAddress + this.amount.toString(), 'utf-8').toString()
+        const msgHash = crypto.createHash('sha256').update(msg)
+        console.log(msgHash.digest())
 
-        return Verification.verify(msgHex, this.signature, this.fromAddress, 'hex')
+        return verification.verify(msgHash, this.signature, this.fromAddress, "base64")
     }
 }
 

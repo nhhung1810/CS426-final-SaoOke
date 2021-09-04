@@ -29,7 +29,7 @@ app.post("/balance", function(req, res){
   }
   else {
     //remerber fix this pls, this should be accept an public key
-    tmp = mCoin.getBalanceOfAddress(myWalletAddress)
+    tmp = mCoin.getBalanceOfAddress(req.body.address)
     res.send(200, tmp)
   }
 
@@ -50,6 +50,7 @@ app.post("/balance", function(req, res){
 // }
 app.post('/transaction', function(req, res){
   const trans = (req) => {
+    console.log(req.body)
     if(!req || !req.body || !req.body.transaction || !req.body.signature) {
       console.log("How about null body");
       return null;

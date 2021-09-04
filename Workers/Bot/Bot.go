@@ -2,13 +2,20 @@ package Bot
 
 import (
 	"bytes"
+	"crypto"
+	"crypto/rand"
+	"crypto/rsa"
+	"crypto/sha256"
+	"crypto/x509"
+	"encoding/base64"
+	"encoding/hex"
 	"encoding/json"
+	"encoding/pem"
 	"fmt"
 	"io"
 	"io/ioutil"
 	"net/http"
 	"strconv"
-
 	"worker/Utils"
 )
 
@@ -26,42 +33,32 @@ func (b *Bot) Test() {
 }
 
 func (b *Bot) Register() {
-	b.username = Utils.GenerateRandomString(10)
-	b.password = Utils.GenerateRandomString(10)
 
-	params := map[string]string{
-		"username": b.username,
-		"password": b.password,
-	}
-	jsonValue, _ := json.Marshal(params)
-	resp, err := http.Post("http://localhost:5000/register", "application/json", bytes.NewBuffer(jsonValue))
+	privateKey, err := rsa.GenerateKey(rand.Reader, 1024)
 	if err != nil {
-		fmt.Print(err.Error())
-		return
+		panic(err)
 	}
-	body, err := ioutil.ReadAll(resp.Body)
-	if err != nil {
-		fmt.Print(err.Error())
-		return
-	}
-	resp.Body.Close()
+	publicKey := &privateKey.PublicKey
 
-	bodyString := string(body)
-	var responseParams map[string]interface{}
+	privatePem := pem.EncodeToMemory(
+		&pem.Block{
+			Type:  "RSA PRIVATE KEY",
+			Bytes: x509.MarshalPKCS1PrivateKey(privateKey),
+		},
+	)
 
-	// println(bodyString)
-	json.Unmarshal([]byte(bodyString), &responseParams)
+	publicKeyBytes, _ := x509.MarshalPKIXPublicKey(publicKey)
 
-	errorMessage, _ := responseParams["error"].(string)
+	publicPem := pem.EncodeToMemory(
+		&pem.Block{
+			Type:  "PUBLIC KEY",
+			Bytes: publicKeyBytes,
+		},
+	)
 
-	if len(errorMessage) != 0 {
-		println(errorMessage)
-		return
-	}
-	b.publicKey, _ = responseParams["publicKey"].(string)
-	b.privateKey, _ = responseParams["privateKey"].(string)
-	BotAddress = append(BotAddress, b.publicKey)
-	// print(b.publicKey, b.privateKey)
+	b.publicKey = string(publicPem)
+	b.privateKey = string(privatePem)
+	BotAddress = append(BotAddress, string(publicPem))
 }
 
 func (b *Bot) Mine() {
@@ -92,7 +89,7 @@ func (b *Bot) Mine() {
 	// println(bodyString)
 }
 
-func (b *Bot) getBalance() float64 {
+func (b *Bot) getBalance() int {
 	params := map[string]string{
 		"address": b.publicKey,
 	}
@@ -105,7 +102,8 @@ func (b *Bot) getBalance() float64 {
 
 	if resp.StatusCode == 200 {
 		body, _ := io.ReadAll(resp.Body)
-		amount, _ := strconv.ParseFloat(string(body), 32)
+		// amount, _ := strconv.ParseInt(string(body), 10, 64)
+		amount, _ := strconv.Atoi(string(body))
 		// println(amount)
 		return amount
 	}
@@ -115,21 +113,51 @@ func (b *Bot) getBalance() float64 {
 
 func (b *Bot) SendRandom() {
 	toAddress := BotAddress[Utils.RandIntInRange(0, len(BotAddress))]
-	fromAddress := b.privateKey
+	fromAddress := b.publicKey
 	balance := b.getBalance()
-	amount := Utils.RandFloatInRange(0, balance)
+	amount := Utils.RandIntInRange(0, balance)
+
 	// println(fromAddress)
 	// println(toAddress)
-	// println(fmt.Sprintf("%f", balance))
-	// println(fmt.Sprintf("%f", amount))
+	// println(balance)
 
-	requestParams := map[string]map[string]string{
+	msg := []byte(fromAddress + toAddress + strconv.Itoa(amount))
+
+	msgHash := sha256.New()
+	_, err := msgHash.Write(msg)
+	if err != nil {
+		panic(err)
+	}
+	msgHashSum := msgHash.Sum(nil)
+	fmt.Printf("msgHash:\t %x \n", msgHashSum)
+
+	block, _ := pem.Decode([]byte(b.privateKey))
+	if block == nil {
+		panic("Can not decode pem data")
+	}
+
+	privateKey, err := x509.ParsePKCS1PrivateKey(block.Bytes)
+
+	if err != nil {
+		panic(err.Error())
+	}
+
+	signature, err := rsa.SignPSS(rand.Reader, privateKey, crypto.SHA256, msgHashSum, nil)
+	if err != nil {
+		panic(err)
+	}
+	// println(string(signature))
+
+	requestParams := map[string]interface{}{
 		"transaction": map[string]string{
 			"from":   fromAddress,
 			"to":     toAddress,
-			"amount": fmt.Sprintf("%f", amount),
+			"amount": strconv.Itoa(amount),
 		},
+		"signature": base64.StdEncoding.EncodeToString(signature),
 	}
+
+	fmt.Print("Hex: ", hex.EncodeToString(signature))
 
 	jsonValue, _ := json.Marshal(requestParams)
 	resp, err := http.Post("http://localhost:5000/transaction", "application/json", bytes.NewBuffer(jsonValue))
