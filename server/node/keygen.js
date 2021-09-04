@@ -20,40 +20,48 @@ const rsu = require('jsrsasign-util');
 // rsu.saveFile('public_key.pem', pubKeyPEM)
 // console.log("done.");
 
-var textOrFile = "Hello"
+var textOrFile = "hello"
 var pubFile = "public_key.pem"
-var sigFile = "STY6EEVDf411GBxu7bhE3/t6m3tKNchC106U+JI8df0J756aLEUZGCA0xetPW5OEI+vt5CeS552FbdTV4IUz9IF9J2bV/yTU64eC1Pj+jp4pGuXpXQUz0Ew0dp9WOaJPC5IZ9or5RsnfHgiDNwI8bdVLl0etv4BR5O1y3NsoCAw="
+var sigFile = "CRLxYTYa2vnNPsgyxhWYLcT+ubN+TWB8qnxpVIsa6O7ab7KeggUeUMlZNnrU1niKJYVozg4vz1bw94vULo/BYdE1Jou/akX1NSze1MiGErQcpMH5X21IuJdo6unI32nhto9jSISNR3gLNwbRLwokumhiuuDZyZ45A3VPSBxChXo="
 var hashAlg = "SHA256withRSA";
 
-// 1. public key
-var pubPEM = rsu.readFile(pubFile);
-var pub = rs.KEYUTIL.getKey(pubPEM);
-//console.log(pub);
+test = () => {
+  // 1. public key
+  var pubPEM = rsu.readFile(pubFile);
+  var pub = rs.KEYUTIL.getKey(pubPEM);
+  //console.log(pub);
 
-// 2. data to be verifid
-var text;
-try {
-  text = rsu.readFile(textOrFile);
-} catch(ex) {
-  text = textOrFile;
-}
+  // 2. data to be verifid
+  var text;
+  try {
+    text = rsu.readFile(textOrFile);
+  } catch(ex) {
+    text = textOrFile;
+  }
 
-// 3. load signature
-var sig = new rs.KJUR.crypto.Signature({alg: hashAlg});
-sig.init(pub);
-sig.updateString(text);
-var isValid = sig.verify(Buffer.from(sigFile, "base64").toString("hex"));
+  // 3. load signature
+  var sig = new rs.KJUR.crypto.Signature({alg: hashAlg});
+  sig.init(pub);
+  sig.updateString(text);
+  var isValid = sig.verify(Buffer.from(sigFile, "base64").toString("hex"));
 
-if (isValid) {
-   console.log("signature is valid");
-} else {
-   console.log("signature is invalid");
-}
-
-
-class KeyGenerator {
-  generateKeyPair() {
-    var sig = new rs.KJUR.crypto.Signature({alg: hashAlg});
-    return 
+  if (isValid) {
+    console.log("signature is valid");
+  } else {
+    console.log("signature is invalid");
   }
 }
+
+
+// class KeyGenerator {
+//   generateKeyPair() {
+//     var sig = new rs.KJUR.crypto.Signature({alg: hashAlg});
+//     return null
+//   }
+// }
+var fromAddress = "admin"
+var toAddress = "hung"
+var amount = "10"
+
+console.log(Buffer.from(fromAddress + toAddress + amount, 'utf-8').toString('hex'))
+// WvNTdJpmAH5rctxl9mgF4q1GNqtwLGlkO2/XLBY10AKZJOnij2nODZ2IkXQCkwIF9ZdeqOgqKMY41Rr+F/akbiVh2Fs7wbHV9exP9CTajcbWiITLj5S8e06cQdlR4cAk2XdCOA7iWqxpSQFjhr7Bxnyxw2WWQRdgrwMIdFS+AUs=

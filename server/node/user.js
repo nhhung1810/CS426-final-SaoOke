@@ -3,48 +3,28 @@ const {Transaction, Blockchain} = require('./blockchain.js')
 const { Verification } = require("./verify")
 
 class User{
-    constructor(username, hashedPass){
+    constructor(username, publicKey){
         this.username = username
-        this.hashedPass = hashedPass
-        //Really dangerous, this is not practical and by no mean can be use in real life. Plz don't judge :(((((
-        this.key = ec.genKeyPair()
+        this.publicKey = publicKey
     }
 
-    verify(username, hashedPass){
-        if(this.username !== username) return false
-        else{
-            if(this.hashedPass !== hashedPass) return false 
-        }
-        return true
-    }
 }
 
 class UserFactory{
     constructor(){
         this.userList = []
-        this.initUser()
     }
-
-    makeUser(username, hashedPass){
+    
+    makeUser(username, publicKey){
         this.userList.forEach(function(element) {
-            if(username == element.username){
-                throw new Error("Existed this member")
-            }
+        if(username == element.username){
+            throw new Error("Existed this member")
+        }
         })
-        let tmp = new User(username, hashedPass)
+        let tmp = new User(username, publicKey)
+        console.log("\n//User section\n", tmp)
         this.userList.push(tmp)
-        return tmp.key
-    }
-
-    //make some user for testing and for bot
-    initUser(){
-        const hashed = (password) => {return crypto.createHash("sha256").update(password).digest('hex')}
-        //admin
-        this.makeUser('admin', "admin")
-
-        //some bots
-        this.makeUser('bot1', hashed('bot1'))
-        this.makeUser('bot2', hashed('bot2'))
+        return true
     }
 
 
@@ -53,29 +33,13 @@ class UserFactory{
         let key = null
         this.userList.forEach((element) => {
             if(element.username === username) 
-                key = (element.key)
+                key = element.publicKey
+                console.log("\n//Key section\n", key)
         })
         return key
     }
 
-    //init some money for testing
-    freeMoney(username, blockchain, amount){
-        let key = this.getKey(username)
-        blockchain.freeMoney(key.getPublic('hex'), amount)
-    }
-
-    authenticate(username, hashedPass){
-        let flag = false;
-        this.userList.forEach(function(element){
-            if(element.verify(username, hashedPass))
-                flag = true;
-        })
-        return flag;
-    }
-
 }
-
-// let tmp = new UserFactory()
 
 
 module.exports.UserFactory = UserFactory

@@ -9,10 +9,10 @@ const mCoin = new Blockchain();
 const userFactory = new UserFactory()
 
 //test
-ver = new Verification;
-pub = ver.parseKey("public_key.pem", true)
-pri = ver.parseKey("private_key_pkcs8.pem", true)
-myWalletAddress = ver.keyToString(pub)
+const verification = new Verification();
+// pub = verification.parseKey("public_key.pem", true)
+// pri = verification.parseKey("private_key_pkcs8.pem", true)
+// myWalletAddress = ver.keyToString(pub)
 
 const app = express()
 const port = 5000
@@ -58,8 +58,7 @@ app.post('/transaction', function(req, res){
       console.log("How about null body");
       return null;
     }
-    if(!req.body.from 
-        || !req.body.to || !req.body.amount || !req.body.signature){
+    if(!req.body.from || !req.body.to || !req.body.amount || !req.body.signature){
           console.log("Invalid transaction params")
           return null
         }
@@ -78,14 +77,19 @@ app.post('/transaction', function(req, res){
   } else {
     // console.log(tx.signTransaction)
     try {
+      // publicKey = verification.parseKey(userFactory.getKey(req.body.from))
+      // console.log(publicKey)
       if (!tx.isValid()) {
         res.send(405, {"error" : "Invalid signature"})
+        return;
       }
     } catch(err) {
       console.log(err)
       res.send(405, {"error" : "Invalid sign key. Check your 'from' key"})
+      return;
     }
-    
+
+    console.log("\nPassed the valid check!!\n")
     mCoin.addTransaction(tx)
     res.send(200, {"status" : "success"});
   }
@@ -95,35 +99,34 @@ app.post('/transaction', function(req, res){
 // Route: /register
 // Method: POST
 // json sent via body
-// {username: "", password: ""}
-// app.post('/register', function(req, res){
-//   const register = (req) => {
-//     if(!req || !req.body) return null;
-//     if(!req.body.username || !req.body.password) return null;
-//     else {
-//       return userFactory.makeUser(req.body.username, req.body.password)
-//     }
-//   }
+// {username: "", publicKey: "//The orinal PEM"}
+app.post('/register', function(req, res){
+  const register = (req) => {
+    if(!req || !req.body) return null;
+    if(!req.body.username || !req.body.publicKey) return null;
+    else {
+      return userFactory.makeUser(req.body.username, req.body.publicKey)
+    }
+  }
 
-//   try {
-//     key = register(req)
-//     if(key === null) res.send(404, {
-//       "error" : "Invalid register process. Check your params"
-//     })  
-//     else res.send(200, {
-//       "publicKey": key.getPublic('hex'),
-//       "privateKey": key.getPrivate('hex')
-//     })
-//   } catch(err) {
-//     //case: error at the makeUser, maybe the username is existed
-//     console.log(err)
-//     res.send(405, {
-//       "error" : "Check your username. It may existed"
-//     })
-//   }
+  try {
+    key = register(req)
+    if(key === null) res.send(404, {
+      "error" : "Invalid register process. Check your params"
+    })  
+    else res.send(200, {
+      "status" : "success"
+    })
+  } catch(err) {
+    //case: error at the makeUser, maybe the username is existed
+    console.log(err)
+    res.send(405, {
+      "error" : "Check your username. It may existed"
+    })
+  }
   
 
-// })
+})
 
 app.get('/transactionsLog', function(req, res) {
   var transactions = mCoin.getTransactionsLog()

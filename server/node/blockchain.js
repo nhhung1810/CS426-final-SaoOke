@@ -1,8 +1,10 @@
 const crypto = require("crypto")
-const debug = require("debug")("blockchain:worker")
-const EC = require('elliptic').ec;
-const ec = new EC('secp256k1');
 const { Verification } = require("./verify")
+const { UserFactory } = require("./user.js")
+
+const verification = new Verification()
+
+
 
 class Transaction{
     constructor(fromAddress, toAddress, amount, signature = ""){
@@ -11,10 +13,6 @@ class Transaction{
         this.amount = amount
         this.signature = signature
         this.timestamp = Date.now()
-    }
-
-    calculateHash() {
-        return crypto.createHash("sha256").update(this.fromAddress + this.toAddress + this.amount + this.timestamp).digest('hex')
     }
 
     calculateHex() {
@@ -29,9 +27,11 @@ class Transaction{
             throw new Error('No signature in this transation');
         }
 
+        publicKey = verification.userFactory.getKey(this.fromAddress)
+        console.log(publicKey)
         const msgHex = Buffer.from(this.fromAddress + this.toAddress + this.amount, 'utf-8').toString('hex')
 
-        return Verification.verify(msgHex, this.signature, this.fromAddress, 'hex')
+        return verification.verify(msgHex, this.signature, publicKey, 'base64')
     }
 }
 
@@ -74,8 +74,6 @@ class Block {
         this.nonce++;
         this.hash = this.calculateHash();
       }
-  
-      debug(`Block mined: ${this.hash}`);
     }
   
     /**
@@ -137,7 +135,6 @@ class Block {
       const block = new Block(Date.now(), this.pendingTransactions, this.getLatestBlock().hash);
       block.mineBlock(this.difficulty);
   
-      debug('Block successfully mined!');
       this.chain.push(block);
   
       this.pendingTransactions = [];
@@ -158,7 +155,6 @@ class Block {
       const block = new Block(Date.now(), this.pendingTransactions, this.getLatestBlock().hash);
       block.mineBlock(this.difficulty);
   
-      debug('Block successfully mined!');
       this.chain.push(block);
   
       this.pendingTransactions = [];
@@ -177,9 +173,10 @@ class Block {
       }
   
       // Verify the transaction
-      if (!transaction.isValid()) {
-        throw new Error('Cannot add invalid transaction to chain');
-      }
+      // Check before 
+      // if (!transaction.isValid()) {
+      //   throw new Error('Cannot add invalid transaction to chain');
+      // }
       
       if (transaction.amount <= 0) {
         throw new Error('Transaction amount should be higher than 0');
@@ -191,7 +188,6 @@ class Block {
       }
   
       this.pendingTransactions.push(transaction);
-      debug('transaction added: %s', transaction);
     }
   
     /**
@@ -215,7 +211,6 @@ class Block {
         }
       }
   
-      debug('getBalanceOfAdrees: %s', balance);
       return balance;
     }
   
@@ -237,7 +232,6 @@ class Block {
         }
       }
   
-      debug('get transactions for wallet count: %s', txs.length);
       return txs;
     }
   
@@ -266,10 +260,10 @@ class Block {
         if (previousBlock.hash !== currentBlock.previousHash) {
           return false;
         }
-  
-        if (!currentBlock.hasValidTransactions()) {
-          return false;
-        }
+        
+        // if (!currentBlock.hasValidTransactions()) {
+        //   return false;
+        // }
   
         if (currentBlock.hash !== currentBlock.calculateHash()) {
           return false;
