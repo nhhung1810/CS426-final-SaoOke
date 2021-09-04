@@ -137,6 +137,7 @@ func (b *Bot) SendRandom() {
 	}
 
 	privateKey, err := x509.ParsePKCS1PrivateKey(block.Bytes)
+	//
 
 	if err != nil {
 		panic(err.Error())
@@ -176,6 +177,7 @@ func (b *Bot) SendRandom() {
 	bodyString := string(body)
 	println(bodyString)
 }
+
 func (b *Bot) Run() {
 	b.Register()
 	b.Mine()

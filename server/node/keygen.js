@@ -1,8 +1,6 @@
-// const EC = require('elliptic').ec;
 const rs = require('jsrsasign');
 const rsu = require('jsrsasign-util');
-// You can use any elliptic curve you want
-// const ec = new EC('secp256k1');
+
 
 // var keysize = 1024
 // console.log("generating RSA " + keysize + "bit key pair...");
@@ -20,15 +18,15 @@ const rsu = require('jsrsasign-util');
 // rsu.saveFile('public_key.pem', pubKeyPEM)
 // console.log("done.");
 
-var textOrFile = "Hello"
-var pubFile = "public_key.pem"
-var sigFile = "STY6EEVDf411GBxu7bhE3/t6m3tKNchC106U+JI8df0J756aLEUZGCA0xetPW5OEI+vt5CeS552FbdTV4IUz9IF9J2bV/yTU64eC1Pj+jp4pGuXpXQUz0Ew0dp9WOaJPC5IZ9or5RsnfHgiDNwI8bdVLl0etv4BR5O1y3NsoCAw="
+var textOrFile = "185f8db32271fe25f561a6fc938b2e264306ec304eda518007d1764826381969"
+var pubFile = "public_key_go.pem"
+var sigFile = "fyWb0EdDoGZFkqTEqUvc7OKAElE4Ldm+RAu+gN3MRKTiWdi3WUETUxcfPO+7cUxrnlLAn2TwMAXSMJs79i0RMAM4fLYGfDKIZJRlGn6CRUG+6I/6U3G2/zFJirS7RiOzMlNjEe+5zQ7Okmae8Stg+e2L2OJ85i00lThdwKwoBOQ="
 var hashAlg = "SHA256withRSA";
 
 // 1. public key
 var pubPEM = rsu.readFile(pubFile);
 var pub = rs.KEYUTIL.getKey(pubPEM);
-//console.log(pub);
+console.log(pub);
 
 // 2. data to be verifid
 var text;
