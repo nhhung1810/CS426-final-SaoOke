@@ -5,5 +5,26 @@ services:
     build: ./server/node
     ports:
       - "5000:5000"
+    networks:
+      - my-network
+      - hostnet
     volumes: 
       - ./server/node:/app
+
+  # worker:
+  #   build: ./Workers
+  #   networks:
+  #     - my-network
+  #     - hostnet
+  #   volumes: 
+  #     - ./Workers:/worker
+  #   links:
+  #     - server:server
+
+networks:
+  my-network:
+    name: my-network
+    driver: bridge
+  hostnet:
+   external: true
+   name: host

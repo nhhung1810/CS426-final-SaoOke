@@ -8,7 +8,6 @@ import (
 	"crypto/sha256"
 	"crypto/x509"
 	"encoding/base64"
-	"encoding/hex"
 	"encoding/json"
 	"encoding/pem"
 	"fmt"
@@ -16,6 +15,7 @@ import (
 	"io/ioutil"
 	"net/http"
 	"strconv"
+	"time"
 	"worker/Utils"
 )
 
@@ -58,7 +58,23 @@ func (b *Bot) Register() {
 
 	b.publicKey = string(publicPem)
 	b.privateKey = string(privatePem)
-	BotAddress = append(BotAddress, string(publicPem))
+	b.username = Utils.GenerateRandomString(10)
+
+	params := map[string]string{
+		"username":  b.username,
+		"publicKey": b.publicKey,
+	}
+	jsonValue, _ := json.Marshal(params)
+	resp, err := http.Post("http://localhost:5000/register", "application/json", bytes.NewBuffer(jsonValue))
+	if err != nil {
+		println(err.Error())
+		return
+	} else {
+		body, _ := ioutil.ReadAll(resp.Body)
+		resp.Body.Close()
+		println(string(body))
+		BotAddress = append(BotAddress, b.username)
+	}
 }
 
 func (b *Bot) Mine() {
@@ -75,14 +91,16 @@ func (b *Bot) Mine() {
 	if err != nil {
 		println(err.Error())
 		return
-	}
-	resp.Body.Close()
-	var responseParams map[string]interface{}
-	json.Unmarshal(body, &responseParams)
+	} else {
+		resp.Body.Close()
+		var responseParams map[string]interface{}
+		println(string(body))
+		json.Unmarshal(body, &responseParams)
 
-	status, _ := responseParams["status"].(string)
-	if status == "failed" {
-		//handle failure
+		status, _ := responseParams["status"].(string)
+		if status == "failed" {
+			//handle failure
+		}
 	}
 
 	// print(status)
@@ -90,11 +108,7 @@ func (b *Bot) Mine() {
 }
 
 func (b *Bot) getBalance() int {
-	params := map[string]string{
-		"address": b.publicKey,
-	}
-	jsonValue, _ := json.Marshal(params)
-	resp, err := http.Post("http://localhost:5000/balance", "application/json", bytes.NewBuffer(jsonValue))
+	resp, err := http.Post("http://localhost:5000/balance/"+b.username, "application/json", nil)
 	if err != nil {
 		println(err.Error())
 		return 0
@@ -103,18 +117,32 @@ func (b *Bot) getBalance() int {
 	if resp.StatusCode == 200 {
 		body, _ := io.ReadAll(resp.Body)
 		// amount, _ := strconv.ParseInt(string(body), 10, 64)
-		amount, _ := strconv.Atoi(string(body))
+		var jsonBody map[string]interface{}
+		err := json.Unmarshal(body, &jsonBody)
+		if err != nil {
+			panic(err)
+		}
+
+		// println(string(body))
+		amount := int(jsonBody["balance"].(float64))
+		resp.Body.Close()
 		// println(amount)
 		return amount
 	}
-	resp.Body.Close()
+
 	return 0
 }
 
 func (b *Bot) SendRandom() {
+	if len(BotAddress) == 0 {
+		return
+	}
 	toAddress := BotAddress[Utils.RandIntInRange(0, len(BotAddress))]
-	fromAddress := b.publicKey
+	fromAddress := b.username
 	balance := b.getBalance()
+	if balance == 0 {
+		return
+	}
 	amount := Utils.RandIntInRange(0, balance)
 
 	// println(fromAddress)
@@ -129,13 +157,9 @@ func (b *Bot) SendRandom() {
 		panic(err)
 	}
 	msgHashSum := msgHash.Sum(nil)
-	fmt.Printf("msgHash:\t %x \n", msgHashSum)
-
+	// fmt.Printf("msgHash:\t %x \n", msgHashSum)
+	// println(b.privateKey)
 	block, _ := pem.Decode([]byte(b.privateKey))
-	if block == nil {
-		panic("Can not decode pem data")
-	}
-
 	privateKey, err := x509.ParsePKCS1PrivateKey(block.Bytes)
 	//
 
@@ -150,18 +174,17 @@ func (b *Bot) SendRandom() {
 	// println(string(signature))
 
 	requestParams := map[string]interface{}{
-		"transaction": map[string]string{
-			"from":   fromAddress,
-			"to":     toAddress,
-			"amount": strconv.Itoa(amount),
-		},
+		"from":      fromAddress,
+		"to":        toAddress,
+		"amount":    strconv.Itoa(amount),
 		"signature": base64.StdEncoding.EncodeToString(signature),
 		"isbot":     true,
 	}
 
-	fmt.Print("Hex: ", hex.EncodeToString(signature))
+	// fmt.Print("Hex: ", hex.EncodeToString(signature))
 
 	jsonValue, _ := json.Marshal(requestParams)
+	println(string(jsonValue))
 	resp, err := http.Post("http://localhost:5000/transaction", "application/json", bytes.NewBuffer(jsonValue))
 
 	if err != nil {
@@ -180,7 +203,10 @@ func (b *Bot) SendRandom() {
 
 func (b *Bot) Run() {
 	b.Register()
-	b.Mine()
 	b.getBalance()
-	b.SendRandom()
+	for {
+		b.Mine()
+		b.SendRandom()
+		time.Sleep(5 * time.Second)
+	}
 }
