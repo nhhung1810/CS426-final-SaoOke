@@ -2,6 +2,7 @@ package com.example.blockchainapp.Utils;
 
 import com.example.blockchainapp.Account.UserKey;
 import com.example.blockchainapp.Campaign.Campaign;
+import com.example.blockchainapp.Campaign.CampaignList;
 import com.example.blockchainapp.Transaction.DonationRequest;
 import com.example.blockchainapp.Transaction.Transaction;
 import com.example.blockchainapp.Log.TransactionLogList;
@@ -32,8 +33,11 @@ public interface BlockchainInterface {
     //@POST("/login")
     //Call<UserKey> ExecutePostLogin(@Body UserAccount account);
 
-    //@GET("/campaign")
-    //Call<>
+    @GET("/campaign/{campaignName}")
+    Call<Campaign> ExecuteGetCampaignInformation(@Path("campaignName") String campaignName);
+
+    @GET("/campaigns")
+    Call<CampaignList> ExecuteGetAllCampaign();
 
     @GET("/transactionsLog")
     Call<TransactionLogList> ExecuteGetTransactionLog();

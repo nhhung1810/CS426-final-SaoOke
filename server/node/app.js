@@ -31,6 +31,8 @@ require('./APIs/transactionAPI')(app, userFactory, mCoin)
 
 require('./APIs/registerAPI')(app, userFactory, mCoin)
 
+require('./APIs/getAllCampaignAPI')(app, campaignFactory)
+
 require('./APIs/transactionlogAPI')(app, mCoin)
 
 require('./APIs/cpnCreateAPI')(app, userFactory, campaignFactory, mCoin)

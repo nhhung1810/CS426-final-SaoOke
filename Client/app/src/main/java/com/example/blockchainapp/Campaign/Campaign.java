@@ -21,6 +21,23 @@ public class Campaign {
         this.expireDate = expireDate;
         this.propaganda = propaganda;
         this.description = description;
+        this.targetAmount = Long.valueOf(0);
+    }
+
+    public PublicKey getOwnerKey() {
+        return ownerKey;
+    }
+
+    public void setOwnerKey(PublicKey ownerKey) {
+        this.ownerKey = ownerKey;
+    }
+
+    public Long getTotalAmount() {
+        return totalAmount;
+    }
+
+    public void setTotalAmount(Long totalAmount) {
+        this.totalAmount = totalAmount;
     }
 
     public String getDescription() {

@@ -148,7 +148,7 @@ class CampaignFactory {
                     "targetAmount" : element.targetAmount,
                     "expireDate" : element.expireDate,
                     "propaganda" : element.propaganda,
-                    "total_amount" : element.getReceivedAmount()
+                    "totalAmount" : element.getReceivedAmount()
                 }
             }
         });
@@ -176,10 +176,13 @@ class CampaignFactory {
         var result = []
         this.campaignList.forEach(campaign => {
             result.push({
+                "ownerKey" : campaign.ownerKey,
                 "campaignName" : campaign.campaignName,
-                "campaignOwnerKey" : campaign.campaignOwnerKey,
+                "ownerName" : campaign.ownerName,
+                "targetAmount" : campaign.targetAmount,
                 "expireDate" : campaign.expireDate,
                 "description" : campaign.description,
+                "propaganda" : campaign.description,
                 "totalAmount" : campaign.getReceivedAmount()
             })
         });
