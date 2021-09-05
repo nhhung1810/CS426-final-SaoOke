@@ -10,6 +10,9 @@ import android.widget.TextView;
 import com.example.blockchainapp.Account.AccountActivity;
 import com.example.blockchainapp.Auth.LoginActivity;
 import com.example.blockchainapp.Campaign.CampaignOptionSelectActivity;
+import com.example.blockchainapp.Campaign.GrantActivity;
+import com.example.blockchainapp.HelpRequest.HelpRequestActivity;
+import com.example.blockchainapp.HelpRequest.HelpRequestOptionSelectActivity;
 import com.example.blockchainapp.Log.HistoryActivity;
 import com.example.blockchainapp.Transaction.DonationActivity;
 
@@ -46,7 +49,7 @@ public class MainActivity extends AppCompatActivity {
         tv_balance.setText(currencyFormatter.format(Constants.BALANCE).toString() + " VNĐ");
     }
 
-    public void TransactionTab(View view) {
+    public void DonateTab(View view) {
         Intent intent = new Intent(this, DonationActivity.class);
         startActivity(intent);
     }
@@ -61,8 +64,18 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    public void RequestTab(View view) {
+        Intent intent = new Intent(this, HelpRequestOptionSelectActivity.class);
+        startActivity(intent);
+    }
+
     public void CampaignTab(View view) {
         Intent intent = new Intent(this, CampaignOptionSelectActivity.class);
+        startActivity(intent);
+    }
+
+    public void GrantTab(View view) {
+        Intent intent = new Intent(this, GrantActivity.class);
         startActivity(intent);
     }
 }

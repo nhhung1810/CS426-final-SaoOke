@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".HelpRequest.HelpRequestOptionSelectActivity"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:layout_marginHorizontal="20sp"
+    >
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:minHeight="10dp"
+        android:background="#FF333333"
+        android:scaleType="centerCrop"
+        android:layout_marginBottom="50dp"
+        />
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
+        android:paddingVertical="20dp"
+        android:text="Create a help request"
+        android:textColor="@color/gold"
+        android:textStyle="bold"
+        android:textSize="20sp"
+        android:layout_marginTop="20sp"
+        android:onClick="createHelpRequest"
+        />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Create a new help request, please clearly identify
+        the campaign you want to seek help from and justify your needs."
+        android:paddingHorizontal="10dp"/>
+
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
+        android:paddingVertical="20dp"
+        android:text="View list of requests"
+        android:textColor="@color/gold"
+        android:textStyle="bold"
+        android:textSize="20sp"
+        android:layout_marginTop="20sp"
+        android:onClick="viewHelpRequestList"
+        />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="List of the available requests. If you are a campaign owner,
+please look for the ones that seek help from your campaign and grant them financial support."
+        android:paddingHorizontal="10dp"/>
+
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:minHeight="10dp"
+        android:background="#FF333333"
+        android:scaleType="centerCrop"
+        android:layout_marginTop="50dp"
+        />
+
+</LinearLayout>

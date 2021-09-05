@@ -13,7 +13,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.BlockchainApp">
-        <activity android:name=".Campaign.CampaignInformation"></activity>
+        <activity android:name=".HelpRequest.HelpRequestOptionSelectActivity"></activity>
+        <activity android:name=".Campaign.CampaignInformation" />
         <activity android:name=".HelpRequest.HelpRequestListActivity" />
         <activity android:name=".HelpRequest.HelpRequestActivity" />
         <activity android:name=".Campaign.CampaignOptionSelectActivity" />

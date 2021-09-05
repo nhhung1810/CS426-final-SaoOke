@@ -73,7 +73,8 @@
                     app:cardElevation="6dp"
                     app:cardCornerRadius="12dp"
                     android:layout_margin="15dp"
-                    android:onClick="TransactionTab">
+                    android:onClick="DonateTab">
+
 
                     <LinearLayout
                         android:gravity="center"
@@ -81,6 +82,7 @@
                         android:layout_height="match_parent"
                         android:padding="16dp"
                         android:orientation="vertical">
+
 
                         <ImageView
                             android:layout_width="80dp"
@@ -95,7 +97,25 @@
                             android:textColor="#6f6f6f"
                             android:text="Donate"/>
 
+                        <ImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:minHeight="1dp"
+                            android:background="#FF333333"
+                            android:scaleType="centerCrop"
+                            android:layout_marginTop="10dp"
+                            />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textSize="15sp"
+                            android:layout_marginTop="12dp"
+                            android:textColor="#6f6f6f"
+                            android:text="Support an ongoing campaign."/>
+
                     </LinearLayout>
+
 
                 </androidx.cardview.widget.CardView>
 
@@ -107,7 +127,8 @@
                     android:layout_rowWeight="1"
                     app:cardElevation="6dp"
                     app:cardCornerRadius="12dp"
-                    android:layout_margin="12dp">
+                    android:layout_margin="12dp"
+                    android:onClick="GrantTab">
 
                     <LinearLayout
                         android:gravity="center"
@@ -128,6 +149,24 @@
                             android:layout_marginTop="12dp"
                             android:textColor="#6f6f6f"
                             android:text="Grant"/>
+
+                        <ImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:minHeight="1dp"
+                            android:background="#FF333333"
+                            android:scaleType="centerCrop"
+                            android:layout_marginTop="10dp"
+                            />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textSize="15sp"
+                            android:layout_marginTop="12dp"
+                            android:textColor="#6f6f6f"
+                            android:text="Give money to a person in need."/>
+
 
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>
@@ -163,6 +202,23 @@
                             android:textColor="#6f6f6f"
                             android:text="Account"/>
 
+                        <ImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:minHeight="1dp"
+                            android:background="#FF333333"
+                            android:scaleType="centerCrop"
+                            android:layout_marginTop="10dp"
+                            />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textSize="15sp"
+                            android:layout_marginTop="12dp"
+                            android:textColor="#6f6f6f"
+                            android:text="Monitor your account balance."/>
+
                     </LinearLayout>
 
                 </androidx.cardview.widget.CardView>
@@ -197,6 +253,23 @@
                             android:layout_marginTop="12dp"
                             android:textColor="#6f6f6f"
                             android:text="History"/>
+
+                        <ImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:minHeight="1dp"
+                            android:background="#FF333333"
+                            android:scaleType="centerCrop"
+                            android:layout_marginTop="10dp"
+                            />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textSize="15sp"
+                            android:layout_marginTop="12dp"
+                            android:textColor="#6f6f6f"
+                            android:text="A log of all past transactions."/>
 
                     </LinearLayout>
 
@@ -234,6 +307,23 @@
                             android:textColor="#6f6f6f"
                             android:text="Campaign"/>
 
+                        <ImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:minHeight="1dp"
+                            android:background="#FF333333"
+                            android:scaleType="centerCrop"
+                            android:layout_marginTop="10dp"
+                            />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textSize="15sp"
+                            android:layout_marginTop="12dp"
+                            android:textColor="#6f6f6f"
+                            android:text="Create and monitor campaigns."/>
+
                     </LinearLayout>
 
                 </androidx.cardview.widget.CardView>
@@ -246,7 +336,8 @@
                     android:layout_rowWeight="1"
                     app:cardElevation="6dp"
                     app:cardCornerRadius="12dp"
-                    android:layout_margin="12dp">
+                    android:layout_margin="12dp"
+                    android:onClick="RequestTab">
 
                     <LinearLayout
                         android:gravity="center"
@@ -258,7 +349,7 @@
                         <ImageView
                             android:layout_width="80dp"
                             android:layout_height="80dp"
-                            android:src="@drawable/ic_setting"/>
+                            android:src="@drawable/ic_help_request"/>
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -266,7 +357,24 @@
                             android:textSize="18sp"
                             android:layout_marginTop="12dp"
                             android:textColor="#6f6f6f"
-                            android:text="Others"/>
+                            android:text="Request"/>
+
+                        <ImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:minHeight="1dp"
+                            android:background="#FF333333"
+                            android:scaleType="centerCrop"
+                            android:layout_marginTop="10dp"
+                            />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textSize="15sp"
+                            android:layout_marginTop="12dp"
+                            android:textColor="#6f6f6f"
+                            android:text="Post or obtain help requests."/>
 
                     </LinearLayout>
 
