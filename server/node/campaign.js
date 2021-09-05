@@ -46,9 +46,9 @@ class Campaign {
     getAllDonators(userFactory) {
         var donators = []
         this.transactions.forEach(element => {
-            console.log("\n\n All donors: ", element, "\n\n")
+            // console.log("\n\n All donors: ", element, "\n\n")
             if (element.transaction.fromAddress != this.ownerKey) {
-                console.log("\nreaced here")
+                // console.log("\nreaced here")
                 donators.push(userFactory.getUsername(JSON.parse(JSON.stringify(element)).transaction.fromAddress))
             }
         });
@@ -118,7 +118,7 @@ class CampaignFactory {
         tmp = this.campaignList.forEach(element => {
             if (element.campaignName == campaignName) {
                 // make new transaction here
-                console.log("REACHED HERE")
+                // console.log("REACHED HERE")
                 element.transactions.push({
                     "transaction": transaction,
                     "message": message

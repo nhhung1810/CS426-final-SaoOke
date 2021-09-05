@@ -6,7 +6,7 @@ module.exports = function (app, campaignFactory, userFactory) {
         }
         var tmp
         try {
-            console.log("\n\nCampaign name: ", req.params.campaignName)
+            // console.log("\n\nCampaign name: ", req.params.campaignName)
             tmp = campaignFactory.getAllDonators(req.params.campaignName, userFactory)
             if (tmp == null || tmp.length < 1) {
                 res.send(404, "error")

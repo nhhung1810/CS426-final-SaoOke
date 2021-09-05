@@ -75,7 +75,7 @@ module.exports = function (app, userFactory, campaignFactory, mCoin) {
                 console.log("Campaign not found, please check why it able to reach this line???")
             }
 
-            console.log("\nCheck campaign\n", campaignFactory.getCampaignInformation(req.body.campaignName))
+            // console.log("\nCheck campaign\n", campaignFactory.getCampaignInformation(req.body.campaignName))
             res.send(200, { "status": "success" });
         }
 
