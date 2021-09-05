@@ -51,9 +51,9 @@ class Campaign {
         return donators
     }
 
-    requestHelp(address, amount, message) {
+    requestHelp(username, amount, message) {
         this.requestHelpList.push({
-            "address" : address,
+            "username" : username,
             "amount" : amount,
             "message" : message
         })
@@ -136,18 +136,20 @@ class CampaignFactory {
     }
 
     getCampaignInformation(campaignName) {
-        this.campaignList.forEach(element => {
-            if (element.campaignName == campaignName) {
-                return {
-                    "campaignName" : element.campaignName,
-                    "ownerKey" : element.ownerKey,
-                    "ownerName" : element.ownerName,
-                    "targetAmount" : element.targetAmount,
-                    "expireDate" : element.expireDate,
-                    "total_amount" : element.getReceivedAmount()
-                }
-            }
-        });
+        var campaign = this.getCampaignByCampaignName(campaignName)
+
+        if (campaign == nul) {
+            throw new Error("Campaign does not exists")
+        }
+
+        return {
+            "campaignName" : campaign.campaignName,
+            "ownerKey" : campaign.ownerKey,
+            "ownerName" : campaign.ownerName,
+            "targetAmount" : campaign.targetAmount,
+            "expireDate" : campaign.expireDate,
+            "total_amount" : campaign.getReceivedAmount()
+        }
     }
 
     getCampaignHistory(campaignName) {
@@ -180,12 +182,12 @@ class CampaignFactory {
         return null
     }
 
-    requestHelp(campaignName, address, amount, message) {
+    requestHelp(campaignName, username, amount, message) {
         var campaign = this.getCampaignByCampaignName(campaignName)
         if (campaign == null) {
             throw new Error("campaign does not exists")
         }
-        campaign.requestHelp(address, amount, message)
+        campaign.requestHelp(username, amount, message)
         return true
     }
 
