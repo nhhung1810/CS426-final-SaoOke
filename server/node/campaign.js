@@ -39,11 +39,31 @@ class Campaign {
             }
         });
     }
+
+    getAllDonators() {
+        var donators = []
+        this.transactions.forEach(transaction => {
+            if (transaction.transaction.fromAddress != this.ownerKey) {
+                donators.push(transaction.transaction.fromAddress)
+            }
+        });
+        return donators
+    }
 }
 
 class CampaignFactory {
     constructor() {
         this.campaignList = []
+    }
+
+    getCampaignByCampaignName(campaignName) {
+        var campaign = null
+        this.campaignList.forEach(element => {
+            if (element.campaignName == campaignName) {
+                campaign = element
+            }
+        });
+        return campaign
     }
 
     createCampaign(campaignName, ownerKey, ownerName, targetAmount, expireDate, message) {
@@ -123,6 +143,28 @@ class CampaignFactory {
                 return campaign.getHistory()
             }
         });
+    }
+
+    getAllCampaign() {
+        var result = []
+        this.campaignList.forEach(campaign => {
+            result.push({
+                "campaignName" : campaign.campaignName,
+                "campaignOwnerKey" : campaign.campaignOwnerKey,
+                "expireDate" : campaign.expireDate,
+                "message" : campaign.message,
+                "totalAmount" : campaign.getReceivedAmount()
+            })
+        });
+    }
+
+    getAllDonators(campaignName) {
+        var result = []
+        var campaign = this.getCampaignByCampaignName(campaignName)
+        if (campaign != null) {
+            return campaign.getAllDonators
+        }
+        return null
     }
 }
 
