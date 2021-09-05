@@ -25,17 +25,15 @@ module.exports = function (app, userFactory, campaignFactory, mCoin) {
             else {
                 try {
                     pubFrom = userFactory.getKey(req.body.fromUser);
-                    console.log("\nDonate:\n")
-                    console.log("Donator key:\n ", pubFrom)
                     pubCam = campaignFactory.getCampaignKey(req.body.campaignName)
-                    console.log("\nCampaign Key: ", pubCam)
-                    if(pubCam != null && pubFrom != null){
-                        
+     
+                    if (pubCam != null && pubFrom != null) {
+
                         console.log("New transaction is been created")
                         return new Transaction(pubFrom,
-                                                pubCam,
-                                                req.body.amount,
-                                                req.body.signature)
+                            pubCam,
+                            req.body.amount,
+                            req.body.signature)
                     } else {
                         console.log("Cannot find user or campaign")
                         return false
@@ -53,7 +51,7 @@ module.exports = function (app, userFactory, campaignFactory, mCoin) {
             res.send(404, { "error": "Exception! Check your campaign name" })
             return
         } else {
-            if(tx == false) {
+            if (tx == false) {
                 res.send(404, { "error": "Invalid params or information. Do you sure this username or campaign existed?" })
                 return
             }

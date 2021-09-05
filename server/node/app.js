@@ -43,6 +43,8 @@ require('./APIs/requestHelpAPI')(app, campaignFactory)
 
 require('./APIs/donateAPI')(app, userFactory, campaignFactory, mCoin)
 
+require('./APIs/giveAPI')(app, userFactory, campaignFactory, mCoin)
+
 require('./APIs/getRequestHelpListAPI')(app, campaignFactory)
 
 require('./APIs/getAllCampaignAPI')(app, campaignFactory)
