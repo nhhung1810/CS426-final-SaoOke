@@ -1,3 +1,5 @@
+package com.example.blockchainapp.Utils;
+
 import org.bouncycastle.util.encoders.Hex;
 import org.web3j.crypto.*;
 // import org.web3j.crypto.Sign;
@@ -5,6 +7,7 @@ import java.math.BigInteger;
 
 public class SignUtil {
 
+    /*
     public static String compressPubKey(BigInteger pubKey) {
         String pubKeyYPrefix = pubKey.testBit(0) ? "03" : "02";
         String pubKeyHex = pubKey.toString(16);
@@ -27,7 +30,7 @@ public class SignUtil {
         System.out.println("Msg: " + msg);
         System.out.println("Msg hash: " + Hex.toHexString(msgHash));
         System.out.printf("Signature: [v = %d, r = %s, s = %s]\n",
-                signature.getV() - 27,
+                // signature.getV() - 27,
                 Hex.toHexString(signature.getR()),
                 Hex.toHexString(signature.getS()));
 
@@ -39,4 +42,6 @@ public class SignUtil {
         boolean validSig = pubKey.equals(pubKeyRecovered);
         System.out.println("Signature valid? " + validSig);
     }
+
+     */
 }

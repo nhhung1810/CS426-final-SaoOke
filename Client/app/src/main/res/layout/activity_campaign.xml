@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Transaction.TransactionActivity">
+    tools:context=".Campaign.CampaignActivity">
 
     <ImageView
         android:layout_width="match_parent"
@@ -13,51 +13,68 @@
         android:minHeight="200dp"
         android:background="#FF333333"
         android:scaleType="centerCrop"
-
         />
+
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:layout_marginHorizontal="20dp"
-        android:layout_centerVertical="true"
-        >
+        android:layout_centerVertical="true">
 
         <ImageView
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:src="@drawable/helping_hand" />
+            android:src="@drawable/campaign"
+            app:tint="@color/white"/>
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Specify which charity organization you want to donate to."
+            android:text="Please specify the name of the campaign
+             (including a short description of it)."
             android:textAlignment="center"
             android:textSize="20sp"
-            android:textStyle="bold"
             android:layout_marginBottom="20dp"/>
 
-        <AutoCompleteTextView
+        <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Receiving campaign..."
-            android:id="@+id/actv_campaign"
+            android:hint="Campaign name (Cuu tro mien trung,...)"
+            android:id="@+id/et_campaignName"
             android:inputType="text"
             android:singleLine="true"/>
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Transfer amount..."
-            android:id="@+id/et_amount"
-            android:inputType="numberDecimal"
+            android:hint="Description..."
+            android:id="@+id/et_description"
+            android:inputType="textLongMessage"
             android:singleLine="true"/>
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Message (optional)"
-            android:id="@+id/et_message"
+            android:hint="Target amount... (VND)"
+            android:id="@+id/et_targetAmount"
+            android:inputType="number"
+            android:singleLine="true"/>
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Expire date"
+            android:id="@+id/et_expireDate"
+            android:clickable="false"
+            android:cursorVisible="false"
+            android:focusable="false"
+            android:focusableInTouchMode="false"
+            android:inputType="date"
+            android:singleLine="true"/>
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Propaganda (optional)"
+            android:id="@+id/et_propaganda"
             android:inputType="text"
             android:singleLine="true"/>
 
@@ -66,12 +83,12 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="20dp"
             android:paddingVertical="20dp"
-            android:text="Make a donation"
+            android:text="ADD NEW CAMPAIGN"
             android:textColor="@color/gold"
             android:textStyle="bold"
             android:textSize="20sp"
             android:layout_marginTop="20sp"
-            android:onClick="HandleTransaction"/>
+            android:onClick="HandleCampaignCreation"/>
 
     </LinearLayout>
 

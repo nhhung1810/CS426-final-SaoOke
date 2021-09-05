@@ -1,13 +1,14 @@
 const { Blockchain, Transaction } = require('./blockchain');
 
 class Campaign {
-    constructor(campaignName, ownerKey, ownerName, targetAmount, expireDate, message) {
+    constructor(campaignName, ownerKey, ownerName, targetAmount, expireDate, description, propaganda = "") {
         this.campaignName = campaignName
         this.ownerKey = ownerKey
         this.ownerName = ownerName
         this.targetAmount = targetAmount
         this.expireDate = expireDate
-        this.message = message
+        this.description = description
+        this.propaganda = propaganda
         this.transactions = []
         this.requestHelpList = []
     }
@@ -142,8 +143,10 @@ class CampaignFactory {
                     "campaignName" : element.campaignName,
                     "ownerKey" : element.ownerKey,
                     "ownerName" : element.ownerName,
+                    "description" : element.description,
                     "targetAmount" : element.targetAmount,
                     "expireDate" : element.expireDate,
+                    "propaganda" : element.propaganda,
                     "total_amount" : element.getReceivedAmount()
                 }
             }
@@ -175,7 +178,7 @@ class CampaignFactory {
                 "campaignName" : campaign.campaignName,
                 "campaignOwnerKey" : campaign.campaignOwnerKey,
                 "expireDate" : campaign.expireDate,
-                "message" : campaign.message,
+                "description" : campaign.description,
                 "totalAmount" : campaign.getReceivedAmount()
             })
         });

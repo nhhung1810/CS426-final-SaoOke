@@ -1,25 +1,28 @@
-package com.example.blockchainapp;
+package com.example.blockchainapp.Transaction;
+
+import java.security.PrivateKey;
+import java.security.PublicKey;
 
 public class Transaction {
 
-    private String fromAddress;
-    private String toAddress;
+    private PublicKey fromAddress;
+    private String toUser;
     private Float amount;
     private String message;
 
-    public Transaction(String fromAddress, String toAddress, Float amount, String message) {
+    public Transaction(PublicKey fromAddress, String toUser, Float amount, String message) {
         this.fromAddress = fromAddress;
-        this.toAddress = toAddress;
+        this.toUser = toUser;
         this.amount = amount;
         this.message = message;
     }
 
-    public String getFromAddress() {
+    public PublicKey getFromAddress() {
         return fromAddress;
     }
 
-    public String getToAddress() {
-        return toAddress;
+    public String getToUser() {
+        return toUser;
     }
 
     public Float getAmount() {
@@ -30,12 +33,12 @@ public class Transaction {
         return message;
     }
 
-    public void setFromAddress(String fromAddress) {
+    public void setFromAddress(PublicKey fromAddress) {
         this.fromAddress = fromAddress;
     }
 
-    public void setToAddress(String toAddress) {
-        this.toAddress = toAddress;
+    public void setToUser(String toUser) {
+        this.toUser = toUser;
     }
 
     public void setAmount(Float amount) {
