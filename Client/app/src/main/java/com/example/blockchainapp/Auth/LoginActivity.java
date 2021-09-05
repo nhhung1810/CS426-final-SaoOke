@@ -154,7 +154,8 @@ public class LoginActivity extends AppCompatActivity {
             SecurityManager.HashMethod hashMethod = SecurityManager.getAppropriateHash();
             String hashedPassword = SecurityManager.getHashedPassword( hashMethod, account.getPassword() );
             hashedPassword = hashedPassword.replaceAll("[^a-zA-Z0-9]", "");
-            kp = RSAKey.parseKey(getApplicationContext(), account.getUsername() + "-" + hashedPassword);
+            String name = account.getUsername() + "-" + hashedPassword;
+            kp = RSAKey.parseKey(getApplicationContext(), name);
 
             Constants.USERNAME = account.getUsername();
             System.out.println(Constants.USERNAME);
@@ -162,15 +163,19 @@ public class LoginActivity extends AppCompatActivity {
             Constants.PUBLIC_KEY = kp.getPublic();
             Constants.SESSION_ACTIVE = true;
 
+            String publicPath = name + "-public-key.pem";
+            String privatePath = name + "-private-key.pem";
+            Constants.REAL_PUBLIC_KEY = RSAKey.readPublicKey(getApplicationContext(), publicPath);
+            Constants.REAL_PRIVATE_KEY = RSAKey.readPrivateKey(getApplicationContext(), privatePath);
+
             AlertDialog.Builder builder = new AlertDialog.Builder(LoginActivity.this);
-            builder.setTitle("Successfully registered!");
+            builder.setTitle("Successfully logged in!");
             builder.setMessage("Your private key saved: " + kp.getPrivate()
                     + " | Your public key saved: " + kp.getPublic());
 
             RetrofitUtils.GetBalance();
             RetrofitUtils.LoadCampaignNames(Constants.USERNAME);
             RetrofitUtils.LoadAllCampaigns();
-            RetrofitUtils.GetRealPublicKey();
 
             builder.setPositiveButton("Confirm",
                     new DialogInterface.OnClickListener() {

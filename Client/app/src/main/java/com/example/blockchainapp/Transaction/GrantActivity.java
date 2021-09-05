@@ -87,7 +87,7 @@ public class GrantActivity extends AppCompatActivity {
                             public void onResponse(Call<Object> call, Response<Object> response) {
                                 if (response.code() == 200) {
                                     Toast.makeText(GrantActivity.this,
-                                            "You have successfully donated to the campaign!", Toast.LENGTH_LONG).show();
+                                            "You have successfully granted the fund to " + toUser + "!", Toast.LENGTH_LONG).show();
                                 } else {
                                     try {
                                         Toast.makeText(GrantActivity.this,

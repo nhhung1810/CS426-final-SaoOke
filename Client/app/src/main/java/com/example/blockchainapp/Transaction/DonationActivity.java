@@ -92,7 +92,7 @@ public class DonationActivity extends AppCompatActivity {
                             public void onResponse(Call<Object> call, Response<Object> response) {
                                 if (response.code() == 200) {
                                     Toast.makeText(DonationActivity.this,
-                                            "You have successfully donated to the campaign!", Toast.LENGTH_LONG).show();
+                                            "You have successfully donated to the campaign " + toCampaign + "!", Toast.LENGTH_LONG).show();
                                 } else {
                                     try {
                                         Toast.makeText(DonationActivity.this,

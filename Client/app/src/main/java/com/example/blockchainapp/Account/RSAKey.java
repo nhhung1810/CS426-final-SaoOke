@@ -33,6 +33,7 @@ import java.security.Signature;
 import java.io.FileNotFoundException;
 import java.security.Key;
 
+import org.bouncycastle.util.encoders.Hex;
 import org.json.JSONObject;
 
 public class RSAKey{
@@ -136,6 +137,28 @@ public class RSAKey{
         return publicKeyContent;
     }
 
+    public static String readPrivateKey(Context context, String privatePath) throws Exception {
+        File file = new File(context.getFilesDir(), Constants.RESOURCE_LOCATION);
+        // Log.d("path", file.getAbsolutePath() + "/" + privatePath);
+        InputStreamReader isr = new InputStreamReader(new FileInputStream(file.getAbsolutePath() + "/" + privatePath));
+        // System.out.println("File path:" + file.getAbsolutePath() + "/" + publicPath);
+        BufferedReader bufferedReader = new BufferedReader(isr);
+        StringBuilder sb = new StringBuilder();
+        String line = "";
+        while ((line = bufferedReader.readLine()) != null) {
+            // Log.d("readline", line);
+            sb.append(line);
+            sb.append('\n');
+        }
+
+        String privateKeyContent = sb.toString();
+
+        bufferedReader.close();
+        isr.close();
+
+        return privateKeyContent;
+    }
+
     @RequiresApi(api = Build.VERSION_CODES.O)
     public static KeyPair parseKey(Context context, String name){
         String publicPath = name + "-public-key.pem";
@@ -182,11 +205,13 @@ public class RSAKey{
         Signature privateSignature = Signature.getInstance("SHA256withRSA");
         privateSignature.initSign(privateKey);
         // from + to + amount
+        System.out.println("Signature: " + text);
         // String toBeHashed = Constants.PUBLIC_KEY.toString() + transaction.getToUser() + transaction.getAmount();
         privateSignature.update(text.getBytes());
 
         byte[] signature = privateSignature.sign();
 
+        // return Hex.toHexString(signature);
         return Base64.getEncoder().encodeToString(signature);
     }
 

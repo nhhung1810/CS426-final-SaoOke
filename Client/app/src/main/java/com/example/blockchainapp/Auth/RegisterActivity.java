@@ -163,12 +163,14 @@ public class RegisterActivity extends AppCompatActivity {
             RSAKey.writePemFile(getApplicationContext(), kp, name);
 
             String publicPath = name + "-public-key.pem";
-            String publicKey = RSAKey.readPublicKey(getApplicationContext(), publicPath);
+            String privatePath = name + "-private-key.pem";
+            Constants.REAL_PUBLIC_KEY = RSAKey.readPublicKey(getApplicationContext(), publicPath);
+            Constants.REAL_PRIVATE_KEY = RSAKey.readPrivateKey(getApplicationContext(), privatePath);
 
             //System.out.println("Before register:" + kp.getPublic().toString());
 
-            UserKey key = new UserKey(account.getUsername(), publicKey);
-            Log.d("Key", publicKey);
+            UserKey key = new UserKey(account.getUsername(), Constants.REAL_PUBLIC_KEY);
+            Log.d("Key", Constants.REAL_PUBLIC_KEY);
 
             Call<Object> keyCall =  RetrofitUtils.blockchainInterface.ExecutePostRegister(key);
             keyCall.enqueue(new Callback<Object>() {
@@ -185,7 +187,7 @@ public class RegisterActivity extends AppCompatActivity {
                         RetrofitUtils.GetBalance();
                         RetrofitUtils.LoadCampaignNames(Constants.USERNAME);
                         RetrofitUtils.LoadAllCampaigns();
-                        RetrofitUtils.GetRealPublicKey();
+                        // RetrofitUtils.GetRealPublicKey();
 
                         AlertDialog.Builder builder = new AlertDialog.Builder(RegisterActivity.this);
                         builder.setTitle("Successfully registered!");
