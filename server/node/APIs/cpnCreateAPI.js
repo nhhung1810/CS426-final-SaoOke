@@ -8,8 +8,19 @@
 //     "expire" : "dd-mm-yyyy",
 //     "msg" : "optional" //won't be include in the transaction
 // }
-module.exports = function(app){
-    app.post("./cpncreate", function(req, res){
-        console.log(404)
+module.exports = function (app, userFactory, mCoin) {
+    app.post("./cpncreate", function (req, res) {
+        const check = (req) => {
+            if (!req || !req.body) {
+                console.log("Null Body! Check your params")
+                return null
+            } else if (!req.body.ownerName || !req.body.campaignName
+                || !req.body.target || !req.body.expire || !req.body.msg) {
+                    console.log("Invalid Params! Check your params")
+                    return null
+            } else {
+                publicKey = userFactory.getKey(req.body.ownerName)
+            }
+        }
     })
 }
