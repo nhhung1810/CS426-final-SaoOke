@@ -6,10 +6,13 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.widget.ImageView;
 
+import com.example.blockchainapp.Auth.LoginActivity;
 import com.example.blockchainapp.R;
 
 import java.util.Timer;
 import java.util.TimerTask;
+
+import jnr.ffi.annotations.In;
 
 public class LandingScreenActivity extends AppCompatActivity {
     private ImageView iv_star;
@@ -45,10 +48,20 @@ public class LandingScreenActivity extends AppCompatActivity {
                 iv_chicken.setImageResource(chicken[counter/2 % 6]);
                 ++counter;
                 if (counter * period >= timeLimit)
+                {
+                    timer.cancel();
+                    timer.purge();
                     finish();
+                    startMain();
+                }
             }
         };
         timer.schedule(timerTask, 0, period);
+    }
+
+    private void startMain() {
+        Intent intent1 = new Intent(LandingScreenActivity.this, LoginActivity.class);
+        startActivity(intent1);
     }
 
     private void initialize() {
