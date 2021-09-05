@@ -1,4 +1,6 @@
-module.exports = function (app) {
+const { Transaction } = require("../blockchain");
+
+module.exports = function (app, userFactory, mCoin) {
     // Route: /transaction
     // Method: POST
     // json sent via body

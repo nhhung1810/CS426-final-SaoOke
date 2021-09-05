@@ -24,13 +24,13 @@ app.listen(port, () => {
   // test()
 })
 
-require('./APIs/balanceAPI')(app)
+require('./APIs/balanceAPI')(app, userFactory, mCoin)
 
-require('./APIs/transactionAPI')(app)
+require('./APIs/transactionAPI')(app, userFactory, mCoin)
 
-require('./APIs/registerAPI')(app)
+require('./APIs/registerAPI')(app, userFactory, mCoin)
 
-require('./APIs/transactionlogAPI')(app)
+require('./APIs/transactionlogAPI')(app, mCoin)
 
 // TODO
 // POST: CreateCampaign (ownerKey, campaignName, ownerName, targetAmount, expireDate, message)

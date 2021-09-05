@@ -1,4 +1,4 @@
-module.exports = function (app) {
+module.exports = function (app, mCoin) {
     // Route: /transactionLog
     // Method: GET
     // {

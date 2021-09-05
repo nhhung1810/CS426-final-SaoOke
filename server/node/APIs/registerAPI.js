@@ -1,4 +1,4 @@
-module.exports = function (app) {
+module.exports = function (app, userFactory, mCoin) {
     // Route: /register
     // Method: POST
     // json sent via body
@@ -20,7 +20,7 @@ module.exports = function (app) {
         }
 
         try {
-            flag = register(req)
+            var flag = register(req)
             if (flag === null) res.send(404, {
                 "error": "Invalid register process. Check your params"
             })
