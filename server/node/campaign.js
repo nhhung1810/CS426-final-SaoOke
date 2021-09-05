@@ -188,6 +188,8 @@ class CampaignFactory {
                 "campaignOwnerKey" : campaign.ownerKey,
                 "expireDate" : campaign.expireDate,
                 "description" : campaign.description,
+                "targetAmount" : campaign.targetAmount,
+                "propaganda" : campaign.propaganda,
                 "totalAmount" : campaign.getReceivedAmount()
             })
         });
@@ -209,7 +211,9 @@ class CampaignFactory {
             throw new Error("campaign does not exists")
         }
         campaign.requestHelp(username, amount, message)
-        return true
+        return {
+            "message" : "Sent help successfully"
+        }
     }
 
     getRequestHelpList(campaignName) {
