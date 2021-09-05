@@ -1,6 +1,6 @@
 const { Transaction } = require("../blockchain");
 
-// POST: Donate (như transaction) (donatorKey, campaignName, amount, message) 
+// POST: Donate (như transaction) (donatorKey, campaignName, amount) 
 //=> Chuyển tiền bằng public key tới owner của cái campaign đó
 module.exports = function (app, userFactory, campaignFactory, mCoin) {
     // Route: /donate
@@ -26,7 +26,7 @@ module.exports = function (app, userFactory, campaignFactory, mCoin) {
                 try {
                     pubFrom = userFactory.getKey(req.body.from);
                     pubCam = campaignFactory.getCampaignKey(req.body.campaignName)
-     
+
                     if (pubCam != null && pubFrom != null) {
 
                         console.log("New transaction is been created")
@@ -70,6 +70,8 @@ module.exports = function (app, userFactory, campaignFactory, mCoin) {
             console.log("\nPassed the valid check!!\n")
             mCoin.addTransaction(tx)
             mCoin.minePendingTransactions("master-mine")
+            campaignFactory.donate(req.body.campaignName, tx, "")
+            console.log("\nCheck campaign\n", campaignFactory.getCampaignInformation(req.body.campaignName))
             res.send(200, { "status": "success" });
         }
 

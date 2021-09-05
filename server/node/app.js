@@ -46,19 +46,9 @@ require('./APIs/giveAPI')(app, userFactory, campaignFactory, mCoin)
 require('./APIs/getRequestHelpListAPI')(app, campaignFactory)
 
 require('./APIs/getAllCampaignAPI')(app, campaignFactory)
-// TODO
-// POST: CreateCampaign (ownerKey, campaignName, ownerName, targetAmount, expireDate, message) => DONE
-
-// POST: Donate (như transaction) (donatorKey, campaignName, amount, message) 
-// => Chuyển tiền bằng public key tới owner của cái campaign đó=> Done
-
-// POST: Give (như transaction) (campaignOwnerKey, receiverKey, amount ,message)
-
-// POST: RequestHelp (campaignName, ownerKey, amount, message)
 
 // GET: CheckCampaignInformation (campaignName) => trả về tất cả thông tin kèm theo số tiền trong chiến dịch
 // GET: CheckHistory(campaign) => trả về các lượt donate và các lượt give của chiến dịch
-// GET: CheckAllCampaigns => lấy tất cả thông tin chiến dịch sẵn có
 // GET: CheckDonator(campaignName) => Danh sách các người donate của chiến dịch
 // GET: CheckHelpRequests => Danh sách các người đã đăng yêu cầu từ thiện
 // GET: username -> tất cả campaign username đó own
