@@ -33,7 +33,7 @@ test = () => {
   var text;
   try {
     text = rsu.readFile(textOrFile);
-  } catch(ex) {
+  } catch (ex) {
     text = textOrFile;
   }
   /*
@@ -58,7 +58,7 @@ try {
 */
 
   // 3. load signature
-  var sig = new rs.KJUR.crypto.Signature({alg: hashAlg});
+  var sig = new rs.KJUR.crypto.Signature({ alg: hashAlg });
   sig.init(pub);
   sig.updateString(text);
   var isValid = sig.verify(Buffer.from(sigFile, "base64").toString("hex"));

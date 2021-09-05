@@ -1,4 +1,4 @@
-module.exports = function (app) {
+module.exports = function (app, mCoin) {
     // Route: /transactionLog
     // Method: GET
     // {
@@ -12,29 +12,29 @@ module.exports = function (app) {
     //       }, ...
     //   ]
     // }
-    app.get('/transactionsLog', function(req, res) {
+    app.get('/transactionsLog', function (req, res) {
         var transactions = mCoin.getTransactionsLog()
-        res.send(200, 
-        {
-            "logs": transactions
-        }  
+        res.send(200,
+            {
+                "logs": transactions
+            }
         )
     })
-    
+
     //inactive
     app.post('/mine', (req, res) => {
         console.log(req.body)
         if (!req || !req.body || !req.body.address) {
-        res.send(404, {
-            "status" : "failed",
-            "error" : "Invalid request. Check your params"
-        })
+            res.send(404, {
+                "status": "failed",
+                "error": "Invalid request. Check your params"
+            })
         } else {
-        address = req.body.address
-        mCoin.minePendingTransactions(address)
-        res.send(200, {
-            "status" : "success"
-        }) 
+            address = req.body.address
+            mCoin.minePendingTransactions(address)
+            res.send(200, {
+                "status": "success"
+            })
         }
     })
 }

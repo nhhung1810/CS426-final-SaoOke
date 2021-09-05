@@ -1,53 +1,51 @@
 const rs = require('jsrsasign');
 const rsu = require('jsrsasign-util');
 
-class Verification{
+class Verification {
 
-    verify(msg, signature, publicKey, format = "base64"){
-        var sig = new rs.KJUR.crypto.Signature({alg: "SHA256withRSA"});
+    verify(msg, signature, publicKey, format = "base64") {
+        var sig = new rs.KJUR.crypto.Signature({ alg: "SHA256withRSA" });
         sig.init(publicKey);
         sig.updateString(msg);
 
         var isValid = null;
-        if(format == "base64") isValid = sig.verify(Buffer.from(signature, "base64").toString("hex"));
+        if (format == "base64") isValid = sig.verify(Buffer.from(signature, "base64").toString("hex"));
         else if (format == "hex") isValid = sig.verify(signature);
-        
-        
         if (isValid) {
-           return true;
+            return true;
         }
         return false;
     }
 
-    parseKey(path, isFile = false){
-        if(isFile == true) try{
+    parseKey(path, isFile = false) {
+        if (isFile == true) try {
             //file format
             var pubPEM = rsu.readFile(path);
             var pub = rs.KEYUTIL.getKey(pubPEM);
         } catch (ex) {
             return null;
         } else {
-            try{
+            try {
                 //text format
                 //require the key to be exactly in PEM format
                 var pub = rs.KEYUTIL.getKey(path);
-            } catch(ex) {
+            } catch (ex) {
                 return null;
             }
         }
         return pub;
     }
 
-    keyToString(key){
-        try{
-            if(key.isPublic && !key.isPrivate) {
+    keyToString(key) {
+        try {
+            if (key.isPublic && !key.isPrivate) {
                 var pubKeyPEM = rs.KEYUTIL.getPEM(key);
                 return pubKeyPEM;
             } else if (key.isPrivate) {
                 var prvKeyPEM = rs.KEYUTIL.getPEM(key, "PKCS8PRV");
                 return prvKeyPEM;
             }
-        } catch(ex) {
+        } catch (ex) {
             console.log(ex.toString());
             return null;
         }
