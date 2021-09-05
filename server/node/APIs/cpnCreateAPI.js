@@ -6,15 +6,9 @@ const { Transaction } = require("../blockchain")
 //     "ownerName" : "username", //=>auto get the existed public key
 //     "campaignName" : "name",
 //     "targetAmount" : int,
-<<<<<<< HEAD
 //     "expireDate" : "dd-mm-yyyy",
 //     "description" : "long string",
 //     "propaganda" : "optional" //won't be include in the transaction
-=======
-//     "expireDate" : "optional",
-//     "description" : "Wow",
-//     "propaganda" : "Hello"
->>>>>>> origin/hung-api2
 // }
 module.exports = function (app, userFactory, campaignFactory) {
     app.post("/cpncreate", function (req, res) {
