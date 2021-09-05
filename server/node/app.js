@@ -36,10 +36,12 @@ require('./APIs/registerAPI')(app)
 
 require('./APIs/transactionlogAPI')(app)
 
-
+// TODO
 // POST: CreateCampaign (ownerKey, campaignName, ownerName, targetAmount, expireDate, message)
+
 // POST: Donate (như transaction) (donatorKey, campaignName, amount, message) => Chuyển tiền bằng public key tới owner của cái campaign đó
 // POST: Give (như transaction) (campaignOwnerKey, receiverKey, amount ,message)
+
 // POST: RequestHelp (ownerKey, amount, message)
 // GET: CheckCampaignInformation (campaignName) => trả về tất cả thông tin kèm theo số tiền trong chiến dịch
 // GET: CheckHistory(campaign) => trả về các lượt donate và các lượt give của chiến dịch
