@@ -55,7 +55,7 @@ public class GrantActivity extends AppCompatActivity {
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
-    private void HandleDonate(View view) throws Exception {
+    public void HandleGrant(View view) throws Exception {
         if (TextUtils.isEmpty(campaignET.getText()) || TextUtils.isEmpty(amountET.getText())) return;
         String campaign = campaignET.getText().toString();
         String toUser = toUserET.getText().toString();
@@ -72,25 +72,12 @@ public class GrantActivity extends AppCompatActivity {
 
             @Override
             public void onResponse(Call<Object> call, Response<Object> response) {
-                
-            }
-
-            @Override
-            public void onFailure(Call<Object> call, Throwable t) {
-
-            }
-        });
-
-        Call<Object> donationCall = RetrofitUtils.blockchainInterface.ExecutePostDonate(request);
-        donationCall.enqueue(new Callback<Object>() {
-            @Override
-            public void onResponse(Call<Object> call, Response<Object> response) {
                 if (response.code() == 200) {
-                    Toast.makeText(DonationActivity.this,
+                    Toast.makeText(GrantActivity.this,
                             "You have successfully donated to the campaign!", Toast.LENGTH_LONG).show();
                 } else {
                     try {
-                        Toast.makeText(DonationActivity.this,
+                        Toast.makeText(GrantActivity.this,
                                 response.errorBody().string(), Toast.LENGTH_LONG).show();
                     } catch (IOException e) {
                         e.printStackTrace();
@@ -100,9 +87,10 @@ public class GrantActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<Object> call, Throwable t) {
-                Toast.makeText(DonationActivity.this, t.getMessage(), Toast.LENGTH_LONG).show();
+                Toast.makeText(GrantActivity.this, t.getMessage(), Toast.LENGTH_LONG).show();
             }
         });
+
         /*
         Transaction transaction = new Transaction(Constants.PUBLIC_KEY, toUser, amount, message);
         String signature = RSAKey.sign(transaction, Constants.PRIVATE_KEY);

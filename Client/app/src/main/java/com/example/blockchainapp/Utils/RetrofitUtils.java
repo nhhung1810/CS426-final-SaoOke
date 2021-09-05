@@ -57,6 +57,7 @@ public class RetrofitUtils {
 
     public static void LoadCampaignNames(String username) {
 
+        /*
         Call<Campaign[]> logCall = RetrofitUtils.blockchainInterface.ExecuteGetCampaignsByUser(username);
         logCall.enqueue(new Callback<Campaign[]>() {
             @Override
@@ -88,6 +89,8 @@ public class RetrofitUtils {
 
 //        recyclerView.setAdapter(new CampaignListAdapter());
 //        recyclerView.setLayoutManager(new LinearLayoutManager(CampaignListActivity.this));
+
+         */
     }
 
 }

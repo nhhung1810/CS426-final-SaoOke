@@ -62,7 +62,7 @@ public class DonationActivity extends AppCompatActivity {
 
         // TODO: change private key to user's current session
         DonationRequest request = new DonationRequest(toCampaign, Constants.USERNAME, amount, message);
-        request.setSignature(RSAKey.sign(toCampaign + Constants.USERNAME + amount.toString(), Constants.PRIVATE_KEY));
+        request.setSignature(RSAKey.sign(Constants.USERNAME + toCampaign + amount.toString(), Constants.PRIVATE_KEY));
         //Transaction transaction = new Transaction(Constants.PUBLIC_KEY, toCampaign, amount, message);
 
         Call<Object> donationCall = RetrofitUtils.blockchainInterface.ExecutePostDonate(request);
