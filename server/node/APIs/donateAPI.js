@@ -25,10 +25,8 @@ module.exports = function (app, userFactory, campaignFactory, mCoin) {
             else {
                 try {
                     pubFrom = userFactory.getKey(req.body.from);
-                    // console.log("\nDonate:\n")
-                    // console.log("Donator key:\n ", pubFrom)
                     pubCam = campaignFactory.getCampaignKey(req.body.campaignName)
-                    // console.log("\nCampaign Key: ", pubCam)
+     
                     if (pubCam != null && pubFrom != null) {
 
                         console.log("New transaction is been created")

@@ -1,32 +1,33 @@
 const { Transaction } = require("../blockchain");
 
-// POST: Give (như transaction) (campaignOwner, receiver, amount , signature, message)
+// POST: Give (như transaction) (campaignName, receiver, amount , signature, message)
 module.exports = function (app, userFactory, campaignFactory, mCoin) {
     // Route: /give
     // Method: POST
     // json sent via body
     // {
-    //   "campaignOwner" : "", => auto fetch
+    //   "campaignName" : "", => auto fetch
     //   "receiver" : "",
     //   "amount" : 10,
     //   "signature" : "",
     //   "message" : ""
     // }
-    app.post('/donate', function (req, res) {
+    app.post('/give', function (req, res) {
         const trans = (req) => {
             if (!req || !req.body) {
                 console.log("How about null body");
                 return false;
             }
-            if (!req.body.campaignOwner || !req.body.receiver || !req.body.amount || !req.body.signature || !req.body.message) {
+            if (!req.body.campaignName || !req.body.receiver || !req.body.amount || !req.body.signature || !req.body.message) {
                 console.log("Invalid transaction params")
                 return false;
             }
             try {
-                pubOwn = userFactory.getKey(!req.body.campaignOwner)
-                pubRe = userFactory.getKey(!req.body.receiver)
+                pubOwn = campaignFactory.getCampaignKey(req.body.campaignName)
+                pubRe = userFactory.getKey(req.body.receiver)
+
                 if (pubOwn != null && pubRe != null) {
-                    return new Transaction(pubOwn, pubRe, req.body.amount, req.signature)
+                    return new Transaction(pubOwn, pubRe, req.body.amount, req.body.signature)
                 } else {
                     console.log("Check your copying again")
                     return false;
@@ -48,6 +49,7 @@ module.exports = function (app, userFactory, campaignFactory, mCoin) {
         }
 
         try {
+            console.log(tx)
             if (!tx.isValid()) {
                 res.send(403, { "error": "Invalid signature" })
                 return;
