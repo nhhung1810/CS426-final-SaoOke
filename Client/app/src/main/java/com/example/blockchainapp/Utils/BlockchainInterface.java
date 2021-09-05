@@ -2,6 +2,7 @@ package com.example.blockchainapp.Utils;
 
 import com.example.blockchainapp.Account.UserKey;
 import com.example.blockchainapp.Campaign.Campaign;
+import com.example.blockchainapp.HelpRequest.HelpRequest;
 import com.example.blockchainapp.Transaction.Transaction;
 import com.example.blockchainapp.Log.TransactionLogList;
 import com.example.blockchainapp.Transaction.TransactionPackage;
@@ -36,4 +37,7 @@ public interface BlockchainInterface {
 
     @POST("/cpncreate")
     Call<Object> ExecutePostCampaign(@Body Campaign campaign);
+
+    @POST("/requesthelp")
+    Call<Boolean> ExecutePostHelpRequest(@Body HelpRequest helpRequest);
 }
