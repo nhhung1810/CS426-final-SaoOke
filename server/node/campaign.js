@@ -44,9 +44,10 @@ class Campaign {
 
     getAllDonators() {
         var donators = []
-        this.transactions.forEach(transaction => {
-            if (transaction.transaction.fromAddress != this.ownerKey) {
-                donators.push(transaction.transaction.fromAddress)
+        this.transactions.forEach(element => {
+            if (element.transaction.fromAddress != this.ownerKey) {
+                donators.push(JSON.parse(JSON.stringify(element)).transaction.fromAddress)
+                // donators.push(element.transaction.fromAddress)
             }
         });
         return donators
@@ -91,11 +92,11 @@ class CampaignFactory {
         this.campaignList.push(tmp) 
     }
 
-    donate(donatorKey, campaignName, transaction, message) {
+    donate(campaignName, transaction, message) {
         var targetCampaign = null
-        this.campaignList.forEach(campaign => {
-            if (campaign.campaignName == campaignName) {
-                targetCampaign = campaign
+        this.campaignList.forEach(element => {
+            if (element.campaignName == campaignName) {
+                targetCampaign = element //campaign
                 break
             }
         });
@@ -104,7 +105,7 @@ class CampaignFactory {
         }
 
         // make new transaction here
-        targetCampaign.push({
+        targetCampaign.transactions.push({
             "transaction" : transaction,
             "message" : message
         })
@@ -200,7 +201,7 @@ class CampaignFactory {
         var result = []
         var campaign = this.getCampaignByCampaignName(campaignName)
         if (campaign != null) {
-            return campaign.getAllDonators
+            return campaign.getAllDonators()
         }
         return null
     }
