@@ -1,16 +1,17 @@
 package com.example.blockchainapp.Campaign;
 
+import java.security.PublicKey;
 import java.sql.Date;
 
 public class Campaign {
-    private String ownerKey;
+    private PublicKey ownerKey;
     private String campaignName;
     private String ownerName;
     private Float targetAmount;
     private Date expireDate;
     private String propaganda;
 
-    public Campaign(String ownerKey, String campaignName, String ownerName, Float targetAmount, Date expireDate, String propaganda) {
+    public Campaign(PublicKey ownerKey, String campaignName, String ownerName, Float targetAmount, Date expireDate, String propaganda) {
         this.ownerKey = ownerKey;
         this.campaignName = campaignName;
         this.ownerName = ownerName;

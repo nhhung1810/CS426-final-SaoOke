@@ -31,14 +31,14 @@ public class CampaignActivity extends AppCompatActivity {
     private void initializeInputs() {
         et_campaignName = findViewById(R.id.et_campaignName);
         et_leaderName = findViewById(R.id.et_leaderName);
-        et_targetAmount = findViewById((R.id.et_targetAmount);
+        et_targetAmount = findViewById(R.id.et_targetAmount);
         et_expireDate = findViewById(R.id.et_expireDate);
         et_propaganda = findViewById(R.id.et_propaganda);
     }
 
     // btn_addCampaign onClick
     public void HandleCampaignCreation(View view) {
-        campaign = new Campaign(Constants.PRIVATE_KEY,
+        campaign = new Campaign(Constants.PUBLIC_KEY,
                                 et_campaignName.getText().toString(),
                                 et_leaderName.getText().toString(),
                                 Float.parseFloat(et_targetAmount.getText().toString()),

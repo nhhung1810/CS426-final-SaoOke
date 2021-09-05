@@ -50,7 +50,7 @@ public class CampaignListAdapter extends RecyclerView.Adapter<CampaignListAdapte
     public ViewHolder onCreateViewHolder(@NonNull @NotNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(context);
         View view = inflater.inflate(R.layout.campaign_row, parent, false);
-        return new LogAdapter.LogViewHolder(view);
+        return new ViewHolder(view);
     }
 
     @Override
