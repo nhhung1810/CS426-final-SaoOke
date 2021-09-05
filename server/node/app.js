@@ -49,7 +49,7 @@ require('./APIs/getAllCampaignAPI')(app, campaignFactory)
 
 require('./APIs/getCamByUserAPI')(app, campaignFactory)
 
-require('./APIs/publicAPI')(app, userFactory)
+require('./APIs/publicAPI')(app, userFactory, campaignFactory)
 
 
 
