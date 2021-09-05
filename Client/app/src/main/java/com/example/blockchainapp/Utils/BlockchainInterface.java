@@ -28,12 +28,12 @@ public interface BlockchainInterface {
     //@POST("/login")
     //Call<UserKey> ExecutePostLogin(@Body UserAccount account);
 
-    @GET("/campaign")
-    Call<>
+    //@GET("/campaign")
+    //Call<>
 
     @GET("/transactionsLog")
     Call<TransactionLogList> ExecuteGetTransactionLog();
 
-    @POST("/campaign")
-    Call<Boolean> ExecutePostCampaign(@Body Campaign campaign);
+    @POST("/cpncreate")
+    Call<Object> ExecutePostCampaign(@Body Campaign campaign);
 }

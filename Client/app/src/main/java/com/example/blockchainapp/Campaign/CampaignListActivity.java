@@ -22,7 +22,7 @@ public class CampaignListActivity extends AppCompatActivity {
         if (sortType.equals("ALL")) {
             loadCampaignList();
         } else if (sortType.equals("USER")) {
-
+            loadCampaignList();
         }
 
 

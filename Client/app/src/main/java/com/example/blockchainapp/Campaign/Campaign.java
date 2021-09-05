@@ -1,18 +1,19 @@
 package com.example.blockchainapp.Campaign;
 
 import java.security.PublicKey;
-import java.sql.Date;
+import java.util.Date;
 
 public class Campaign {
     private PublicKey ownerKey;
     private String campaignName;
     private String ownerName;
     private String description;
-    private Float targetAmount;
+    private Long targetAmount;
     private Date expireDate;
     private String propaganda;
+    private Long totalAmount;
 
-    public Campaign(PublicKey ownerKey, String campaignName, String ownerName, String description, Float targetAmount, Date expireDate, String propaganda) {
+    public Campaign(PublicKey ownerKey, String campaignName, String ownerName, String description, Long targetAmount, Date expireDate, String propaganda) {
         this.ownerKey = ownerKey;
         this.campaignName = campaignName;
         this.ownerName = ownerName;
@@ -46,11 +47,11 @@ public class Campaign {
         this.ownerName = ownerName;
     }
 
-    public Float getTargetAmount() {
+    public Long getTargetAmount() {
         return targetAmount;
     }
 
-    public void setTargetAmount(Float targetAmount) {
+    public void setTargetAmount(Long targetAmount) {
         this.targetAmount = targetAmount;
     }
 

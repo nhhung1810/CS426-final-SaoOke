@@ -50,7 +50,7 @@
             android:layout_height="wrap_content"
             android:hint="Description..."
             android:id="@+id/et_description"
-            android:inputType="numberDecimal"
+            android:inputType="textLongMessage"
             android:singleLine="true"/>
         <EditText
             android:layout_width="match_parent"
@@ -64,7 +64,11 @@
             android:layout_height="wrap_content"
             android:hint="Expire date"
             android:id="@+id/et_expireDate"
-            android:inputType="number"
+            android:clickable="false"
+            android:cursorVisible="false"
+            android:focusable="false"
+            android:focusableInTouchMode="false"
+            android:inputType="date"
             android:singleLine="true"/>
         <EditText
             android:layout_width="match_parent"
