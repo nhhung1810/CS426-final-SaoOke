@@ -51,6 +51,9 @@ require('./APIs/getAllCampaignAPI')(app, campaignFactory)
 
 require('./APIs/getCamByUserAPI')(app, campaignFactory)
 
+require('./APIs/publicAPI')(app, userFactory)
+
+
 
 
 // GET: CheckCampaignInformation (campaignName) => trả về tất cả thông tin kèm theo số tiền trong chiến dịch
