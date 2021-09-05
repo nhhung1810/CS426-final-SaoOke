@@ -92,19 +92,19 @@ class CampaignFactory {
     }
 
     donate(donatorKey, campaignName, transaction, message) {
-        var targetcampaign = null
+        var targetCampaign = null
         this.campaignList.forEach(campaign => {
             if (campaign.campaignName == campaignName) {
-                targetcampaign = campaign
+                targetCampaign = campaign
                 break
             }
         });
-        if (targetcampaign == null) {
+        if (targetCampaign == null) {
             throw new Error("Campaign not found");
         }
 
         // make new transaction here
-        targetcampaign.push({
+        targetCampaign.push({
             "transaction" : transaction,
             "message" : message
         })
