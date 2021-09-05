@@ -191,3 +191,14 @@ app.post('/mine', (req, res) => {
   }
 })
 
+
+// POST: CreateCampaign (ownerKey, campaignName, ownerName, targetAmount, expireDate, message)
+// POST: Donate (như transaction) (donatorKey, campaignName, amount, message) => Chuyển tiền bằng public key tới owner của cái campaign đó
+// POST: Give (như transaction) (campaignOwnerKey, receiverKey, amount ,message)
+// POST: RequestHelp (ownerKey, amount, message)
+// GET: CheckCampaignInformation (campaignName) => trả về tất cả thông tin kèm theo số tiền trong chiến dịch
+// GET: CheckHistory(campaign) => trả về các lượt donate và các lượt give của chiến dịch
+// GET: CheckAllCampaigns => lấy tất cả thông tin chiến dịch sẵn có
+// GET: CheckDonator(campaignName) => Danh sách các người donate của chiến dịch
+// GET: CheckHelpRequests => Danh sách các người đã đăng yêu cầu từ thiện
+
