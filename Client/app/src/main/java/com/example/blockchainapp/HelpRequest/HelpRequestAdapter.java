@@ -26,12 +26,16 @@ public class HelpRequestAdapter extends RecyclerView.Adapter<HelpRequestAdapter.
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
+        TextView tv_hr_campaignName;
+        TextView tv_hr_username;
         TextView tv_hr_amount;
         TextView tv_hr_message;
 
         public ViewHolder(@NonNull @NotNull View itemView) {
             super(itemView);
 
+            tv_hr_campaignName = itemView.findViewById(R.id.tv_hr_campaignName);
+            tv_hr_username = itemView.findViewById(R.id.tv_hr_username);
             tv_hr_amount = itemView.findViewById(R.id.tv_hr_amount);
             tv_hr_message = itemView.findViewById(R.id.tv_hr_message);
         }
@@ -50,6 +54,8 @@ public class HelpRequestAdapter extends RecyclerView.Adapter<HelpRequestAdapter.
     public void onBindViewHolder(@NonNull @NotNull HelpRequestAdapter.ViewHolder holder, int position) {
         HelpRequest helpRequest = list.get(position);
 
+        holder.tv_hr_campaignName.setText(helpRequest.getCampaignName());
+        holder.tv_hr_username.setText(helpRequest.getUsername());
         holder.tv_hr_amount.setText(helpRequest.getAmount().toString());
         holder.tv_hr_message.setText(helpRequest.getMessage());
     }
