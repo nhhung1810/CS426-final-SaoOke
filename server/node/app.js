@@ -37,7 +37,7 @@ require('./APIs/cpnCreateAPI')(app, userFactory, campaignFactory, mCoin)
 
 require('./APIs/getCpnInfoAPI')(app, campaignFactory)
 
-require('./APIS/requestHelpAPI')(app, campaignFactory)
+require('./APIs/requestHelpAPI')(app, campaignFactory)
 require('./APIs/donateAPI')(app, userFactory, campaignFactory, mCoin)
 
 // TODO

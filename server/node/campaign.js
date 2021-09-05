@@ -14,7 +14,7 @@ class Campaign {
     }
 
     getReceivedAmount() {
-        amount = 0;
+        var amount = 0;
         this.transactions.forEach(transaction => {
             if (this.ownerKey == transaction.transaction.toAddress) {
                 amount += transaction.transaction.amount;
@@ -138,21 +138,24 @@ class CampaignFactory {
     }
 
     getCampaignInformation(campaignName) {
-        this.campaignList.forEach(element => {
-            if (element.campaignName == campaignName) {
-                return {
-                    "campaignName" : element.campaignName,
-                    "ownerKey" : element.ownerKey,
-                    "ownerName" : element.ownerName,
-                    "description" : element.description,
-                    "targetAmount" : element.targetAmount,
-                    "expireDate" : element.expireDate,
-                    "propaganda" : element.propaganda,
-                    "total_amount" : element.getReceivedAmount()
-                }
+        var result = this.getCampaignByCampaignName(campaignName)
+        console.log(result)
+
+        if (result == null) {
+            return {
+                "message" : "Campaign does not exists"
             }
-        });
-        return null;
+        }
+        return {
+            "campaignName" : result.campaignName,
+            "campaignOwnerKey" : result.ownerKey,
+            "ownerName" : result.ownerName,
+            "description" : result.description,
+            "targetAmount" : result.targetAmount,
+            "expireDate" : result.expireDate,
+            "propaganda" : result.propaganda,
+            "total_amount" : result.getReceivedAmount()
+        };
     }
 
     getCampaignKey(campaignName) {
