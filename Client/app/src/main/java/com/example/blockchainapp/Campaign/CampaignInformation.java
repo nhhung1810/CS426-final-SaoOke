@@ -21,6 +21,7 @@ public class CampaignInformation extends AppCompatActivity {
 
     private String campaignName;
     private Campaign currentCampaign;
+    
 
     TextView tv_campaignName;
     TextView tv_campaignOwner;

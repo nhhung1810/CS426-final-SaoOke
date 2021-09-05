@@ -7,12 +7,28 @@
     android:layout_height="match_parent"
     tools:context=".Account.AccountActivity">
 
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:minHeight="200dp"
+        android:background="#FF333333"
+        android:scaleType="centerCrop"
+        />
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:layout_centerVertical="true"
         android:layout_marginHorizontal="20sp">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_balance_account"
+            android:minHeight="200dp"
+            app:tint="@color/gold"/>
+
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -32,6 +48,30 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Refresh balance"
+            android:textColor="@color/gold"
+            android:textStyle="bold"
+            android:onClick="HandleRefreshBalance"/>
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Integrate bank (coming soon)"
+            android:textColor="@color/gold"
+            android:textStyle="bold"
+            android:onClick="HandleRefreshBalance"/>
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Add money to account (coming soon)"
+            android:textColor="@color/gold"
+            android:textStyle="bold"
+            android:onClick="HandleRefreshBalance"/>
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Make a transaction (coming soon)"
             android:textColor="@color/gold"
             android:textStyle="bold"
             android:onClick="HandleRefreshBalance"/>

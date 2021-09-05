@@ -44,7 +44,7 @@ public interface BlockchainInterface {
     @GET("/campaigns")
     Call<Campaign[]> ExecuteGetAllCampaign();
 
-    @GET("/campaigns/{username}")
+    @GET("/getCamByUser/{username}")
     Call<Campaign[]> ExecuteGetCampaignsByUser(@Path("username") String username);
 
     @GET("/transactionsLog")
