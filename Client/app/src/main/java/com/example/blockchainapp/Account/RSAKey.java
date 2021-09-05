@@ -205,7 +205,7 @@ public class RSAKey{
         Signature privateSignature = Signature.getInstance("SHA256withRSA");
         privateSignature.initSign(privateKey);
         // from + to + amount
-        System.out.println("Signature: " + text);
+        // System.out.println("Signature: " + text);
         // String toBeHashed = Constants.PUBLIC_KEY.toString() + transaction.getToUser() + transaction.getAmount();
         privateSignature.update(text.getBytes());
 
