@@ -14,13 +14,30 @@ class Campaign {
     getReceivedAmount() {
         amount = 0;
         this.transactions.forEach(transaction => {
-            if (this.ownerKey == transaction.toAddress) {
-                amount += transaction.amount;
+            if (this.ownerKey == transaction.transaction.toAddress) {
+                amount += transaction.transaction.amount;
             } else {
-                amount -= transaction.amount;
+                amount -= transaction.transaction.amount;
             }
         });
         return amount;
+    }
+
+    getHistory() {
+        var logs = []
+        this.transactions.forEach(transaction => {
+            if (transaction.transaction.toAddress == this.ownerKey) {
+                logs.push({
+                    "amount" : transaction.transaction.amount,
+                    "message" : transaction.message
+                })
+            } else {
+                logs.push({
+                    "amount" : -transaction.transaction.amount,
+                    "message" : transaction.message
+                })
+            }
+        });
     }
 }
 
@@ -94,8 +111,16 @@ class CampaignFactory {
                     "ownerName" : element.ownerName,
                     "targetAmount" : element.targetAmount,
                     "expireDate" : element.expireDate,
-                    "total_amount" : element.getReceivedAmount
+                    "total_amount" : element.getReceivedAmount()
                 }
+            }
+        });
+    }
+
+    getCampaignHistory(campaignName) {
+        this.campaignList.forEach(campaign => {
+            if (Campaign.campaignName == campaignName) {
+                return campaign.getHistory()
             }
         });
     }
