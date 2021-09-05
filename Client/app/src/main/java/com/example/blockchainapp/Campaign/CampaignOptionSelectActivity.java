@@ -21,6 +21,6 @@ public class CampaignOptionSelectActivity extends AppCompatActivity {
     }
 
     public void viewCampaignList(View view) {
-        startActivity(new Intent(this, CampaignListActivity.class);
+        startActivity(new Intent(this, CampaignListActivity.class));
     }
 }

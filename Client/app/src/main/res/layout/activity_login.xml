@@ -38,7 +38,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Log in"
+                    android:text="Welcome to MCoin!"
                     android:textSize="25sp"
                     android:textColor="@color/white"
                     />
