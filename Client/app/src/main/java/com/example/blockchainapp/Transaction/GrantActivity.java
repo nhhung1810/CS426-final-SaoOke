@@ -13,11 +13,10 @@ import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.blockchainapp.Account.PublicKey;
 import com.example.blockchainapp.Account.RSAKey;
 import com.example.blockchainapp.Constants;
 import com.example.blockchainapp.R;
-import com.example.blockchainapp.Transaction.Transaction;
-import com.example.blockchainapp.Transaction.TransactionPackage;
 import com.example.blockchainapp.Utils.RetrofitUtils;
 
 import java.io.IOException;
@@ -47,7 +46,7 @@ public class GrantActivity extends AppCompatActivity {
         messageET = findViewById(R.id.et_message);
 
         ArrayAdapter<String> adapter = new ArrayAdapter<String>
-                (this,android.R.layout.select_dialog_item, Constants.CAMPAIGN_LIST);
+                (this,android.R.layout.select_dialog_item, Constants.USER_CAMPAIGN_LIST);
 
         campaignET.setThreshold(1);
         campaignET.setAdapter(adapter);
@@ -56,6 +55,7 @@ public class GrantActivity extends AppCompatActivity {
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     public void HandleGrant(View view) throws Exception {
+
         if (TextUtils.isEmpty(campaignET.getText()) || TextUtils.isEmpty(amountET.getText())) return;
         String campaign = campaignET.getText().toString();
         String toUser = toUserET.getText().toString();
@@ -64,17 +64,46 @@ public class GrantActivity extends AppCompatActivity {
 
         // TODO: change public key to campaign's name
         GrantRequest request = new GrantRequest(campaign, toUser, amount, message);
-        request.setSignature(RSAKey.sign(campaign + toUser + amount.toString(), Constants.PRIVATE_KEY));
-        //Transaction transaction = new Transaction(Constants.PUBLIC_KEY, toCampaign, amount, message);
+        // request.setSignature(RSAKey.sign(campaign + toUser + amount.toString(), Constants.PRIVATE_KEY));
+        // System.out.println("Here:" + campaign);
 
-        Call<Object> grantCall = RetrofitUtils.blockchainInterface.ExecutePostGrant(request);
-        grantCall.enqueue(new Callback<Object>() {
-
+        Call<PublicKey> publicKeyCall = RetrofitUtils.blockchainInterface.ExecuteGetPublicKey(RetrofitUtils.GetUserByCampaign(campaign));
+        publicKeyCall.enqueue(new Callback<PublicKey>() {
             @Override
-            public void onResponse(Call<Object> call, Response<Object> response) {
+            public void onResponse(Call<PublicKey> call, Response<PublicKey> response) {
                 if (response.code() == 200) {
-                    Toast.makeText(GrantActivity.this,
-                            "You have successfully donated to the campaign!", Toast.LENGTH_LONG).show();
+                    String toUserPublicKey = response.body().publicKey;
+                    try {
+                        System.out.println("Obtained public key");
+                        request.setSignature(RSAKey.sign(Constants.PUBLIC_KEY.toString() +
+                                toUserPublicKey + amount.toString(), Constants.PRIVATE_KEY));
+
+                        Call<Object> grantCall = RetrofitUtils.blockchainInterface.ExecutePostGrant(request);
+                        grantCall.enqueue(new Callback<Object>() {
+                            @Override
+                            public void onResponse(Call<Object> call, Response<Object> response) {
+                                if (response.code() == 200) {
+                                    Toast.makeText(GrantActivity.this,
+                                            "You have successfully donated to the campaign!", Toast.LENGTH_LONG).show();
+                                } else {
+                                    try {
+                                        Toast.makeText(GrantActivity.this,
+                                                response.errorBody().string(), Toast.LENGTH_LONG).show();
+                                    } catch (IOException e) {
+                                        e.printStackTrace();
+                                    }
+                                }
+                            }
+
+                            @Override
+                            public void onFailure(Call<Object> call, Throwable t) {
+                                Toast.makeText(GrantActivity.this, t.getMessage(), Toast.LENGTH_LONG).show();
+                            }
+                        });
+
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                 } else {
                     try {
                         Toast.makeText(GrantActivity.this,
@@ -86,11 +115,13 @@ public class GrantActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<Object> call, Throwable t) {
+            public void onFailure(Call<PublicKey> call, Throwable t) {
                 Toast.makeText(GrantActivity.this, t.getMessage(), Toast.LENGTH_LONG).show();
             }
         });
 
+
+        //Transaction transaction = new Transaction(Constants.PUBLIC_KEY, toCampaign, amount, message);
         /*
         Transaction transaction = new Transaction(Constants.PUBLIC_KEY, toUser, amount, message);
         String signature = RSAKey.sign(transaction, Constants.PRIVATE_KEY);

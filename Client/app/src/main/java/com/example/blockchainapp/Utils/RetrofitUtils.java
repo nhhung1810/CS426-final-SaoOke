@@ -1,27 +1,33 @@
 package com.example.blockchainapp.Utils;
 
 import android.util.Log;
-import android.widget.ArrayAdapter;
-import android.widget.Toast;
 
 import com.example.blockchainapp.Campaign.Campaign;
 import com.example.blockchainapp.Constants;
-import com.example.blockchainapp.HelpRequest.HelpRequestListActivity;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
+import retrofit2.converter.scalars.ScalarsConverterFactory;
 
 public class RetrofitUtils {
 
+    public static Gson gson = new GsonBuilder()
+            .setLenient()
+            .create();
+
     public static Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(Constants.BASE_URL)
-                .addConverterFactory(GsonConverterFactory.create())
+                .addConverterFactory(GsonConverterFactory.create(gson))
+                .addConverterFactory(ScalarsConverterFactory.create())
                 .build();
     public static BlockchainInterface blockchainInterface = retrofit.create(BlockchainInterface.class);
 
@@ -69,8 +75,8 @@ public class RetrofitUtils {
                     for (int i = 0; i < campaigns.length; ++i) {
                         campaignNames.add(campaigns[i].getCampaignName());
                     }
-                    Constants.CAMPAIGN_LIST = new String[campaignNames.size()];
-                    campaignNames.toArray(Constants.CAMPAIGN_LIST);
+                    Constants.USER_CAMPAIGN_LIST = new String[campaignNames.size()];
+                    campaignNames.toArray(Constants.USER_CAMPAIGN_LIST);
                 }
                 else {
                     try {
@@ -92,5 +98,49 @@ public class RetrofitUtils {
 
 
     }
+
+    public static void LoadAllCampaigns() {
+
+
+        Call<Campaign[]> logCall = RetrofitUtils.blockchainInterface.ExecuteGetAllCampaign();
+        logCall.enqueue(new Callback<Campaign[]>() {
+            @Override
+            public void onResponse(Call<Campaign[]> call, Response<Campaign[]> response) {
+                if (response.code() == 200) {
+                    Log.d("log callback",response.body().toString());
+                    Constants.ALL_CAMPAIGN_LIST = Arrays.copyOf(response.body(), response.body().length);
+                }
+                else {
+                    try {
+                        System.out.println(response.errorBody().string());
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+
+                }
+
+            }
+            @Override
+            public void onFailure(Call<Campaign[]> call, Throwable t) {
+                System.out.println(t.getMessage());
+            }
+        });
+
+//        recyclerView.setAdapter(new CampaignListAdapter());
+//        recyclerView.setLayoutManager(new LinearLayoutManager(CampaignListActivity.this));
+    }
+
+    public static String GetUserByCampaign(String campaignName) {
+        // System.out.println("Test");
+        for (int i = 0; i < Constants.ALL_CAMPAIGN_LIST.length; ++i) {
+            // System.out.println(i);
+            if (Constants.ALL_CAMPAIGN_LIST[i].getCampaignName().equals(campaignName)) {
+                return Constants.ALL_CAMPAIGN_LIST[i].getOwnerName();
+            }
+        }
+        System.out.println("Cannot find any matching owner");
+        return "";
+    }
+
 
 }

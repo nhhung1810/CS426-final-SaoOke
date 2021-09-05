@@ -1,5 +1,6 @@
 package com.example.blockchainapp.Utils;
 
+import com.example.blockchainapp.Account.PublicKey;
 import com.example.blockchainapp.Account.UserKey;
 import com.example.blockchainapp.Campaign.Campaign;
 import com.example.blockchainapp.Campaign.CampaignList;
@@ -9,8 +10,6 @@ import com.example.blockchainapp.Transaction.GrantRequest;
 import com.example.blockchainapp.Transaction.Transaction;
 import com.example.blockchainapp.Log.TransactionLogList;
 import com.example.blockchainapp.Transaction.TransactionPackage;
-
-import java.security.PublicKey;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -43,6 +42,9 @@ public interface BlockchainInterface {
 
     @GET("/campaigns")
     Call<Campaign[]> ExecuteGetAllCampaign();
+
+    @GET("/public/{username}")
+    Call<PublicKey> ExecuteGetPublicKey(@Path("username") String username);
 
     @GET("/getCamByUser/{username}")
     Call<Campaign[]> ExecuteGetCampaignsByUser(@Path("username") String username);

@@ -4,6 +4,7 @@ import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.graphics.Color;
+import android.graphics.Path;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -13,12 +14,15 @@ import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.blockchainapp.Account.PublicKey;
 import com.example.blockchainapp.Account.RSAKey;
+import com.example.blockchainapp.Campaign.Campaign;
 import com.example.blockchainapp.Constants;
 import com.example.blockchainapp.R;
 import com.example.blockchainapp.Utils.RetrofitUtils;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -44,8 +48,17 @@ public class DonationActivity extends AppCompatActivity {
         amountET = findViewById(R.id.et_amount);
         messageET = findViewById(R.id.et_message);
 
+        Campaign[] campaigns = Constants.ALL_CAMPAIGN_LIST;
+        ArrayList<String> campaignNames = new ArrayList<>();
+        for (int i = 0; i < campaigns.length; ++i) {
+            campaignNames.add(campaigns[i].getCampaignName());
+        }
+
+        String[] listCampaign = new String[campaignNames.size()];
+        campaignNames.toArray(listCampaign);
+
         ArrayAdapter<String> adapter = new ArrayAdapter<String>
-                (this,android.R.layout.select_dialog_item, Constants.CAMPAIGN_LIST);
+                (this,android.R.layout.select_dialog_item, listCampaign);
 
         campaignET.setThreshold(1);
         campaignET.setAdapter(adapter);
@@ -62,16 +75,43 @@ public class DonationActivity extends AppCompatActivity {
 
         // TODO: change private key to user's current session
         DonationRequest request = new DonationRequest(toCampaign, Constants.USERNAME, amount, message);
-        request.setSignature(RSAKey.sign(Constants.USERNAME + toCampaign + amount.toString(), Constants.PRIVATE_KEY));
-        //Transaction transaction = new Transaction(Constants.PUBLIC_KEY, toCampaign, amount, message);
 
-        Call<Object> donationCall = RetrofitUtils.blockchainInterface.ExecutePostDonate(request);
-        donationCall.enqueue(new Callback<Object>() {
+        Call<PublicKey> publicKeyCall = RetrofitUtils.blockchainInterface.ExecuteGetPublicKey(RetrofitUtils.GetUserByCampaign(toCampaign));
+        publicKeyCall.enqueue(new Callback<PublicKey>() {
             @Override
-            public void onResponse(Call<Object> call, Response<Object> response) {
+            public void onResponse(Call<PublicKey> call, Response<PublicKey> response) {
                 if (response.code() == 200) {
-                    Toast.makeText(DonationActivity.this,
-                            "You have successfully donated to the campaign!", Toast.LENGTH_LONG).show();
+                    String toUserPublicKey = response.body().publicKey;
+                    try {
+                        request.setSignature(RSAKey.sign(Constants.PUBLIC_KEY.toString() +
+                                toUserPublicKey + amount.toString(), Constants.PRIVATE_KEY));
+
+                        Call<Object> donationCall = RetrofitUtils.blockchainInterface.ExecutePostDonate(request);
+                        donationCall.enqueue(new Callback<Object>() {
+                            @Override
+                            public void onResponse(Call<Object> call, Response<Object> response) {
+                                if (response.code() == 200) {
+                                    Toast.makeText(DonationActivity.this,
+                                            "You have successfully donated to the campaign!", Toast.LENGTH_LONG).show();
+                                } else {
+                                    try {
+                                        Toast.makeText(DonationActivity.this,
+                                                response.errorBody().string(), Toast.LENGTH_LONG).show();
+                                    } catch (IOException e) {
+                                        e.printStackTrace();
+                                    }
+                                }
+                            }
+
+                            @Override
+                            public void onFailure(Call<Object> call, Throwable t) {
+                                Toast.makeText(DonationActivity.this, t.getMessage(), Toast.LENGTH_LONG).show();
+                            }
+                        });
+
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                 } else {
                     try {
                         Toast.makeText(DonationActivity.this,
@@ -83,10 +123,14 @@ public class DonationActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<Object> call, Throwable t) {
+            public void onFailure(Call<PublicKey> call, Throwable t) {
                 Toast.makeText(DonationActivity.this, t.getMessage(), Toast.LENGTH_LONG).show();
             }
         });
+
+        //Transaction transaction = new Transaction(Constants.PUBLIC_KEY, toCampaign, amount, message);
+
+
 
         /*
         Call<Boolean> transactionCall = RetrofitUtils.blockchainInterface.ExecutePostTransaction(transactionPackage);

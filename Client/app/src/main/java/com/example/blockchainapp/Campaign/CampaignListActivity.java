@@ -1,23 +1,16 @@
 package com.example.blockchainapp.Campaign;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
 import android.util.Log;
-import android.view.MotionEvent;
 import android.widget.Toast;
 
 import com.example.blockchainapp.Constants;
-import com.example.blockchainapp.Log.HistoryActivity;
-import com.example.blockchainapp.Log.LogAdapter;
-import com.example.blockchainapp.Log.TransactionLogList;
 import com.example.blockchainapp.R;
 import com.example.blockchainapp.Utils.RetrofitUtils;
-
-import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -81,8 +74,8 @@ public class CampaignListActivity extends AppCompatActivity {
                     for (int i = 0; i < campaigns.length; ++i) {
                         campaignNames.add(campaigns[i].getCampaignName());
                     }
-                    Constants.CAMPAIGN_LIST = new String[campaignNames.size()];
-                    campaignNames.toArray(Constants.CAMPAIGN_LIST);
+                    Constants.USER_CAMPAIGN_LIST = new String[campaignNames.size()];
+                    campaignNames.toArray(Constants.USER_CAMPAIGN_LIST);
 
                     CampaignListAdapter adapter = new CampaignListAdapter(response.body(), CampaignListActivity.this);
                     recyclerView.setAdapter(adapter);

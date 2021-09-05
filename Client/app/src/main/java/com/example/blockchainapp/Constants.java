@@ -11,7 +11,8 @@ public class Constants {
     public static final String RESOURCE_LOCATION = "CharityBlockchain";
 
     // SESSION INFORMATION
-    public static String[] CAMPAIGN_LIST = {"Empty"};
+    public static Campaign[] ALL_CAMPAIGN_LIST = {};
+    public static String[] USER_CAMPAIGN_LIST = {"Empty"};
     public static Long BALANCE = Long.valueOf(1000);
     public static String USERNAME = "";
     public static PrivateKey PRIVATE_KEY;

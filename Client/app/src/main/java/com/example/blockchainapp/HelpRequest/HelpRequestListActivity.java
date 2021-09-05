@@ -13,14 +13,11 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.example.blockchainapp.Campaign.Campaign;
-import com.example.blockchainapp.Campaign.CampaignListActivity;
-import com.example.blockchainapp.Campaign.CampaignListAdapter;
 import com.example.blockchainapp.Constants;
 import com.example.blockchainapp.R;
 import com.example.blockchainapp.Utils.RetrofitUtils;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -40,8 +37,8 @@ public class HelpRequestListActivity extends AppCompatActivity {
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                if (i < Constants.CAMPAIGN_LIST.length)
-                loadHelpRequests(Constants.CAMPAIGN_LIST[i]);
+                if (i < Constants.USER_CAMPAIGN_LIST.length)
+                loadHelpRequests(Constants.USER_CAMPAIGN_LIST[i]);
             }
 
             @Override
@@ -71,10 +68,10 @@ public class HelpRequestListActivity extends AppCompatActivity {
                     for (int i = 0; i < campaigns.length; ++i) {
                         campaignNames.add(campaigns[i].getCampaignName());
                     }
-                    Constants.CAMPAIGN_LIST = new String[campaignNames.size()];
-                    campaignNames.toArray(Constants.CAMPAIGN_LIST);
+                    Constants.USER_CAMPAIGN_LIST = new String[campaignNames.size()];
+                    campaignNames.toArray(Constants.USER_CAMPAIGN_LIST);
                     ArrayAdapter adapter = new ArrayAdapter(HelpRequestListActivity.this,
-                            android.R.layout.simple_spinner_item, Constants.CAMPAIGN_LIST);
+                            android.R.layout.simple_spinner_item, Constants.USER_CAMPAIGN_LIST);
                     adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                     spinner.setAdapter(adapter);
                 }

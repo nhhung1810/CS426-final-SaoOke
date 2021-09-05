@@ -11,11 +11,8 @@ import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.example.blockchainapp.Account.RSAKey;
 import com.example.blockchainapp.Constants;
 import com.example.blockchainapp.R;
-import com.example.blockchainapp.Transaction.Transaction;
-import com.example.blockchainapp.Transaction.TransactionPackage;
 import com.example.blockchainapp.Utils.RetrofitUtils;
 
 import java.io.IOException;
@@ -43,7 +40,7 @@ public class HelpRequestActivity extends AppCompatActivity {
         et_hr_message = findViewById(R.id.et_hr_message);
 
         ArrayAdapter<String> adapter = new ArrayAdapter<String>
-                (this,android.R.layout.select_dialog_item, Constants.CAMPAIGN_LIST);
+                (this,android.R.layout.select_dialog_item, Constants.USER_CAMPAIGN_LIST);
 
         actv_hr_campaign.setThreshold(1);
         actv_hr_campaign.setAdapter(adapter);
