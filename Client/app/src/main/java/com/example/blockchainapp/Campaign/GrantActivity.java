@@ -17,7 +17,6 @@ import com.example.blockchainapp.Account.RSAKey;
 import com.example.blockchainapp.Constants;
 import com.example.blockchainapp.R;
 import com.example.blockchainapp.Transaction.Transaction;
-import com.example.blockchainapp.Transaction.TransactionActivity;
 import com.example.blockchainapp.Transaction.TransactionPackage;
 import com.example.blockchainapp.Utils.RetrofitUtils;
 
@@ -27,7 +26,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class DonateActivity extends AppCompatActivity {
+public class GrantActivity extends AppCompatActivity {
 
     private AutoCompleteTextView campaignET;
     private EditText toUserET;
@@ -65,6 +64,7 @@ public class DonateActivity extends AppCompatActivity {
 
         // TODO: change public key to campaign's name
 
+        /*
         Transaction transaction = new Transaction(Constants.PUBLIC_KEY, toUser, amount, message);
         String signature = RSAKey.sign(transaction, Constants.PRIVATE_KEY);
         TransactionPackage transactionPackage = new TransactionPackage(transaction, signature);
@@ -74,11 +74,11 @@ public class DonateActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<Boolean> call, Response<Boolean> response) {
                 if (response.code() == 200) {
-                    Toast.makeText(DonateActivity.this,
+                    Toast.makeText(GrantActivity.this,
                             "Transaction carried out successfully!", Toast.LENGTH_LONG).show();
                 } else {
                     try {
-                        Toast.makeText(DonateActivity.this,
+                        Toast.makeText(GrantActivity.this,
                                 response.errorBody().string(), Toast.LENGTH_LONG).show();
                     } catch (IOException e) {
                         e.printStackTrace();
@@ -88,9 +88,11 @@ public class DonateActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<Boolean> call, Throwable t) {
-                Toast.makeText(DonateActivity.this, t.getMessage(), Toast.LENGTH_LONG).show();
+                Toast.makeText(GrantActivity.this, t.getMessage(), Toast.LENGTH_LONG).show();
             }
         });
+
+         */
     }
 
 }

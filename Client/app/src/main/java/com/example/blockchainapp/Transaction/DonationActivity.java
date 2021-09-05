@@ -19,14 +19,12 @@ import com.example.blockchainapp.R;
 import com.example.blockchainapp.Utils.RetrofitUtils;
 
 import java.io.IOException;
-import java.security.KeyPair;
-import java.security.PublicKey;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class TransactionActivity extends AppCompatActivity {
+public class DonationActivity extends AppCompatActivity {
 
     private AutoCompleteTextView campaignET;
     private EditText amountET;
@@ -63,10 +61,34 @@ public class TransactionActivity extends AppCompatActivity {
         String message = messageET.getText().toString();
 
         // TODO: change private key to user's current session
-        Transaction transaction = new Transaction(Constants.PUBLIC_KEY, toCampaign, amount, message);
-        String signature = RSAKey.sign(transaction, Constants.PRIVATE_KEY);
-        TransactionPackage transactionPackage = new TransactionPackage(transaction, signature);
+        DonationRequest request = new DonationRequest(toCampaign, Constants.USERNAME, amount, message);
+        request.setSignature(RSAKey.sign(toCampaign + Constants.USERNAME + amount.toString(), Constants.PRIVATE_KEY));
+        //Transaction transaction = new Transaction(Constants.PUBLIC_KEY, toCampaign, amount, message);
 
+        Call<Object> donationCall = RetrofitUtils.blockchainInterface.ExecutePostDonate(request);
+        donationCall.enqueue(new Callback<Object>() {
+            @Override
+            public void onResponse(Call<Object> call, Response<Object> response) {
+                if (response.code() == 200) {
+                    Toast.makeText(DonationActivity.this,
+                            "You have successfully donated to the campaign!", Toast.LENGTH_LONG).show();
+                } else {
+                    try {
+                        Toast.makeText(DonationActivity.this,
+                                response.errorBody().string(), Toast.LENGTH_LONG).show();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Object> call, Throwable t) {
+                Toast.makeText(DonationActivity.this, t.getMessage(), Toast.LENGTH_LONG).show();
+            }
+        });
+
+        /*
         Call<Boolean> transactionCall = RetrofitUtils.blockchainInterface.ExecutePostTransaction(transactionPackage);
         transactionCall.enqueue(new Callback<Boolean>() {
             @Override
@@ -89,6 +111,8 @@ public class TransactionActivity extends AppCompatActivity {
                 Toast.makeText(TransactionActivity.this, t.getMessage(), Toast.LENGTH_LONG).show();
             }
         });
+
+         */
 
     }
 }

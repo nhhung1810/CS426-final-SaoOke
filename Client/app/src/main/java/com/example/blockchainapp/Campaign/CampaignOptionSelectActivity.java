@@ -21,13 +21,13 @@ public class CampaignOptionSelectActivity extends AppCompatActivity {
     }
 
     public void viewCampaignList(View view) {
-        Intent intent = new Intent(this, CampaignActivity.class);
+        Intent intent = new Intent(this, CampaignListActivity.class);
         intent.putExtra("SORT_TYPE", "ALL");
         startActivity(intent);
     }
 
     public void viewYourCampaign(View view) {
-        Intent intent = new Intent(this, CampaignActivity.class);
+        Intent intent = new Intent(this, CampaignListActivity.class);
         intent.putExtra("SORT_TYPE", "USER");
         startActivity(intent);
     }

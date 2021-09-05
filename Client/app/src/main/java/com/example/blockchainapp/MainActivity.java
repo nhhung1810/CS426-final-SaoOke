@@ -11,7 +11,7 @@ import com.example.blockchainapp.Account.AccountActivity;
 import com.example.blockchainapp.Auth.LoginActivity;
 import com.example.blockchainapp.Campaign.CampaignOptionSelectActivity;
 import com.example.blockchainapp.Log.HistoryActivity;
-import com.example.blockchainapp.Transaction.TransactionActivity;
+import com.example.blockchainapp.Transaction.DonationActivity;
 
 import java.text.NumberFormat;
 import java.util.Locale;
@@ -47,7 +47,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void TransactionTab(View view) {
-        Intent intent = new Intent(this, TransactionActivity.class);
+        Intent intent = new Intent(this, DonationActivity.class);
         startActivity(intent);
     }
 

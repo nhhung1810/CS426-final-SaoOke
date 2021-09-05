@@ -2,6 +2,7 @@ package com.example.blockchainapp.Utils;
 
 import com.example.blockchainapp.Account.UserKey;
 import com.example.blockchainapp.Campaign.Campaign;
+import com.example.blockchainapp.Transaction.DonationRequest;
 import com.example.blockchainapp.Transaction.Transaction;
 import com.example.blockchainapp.Log.TransactionLogList;
 import com.example.blockchainapp.Transaction.TransactionPackage;
@@ -24,6 +25,9 @@ public interface BlockchainInterface {
 
     @POST("/register")
     Call<Object> ExecutePostRegister(@Body UserKey account);
+
+    @POST("/donate")
+    Call<Object> ExecutePostDonate(@Body DonationRequest request);
 
     //@POST("/login")
     //Call<UserKey> ExecutePostLogin(@Body UserAccount account);

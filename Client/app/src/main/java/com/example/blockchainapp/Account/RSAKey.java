@@ -177,12 +177,12 @@ public class RSAKey{
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
-    public static String sign(Transaction transaction, PrivateKey privateKey) throws Exception {
+    public static String sign(String text, PrivateKey privateKey) throws Exception {
         Signature privateSignature = Signature.getInstance("SHA256withRSA");
         privateSignature.initSign(privateKey);
         // from + to + amount
-        String toBeHashed = Constants.PUBLIC_KEY.toString() + transaction.getToUser() + transaction.getAmount();
-        privateSignature.update(toBeHashed.getBytes());
+        // String toBeHashed = Constants.PUBLIC_KEY.toString() + transaction.getToUser() + transaction.getAmount();
+        privateSignature.update(text.getBytes());
 
         byte[] signature = privateSignature.sign();
 
