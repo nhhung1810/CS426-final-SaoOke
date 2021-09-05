@@ -28,6 +28,7 @@ app.listen(port, () => {
   // test()
 })
 
+<<<<<<< HEAD
 //param: address = username
 app.post("/balance/:username", function(req, res){
   if(!req.params | !req.params.username){
@@ -109,94 +110,15 @@ app.post('/transaction', function(req, res){
       res.send(405, {"error" : "Invalid sign key. Check your 'from' key"})
       return;
     }
+=======
+require('./APIs/balanceAPI')(app)
 
-    console.log("\nPassed the valid check!!\n")
-    mCoin.addTransaction(tx)
-    mCoin.minePendingTransactions("master-mine")
-    res.send(200, {"status" : "success"});
-  }
-  
-})
+require('./APIs/transactionAPI')(app)
+>>>>>>> origin/hung-api2
 
-// Route: /register
-// Method: POST
-// json sent via body
-// {username: "", publicKey: "The original PEM"}
-// {
-//   "username" : "admin",
-//   "publicKey" : "-----BEGIN PUBLIC KEY-----\nMIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDGOll
-//    Tab/mVTMs3353mOBwjDp+\nM6LYYHi+ttH7/diA5PA7ZqJ2NtOzZXWjdaCGrqT/f0vkjWxCzhb1UOGZsSH+jVh
-//    K\niAsag+n2e+xzOPoe7xfWqOn3fI2Rt9yGswJcPP0mHUWsnlOuew9T+yyC7RFEFTX7\nRnD6gyYD8gbWvlFfu
-//    wIDAQAB\n-----END PUBLIC KEY-----"
-// }
-app.post('/register', function(req, res){
-  const register = (req) => {
-    if(!req || !req.body) return null;
-    if(!req.body.username || !req.body.publicKey) return null;
-    else {
-      return userFactory.makeUser(req.body.username, req.body.publicKey)
-    }
-  }
+require('./APIs/registerAPI')(app)
 
-  try {
-    flag = register(req)
-    if(flag === null) res.send(404, {
-      "error" : "Invalid register process. Check your params"
-    })  
-    else{
-      userFactory.freeMoney(req.body.username, 1000, mCoin)
-      res.send(200, {
-        "status" : "success"
-      })
-    } 
-  } catch(err) {
-    //case: error at the makeUser, maybe the username is existed
-    console.log(err)
-    res.send(405, {
-      "error" : "Check your username. It may existed"
-    })
-  }
-})
-
-
-// Route: /transactionLog
-// Method: GET
-// {
-//   "logs": [
-//       {
-//           "fromAddress": null,
-//           "toAddress": "-----BEGIN PUBLIC KEY-----\nMIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDGOllTab/mVTMs3353mOBwjDp+\nM6LYYHi+ttH7/diA5PA7ZqJ2NtOzZXWjdaCGrqT/f0vkjWxCzhb1UOGZsSH+jVhK\niAsag+n2e+xzOPoe7xfWqOn3fI2Rt9yGswJcPP0mHUWsnlOuew9T+yyC7RFEFTX7\nRnD6gyYD8gbWvlFfuwIDAQAB\n-----END PUBLIC KEY-----",
-//           "amount": 100,
-//           "signature": "",
-//           "timestamp": 1630810142437
-//       }, ...
-//   ]
-// }
-app.get('/transactionsLog', function(req, res) {
-  var transactions = mCoin.getTransactionsLog()
-  res.send(200, 
-    {
-      "logs": transactions
-    }  
-  )
-})
-
-//inactive
-app.post('/mine', (req, res) => {
-  console.log(req.body)
-  if (!req || !req.body || !req.body.address) {
-    res.send(404, {
-      "status" : "failed",
-      "error" : "Invalid request. Check your params"
-    })
-  } else {
-    address = req.body.address
-    mCoin.minePendingTransactions(address)
-    res.send(200, {
-      "status" : "success"
-    }) 
-  }
-})
+require('./APIs/transactionlogAPI')(app)
 
 
 // POST: CreateCampaign (ownerKey, campaignName, ownerName, targetAmount, expireDate, message)
