@@ -52,9 +52,9 @@ class Campaign {
         return donators
     }
 
-    requestHelp(address, amount, message) {
+    requestHelp(username, amount, message) {
         this.requestHelpList.push({
-            "address" : address,
+            "username" : username,
             "amount" : amount,
             "message" : message
         })
@@ -80,13 +80,14 @@ class CampaignFactory {
         return campaign
     }
 
-    createCampaign(campaignName, ownerKey, ownerName, targetAmount, expireDate, message) {
+    createCampaign(campaignName, ownerKey, ownerName, targetAmount, expireDate, description, propaganda = "") {
         this.campaignList.forEach(element => {
             if (element.campaignName == campaignName) {
                 throw new Error("This campain name is exists")
             }
         });
-        this.campaignList.push(new Campaign(campaignName, ownerKey, ownerName, targetAmount, expireDate, message))
+        this.campaignList.push(new Campaign(campaignName, ownerKey, ownerName, targetAmount, 
+                expireDate, description, propaganda))
     }
 
     donate(donatorKey, campaignName, transaction, message) {
@@ -193,12 +194,12 @@ class CampaignFactory {
         return null
     }
 
-    requestHelp(campaignName, address, amount, message) {
+    requestHelp(campaignName, username, amount, message) {
         var campaign = this.getCampaignByCampaignName(campaignName)
         if (campaign == null) {
             throw new Error("campaign does not exists")
         }
-        campaign.requestHelp(address, amount, message)
+        campaign.requestHelp(username, amount, message)
         return true
     }
 
