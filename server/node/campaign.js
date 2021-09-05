@@ -40,6 +40,7 @@ class Campaign {
                 })
             }
         });
+        return logs
     }
 
     getAllDonators() {
@@ -173,11 +174,8 @@ class CampaignFactory {
     }
 
     getCampaignHistory(campaignName) {
-        this.campaignList.forEach(campaign => {
-            if (Campaign.campaignName == campaignName) {
-                return campaign.getHistory()
-            }
-        });
+        var campaign = this.getCampaignByCampaignName(campaignName)
+        return campaign.getHistory()
     }
 
     getAllCampaign() {
