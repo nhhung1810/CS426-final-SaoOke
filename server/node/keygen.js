@@ -77,8 +77,8 @@ try {
 //     return null
 //   }
 // }
-var toAddress = "-----BEGIN PUBLIC KEY-----\nMIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDGOllTab/mVTMs3353mOBwjDp+\nM6LYYHi+ttH7/diA5PA7ZqJ2NtOzZXWjdaCGrqT/f0vkjWxCzhb1UOGZsSH+jVhK\niAsag+n2e+xzOPoe7xfWqOn3fI2Rt9yGswJcPP0mHUWsnlOuew9T+yyC7RFEFTX7\nRnD6gyYD8gbWvlFfuwIDAQAB\n-----END PUBLIC KEY-----"
-var fromAddress = "-----BEGIN PUBLIC KEY-----\nMIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDc3ScojjTf82jD7h5T166uMPX8\n7yweIayGzmI7nzH1vAvCNkNWBII/XCe1EVUhSJ3j893j7FmyA9okoGjde5NxdgSO\nX+snTAEUouon9R2qyBDBYmlxVrekf7v7SWQ4J5P4d4HEl/UcaJGNyHMHlTsIR/mq\nSeoKonUHgBRWhqlzjQIDAQAB\n-----END PUBLIC KEY-----"
+var fromAddress = "-----BEGIN PUBLIC KEY-----\nMIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDGOllTab/mVTMs3353mOBwjDp+\nM6LYYHi+ttH7/diA5PA7ZqJ2NtOzZXWjdaCGrqT/f0vkjWxCzhb1UOGZsSH+jVhK\niAsag+n2e+xzOPoe7xfWqOn3fI2Rt9yGswJcPP0mHUWsnlOuew9T+yyC7RFEFTX7\nRnD6gyYD8gbWvlFfuwIDAQAB\n-----END PUBLIC KEY-----"
+var toAddress = "-----BEGIN PUBLIC KEY-----\nMIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDc3ScojjTf82jD7h5T166uMPX8\n7yweIayGzmI7nzH1vAvCNkNWBII/XCe1EVUhSJ3j893j7FmyA9okoGjde5NxdgSO\nX+snTAEUouon9R2qyBDBYmlxVrekf7v7SWQ4J5P4d4HEl/UcaJGNyHMHlTsIR/mq\nSeoKonUHgBRWhqlzjQIDAQAB\n-----END PUBLIC KEY-----"
 var amount = "10"
 
 console.log(Buffer.from(fromAddress + toAddress + amount, 'utf-8').toString('hex'))
