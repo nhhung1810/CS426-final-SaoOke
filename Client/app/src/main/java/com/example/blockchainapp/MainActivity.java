@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import com.example.blockchainapp.Account.AccountActivity;
 import com.example.blockchainapp.Auth.LoginActivity;
+import com.example.blockchainapp.Campaign.CampaignOptionSelectActivity;
 import com.example.blockchainapp.Log.HistoryActivity;
 import com.example.blockchainapp.Transaction.TransactionActivity;
 
@@ -57,6 +58,11 @@ public class MainActivity extends AppCompatActivity {
 
     public void HistoryTab(View view) {
         Intent intent = new Intent(this, HistoryActivity.class);
+        startActivity(intent);
+    }
+
+    public void CampaignTab(View view) {
+        Intent intent = new Intent(this, CampaignOptionSelectActivity.class);
         startActivity(intent);
     }
 }
