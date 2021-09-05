@@ -1,6 +1,7 @@
 const express = require('express')
 const { Blockchain, Transaction } = require('./blockchain');
 const { UserFactory } = require('./user')
+const { CampaignFactory } = require("./campaign")
 const { Verification } = require("./verify")
 // const rs = require('jsrsasign');
 const rsu = require('jsrsasign-util');
@@ -8,11 +9,6 @@ const rsu = require('jsrsasign-util');
 const mCoin = new Blockchain();
 const userFactory = new UserFactory()
 
-//test
-// const verification = new Verification()
-// pub = verification.parseKey("public_key.pem", true)
-// pri = verification.parseKey("private_key_pkcs8.pem", true)
-// myWalletAddress = ver.keyToString(pub)
 
 const app = express()
 const port = 5000

@@ -55,9 +55,8 @@ class CampaignFactory {
     }
 
     give(ownerKey, receiverKey, amount, message) {
-
         //make new transaction here
-        //
+        return null
     }
 
     getCampaignInformation(campaignName) {
@@ -75,3 +74,5 @@ class CampaignFactory {
         });
     }
 }
+
+module.exports.CampaignFactory = CampaignFactory
