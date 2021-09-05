@@ -40,6 +40,7 @@ class Campaign {
                 })
             }
         });
+        return logs
     }
 
     getAllDonators() {
@@ -79,6 +80,19 @@ class CampaignFactory {
             }
         });
         return campaign
+    }
+
+    getCampaignByOwner(username){
+        var result = []
+        this.campaignList.forEach(element => {
+            console.log(element)
+            if (element.ownerName == username) {
+                console.log("\nReach here")
+                result.push(JSON.parse(JSON.stringify(element)))
+                console.log(result)
+            }
+        });
+        return result
     }
 
     createCampaign(campaignName, ownerKey, ownerName, targetAmount, expireDate, description, propaganda = "") {
@@ -173,11 +187,8 @@ class CampaignFactory {
     }
 
     getCampaignHistory(campaignName) {
-        this.campaignList.forEach(campaign => {
-            if (Campaign.campaignName == campaignName) {
-                return campaign.getHistory()
-            }
-        });
+        var campaign = this.getCampaignByCampaignName(campaignName)
+        return campaign.getHistory()
     }
 
     getAllCampaign() {
