@@ -1,4 +1,4 @@
-module.exports = function (app) {
+module.exports = function (app, userFactory, mCoin) {
   //param: address = username
   app.post("/balance/:username", function (req, res) {
     if (!req.params | !req.params.username) {

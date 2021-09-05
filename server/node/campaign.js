@@ -125,3 +125,5 @@ class CampaignFactory {
         });
     }
 }
+
+module.exports.CampaignFactory = CampaignFactory
