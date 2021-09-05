@@ -6,11 +6,17 @@ const { Transaction } = require("../blockchain")
 //     "ownerName" : "username", //=>auto get the existed public key
 //     "campaignName" : "name",
 //     "targetAmount" : int,
+<<<<<<< HEAD
 //     "expireDate" : "dd-mm-yyyy",
 //     "description" : "long string",
 //     "propaganda" : "optional" //won't be include in the transaction
+=======
+//     "expireDate" : "optional",
+//     "description" : "Wow",
+//     "propaganda" : "Hello"
+>>>>>>> origin/hung-api2
 // }
-module.exports = function (app, userFactory, campaignFactory, mCoin) {
+module.exports = function (app, userFactory, campaignFactory) {
     app.post("/cpncreate", function (req, res) {
         const check = (req) => {
             if (!req || !req.body) {
@@ -23,13 +29,16 @@ module.exports = function (app, userFactory, campaignFactory, mCoin) {
             } else {
                 try {
                     publicKey = userFactory.getKey(req.body.ownerName)
-                    // console.log("\nCreate Campaign with:\n", req.body.ownerName, "\n", publicKey, "\nEnd Create\n")
-                    // createCampaign(campaignName, ownerKey, ownerName, targetAmount, expireDate, message)
-                    campaignFactory.createCampaign(req.body.campaignName, publicKey,
-                        req.body.ownerName, req.body.targetAmount, req.body.expireDate, req.body.description, req.body.propaganda)
-                    console.log("\n\nCheck campaign:\n", campaignFactory.getCampaignKey(req.body.campaignName), "\n\n")
-
-                    return true
+                    if(publicKey != null)
+                    {
+                        campaignFactory.createCampaign(req.body.campaignName, publicKey,
+                            req.body.ownerName, req.body.targetAmount, req.body.expireDate, req.body.description, req.body.propaganda)
+                            return true
+                    }
+                    else {
+                        console.log("Check for shallow copying of key");
+                        return false;
+                    }
                 } catch (error) {
                     console.log(error.toString())
                     return false;
@@ -46,13 +55,14 @@ module.exports = function (app, userFactory, campaignFactory, mCoin) {
         }
 
         if(flag === null) {
-            res.send(404, { "error": "Unknow error" })
+            res.send(404, { "error": "Unknown error" })
             return
         } else {
             if(!flag) {
                 res.send(404, { "error": "Invalid params or error in getKey" })
                 return
             } else {
+                console.log(campaignFactory.getAllCampaign())
                 res.send(200, { "status": "success" })
                 return
             }

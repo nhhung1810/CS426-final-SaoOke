@@ -14,7 +14,7 @@ class Campaign {
     }
 
     getReceivedAmount() {
-        amount = 0;
+        var amount = 0;
         this.transactions.forEach(transaction => {
             if (this.ownerKey == transaction.transaction.toAddress) {
                 amount += transaction.transaction.amount;
@@ -83,11 +83,12 @@ class CampaignFactory {
     createCampaign(campaignName, ownerKey, ownerName, targetAmount, expireDate, description, propaganda = "") {
         this.campaignList.forEach(element => {
             if (element.campaignName == campaignName) {
-                throw new Error("This campain name is exists")
+                throw new Error("This campaign name is exists")
             }
         });
-        this.campaignList.push(new Campaign(campaignName, ownerKey, ownerName, targetAmount, 
-                expireDate, description, propaganda))
+        // console.log("\nCheck internal create Campaign\n", ownerKey);
+        var tmp = new Campaign(campaignName, ownerKey, ownerName, targetAmount, expireDate, description, propaganda)
+        this.campaignList.push(tmp) 
     }
 
     donate(donatorKey, campaignName, transaction, message) {
@@ -138,30 +139,37 @@ class CampaignFactory {
     }
 
     getCampaignInformation(campaignName) {
-        this.campaignList.forEach(element => {
-            if (element.campaignName == campaignName) {
-                return {
-                    "campaignName" : element.campaignName,
-                    "ownerKey" : element.ownerKey,
-                    "ownerName" : element.ownerName,
-                    "description" : element.description,
-                    "targetAmount" : element.targetAmount,
-                    "expireDate" : element.expireDate,
-                    "propaganda" : element.propaganda,
-                    "totalAmount" : element.getReceivedAmount()
-                }
+        var result = this.getCampaignByCampaignName(campaignName)
+        console.log(result)
+
+        if (result == null) {
+            return {
+                "message" : "Campaign does not exists"
             }
-        });
-        return null;
+        }
+        return {
+            "campaignName" : result.campaignName,
+            "ownerKey" : result.ownerKey,
+            "ownerName" : result.ownerName,
+            "description" : result.description,
+            "targetAmount" : result.targetAmount,
+            "expireDate" : result.expireDate,
+            "propaganda" : result.propaganda,
+            "totalAmount" : result.getReceivedAmount()
+        };
     }
 
     getCampaignKey(campaignName) {
+        var key = null
         this.campaignList.forEach(element => {
+            // console.log(element)
             if (element.campaignName == campaignName) {
-                return element.ownerKey;
+                // console.log("Reached here")
+                // console.log("\n\nCheck element reached: \n", element)
+                key = JSON.parse(JSON.stringify(element)).ownerKey;
             }
         });
-        return null;
+        return key;
     }
 
     getCampaignHistory(campaignName) {
@@ -178,14 +186,15 @@ class CampaignFactory {
             result.push({
                 "ownerKey" : campaign.ownerKey,
                 "campaignName" : campaign.campaignName,
-                "ownerName" : campaign.ownerName,
-                "targetAmount" : campaign.targetAmount,
+                "ownerKey" : campaign.ownerKey,
                 "expireDate" : campaign.expireDate,
                 "description" : campaign.description,
-                "propaganda" : campaign.description,
+                "targetAmount" : campaign.targetAmount,
+                "propaganda" : campaign.propaganda,
                 "totalAmount" : campaign.getReceivedAmount()
             })
         });
+        return result
     }
 
     getAllDonators(campaignName) {
@@ -203,7 +212,9 @@ class CampaignFactory {
             throw new Error("campaign does not exists")
         }
         campaign.requestHelp(username, amount, message)
-        return true
+        return {
+            "message" : "Sent help successfully"
+        }
     }
 
     getRequestHelpList(campaignName) {

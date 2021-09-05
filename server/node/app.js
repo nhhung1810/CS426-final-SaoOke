@@ -35,13 +35,14 @@ require('./APIs/getAllCampaignAPI')(app, campaignFactory)
 
 require('./APIs/transactionlogAPI')(app, mCoin)
 
-require('./APIs/cpnCreateAPI')(app, userFactory, campaignFactory, mCoin)
+require('./APIs/cpnCreateAPI')(app, userFactory, campaignFactory)
 
 require('./APIs/getCpnInfoAPI')(app, campaignFactory)
 
-require('./APIS/requestHelpAPI')(app, campaignFactory)
+require('./APIs/requestHelpAPI')(app, campaignFactory)
 require('./APIs/donateAPI')(app, userFactory, campaignFactory, mCoin)
-
+require('./APIs/getRequestHelpListAPI')(app, campaignFactory)
+require('./APIs/getAllCampaignAPI')(app, campaignFactory)
 // TODO
 // POST: CreateCampaign (ownerKey, campaignName, ownerName, targetAmount, expireDate, message) => DONE
 
