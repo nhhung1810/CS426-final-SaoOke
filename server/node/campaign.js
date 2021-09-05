@@ -80,13 +80,14 @@ class CampaignFactory {
         return campaign
     }
 
-    createCampaign(campaignName, ownerKey, ownerName, targetAmount, expireDate, message) {
+    createCampaign(campaignName, ownerKey, ownerName, targetAmount, expireDate, description, propaganda = "") {
         this.campaignList.forEach(element => {
             if (element.campaignName == campaignName) {
                 throw new Error("This campain name is exists")
             }
         });
-        this.campaignList.push(new Campaign(campaignName, ownerKey, ownerName, targetAmount, expireDate, message))
+        this.campaignList.push(new Campaign(campaignName, ownerKey, ownerName, targetAmount, 
+                expireDate, description, propaganda))
     }
 
     donate(donatorKey, campaignName, transaction, message) {
