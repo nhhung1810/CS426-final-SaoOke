@@ -114,7 +114,8 @@ class CampaignFactory {
     }
 
     donate(campaignName, transaction, message) {
-        this.campaignList.forEach(element => {
+        var tmp = false;
+        tmp = this.campaignList.forEach(element => {
             if (element.campaignName == campaignName) {
                 // make new transaction here
                 console.log("REACHED HERE")
@@ -125,7 +126,7 @@ class CampaignFactory {
                 return true;
             }
         });
-        return false
+        return tmp;
     }
 
     give(campaignName, ownerKey, receiverKey, transaction, message) {
