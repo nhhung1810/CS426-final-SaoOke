@@ -70,7 +70,11 @@ module.exports = function (app, userFactory, campaignFactory, mCoin) {
             console.log("\nPassed the valid check!!\n")
             mCoin.addTransaction(tx)
             mCoin.minePendingTransactions("master-mine")
-            campaignFactory.donate(req.body.campaignName, tx, "")
+
+            if(campaignFactory.donate(req.body.campaignName, tx, "") == false){
+                console.log("Campaign not found, please check why it able to reach this line???")
+            }
+
             console.log("\nCheck campaign\n", campaignFactory.getCampaignInformation(req.body.campaignName))
             res.send(200, { "status": "success" });
         }
