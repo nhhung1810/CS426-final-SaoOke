@@ -1,4 +1,4 @@
-package com.example.blockchainapp;
+package com.example.blockchainapp.Log;
 
 import java.util.Date;
 import java.util.List;
@@ -7,10 +7,10 @@ public class TransactionLog {
     private String fromAddress;
     private String toAddress;
     private int amount;
-    private Object timestamp;
-    private String signature;
+    private String timestamp;
+    private Object signature;
 
-    public TransactionLog(String fromAddress, String toAddress, int amount, Object timestamp, String signature) {
+    public TransactionLog(String fromAddress, String toAddress, int amount, String timestamp, String signature) {
         this.fromAddress = fromAddress;
         this.toAddress = toAddress;
         this.amount = amount;
@@ -42,19 +42,19 @@ public class TransactionLog {
         this.amount = amount;
     }
 
-    public Object getTimestamp() {
+    public String getTimestamp() {
         return timestamp;
     }
 
-    public void setTimestamp(Object timestamp) {
+    public void setTimestamp(String timestamp) {
         this.timestamp = timestamp;
     }
 
-    public String getSignature() {
+    public Object getSignature() {
         return signature;
     }
 
-    public void setSignature(String signature) {
+    public void setSignature(Object signature) {
         this.signature = signature;
     }
 }

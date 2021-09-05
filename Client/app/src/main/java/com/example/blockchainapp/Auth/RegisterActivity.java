@@ -1,4 +1,4 @@
-package com.example.blockchainapp;
+package com.example.blockchainapp.Auth;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
@@ -22,11 +22,17 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import org.json.JSONException;
-import org.json.JSONObject;
+import com.example.blockchainapp.Account.RSAKey;
+import com.example.blockchainapp.Constants;
+import com.example.blockchainapp.MainActivity;
+import com.example.blockchainapp.R;
+import com.example.blockchainapp.Utils.RetrofitUtils;
+import com.example.blockchainapp.Account.UserAccount;
+import com.example.blockchainapp.Account.UserKey;
 
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+import java.io.IOException;
+import java.security.KeyPair;
+import java.security.MessageDigest;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -37,6 +43,7 @@ public class RegisterActivity extends AppCompatActivity {
     public UserAccount account;
     private EditText edt_username;
     private EditText edt_password;
+    private KeyPair kp = null;
     private EditText edt_confirmPassword;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -145,50 +152,92 @@ public class RegisterActivity extends AppCompatActivity {
     public void HandleRegister(View view) {
         if (!CheckValidCredential()) return;
         account = new UserAccount(edt_username.getText().toString(), edt_password.getText().toString());
-        Call<UserKey> keyCall =  RetrofitUtils.blockchainInterface.ExecutePostRegister(account);
-        keyCall.enqueue(new Callback<UserKey>() {
-            @Override
-            public void onResponse(Call<UserKey> call, Response<UserKey> response) {
-                if (response.code() == 200) {
-                    user = response.body();
-                    Constants.PRIVATE_KEY = user.getPrivateKey();
-                    Constants.PUBLIC_KEY = user.getPublicKey();
-                    Constants.SESSION_ACTIVE = true;
 
-                    AlertDialog.Builder builder = new AlertDialog.Builder(RegisterActivity.this);
-                    builder.setTitle("Successfully registered!");
-                    builder.setMessage("Your private key is: " + user.getPrivateKey()
-                            + " | Your public key is: " + user.getPublicKey());
-                    Log.d("Callback", "Your private key is: " + user.getPrivateKey()
-                                                        + "| Your public key is: " + user.getPublicKey());
-                    builder.setPositiveButton("Confirm",
-                            new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    Intent intent = new Intent(RegisterActivity.this, MainActivity.class);
-                                    startActivity(intent);
-                                }
-                            });
-                    builder.show();
+        try {
+            kp = RSAKey.generateKeyPair();
+            MessageDigest md = MessageDigest.getInstance("SHA");
+            SecurityManager.HashMethod hashMethod = SecurityManager.getAppropriateHash();
+            String hashedPassword = SecurityManager.getHashedPassword( hashMethod, account.getPassword() );
+            hashedPassword = hashedPassword.replaceAll("[^a-zA-Z0-9]", "");
+            String name = account.getUsername() + "-" + hashedPassword;
+            RSAKey.writePemFile(getApplicationContext(), kp, name);
+
+            String publicPath = name + "-public-key.pem";
+            String publicKey = RSAKey.readPublicKey(getApplicationContext(), publicPath);
+
+            UserKey key = new UserKey(account.getUsername(), publicKey);
+            Log.d("Key", publicKey);
+
+            Call<Object> keyCall =  RetrofitUtils.blockchainInterface.ExecutePostRegister(key);
+            keyCall.enqueue(new Callback<Object>() {
+                @Override
+                public void onResponse(Call<Object> call, Response<Object> response) {
+                    if (response.code() == 200) {
+
+                        Constants.USERNAME = account.getUsername();
+                        System.out.println(Constants.USERNAME);
+                        Constants.PRIVATE_KEY = kp.getPrivate();
+                        Constants.PUBLIC_KEY = kp.getPublic();
+                        Constants.SESSION_ACTIVE = true;
+
+                        RetrofitUtils.GetBalance();
+
+                        AlertDialog.Builder builder = new AlertDialog.Builder(RegisterActivity.this);
+                        builder.setTitle("Successfully registered!");
+                        builder.setMessage("Your key is saved internally, please keep it safe.");
+                        builder.setPositiveButton("Confirm",
+                                new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        Intent intent = new Intent(RegisterActivity.this, MainActivity.class);
+                                        startActivity(intent);
+                                    }
+                                });
+                        builder.show();
 
 
-                }
-                else if (response.code() == 404) {
-                    try {
-                        JSONObject jObj = new JSONObject(response.body().toString());
-                        Toast.makeText(RegisterActivity.this, response.body().toString(), Toast.LENGTH_LONG).show();
-                    } catch (Exception e) {
-                        Toast.makeText(RegisterActivity.this, "Invalid credentials", Toast.LENGTH_LONG).show();
                     }
-                    // Toast.makeText(RegisterActivity.this, "Invalid credentials", Toast.LENGTH_LONG).show();
+                    else {
+                        try {
+                            Toast.makeText(RegisterActivity.this, response.errorBody().string(), Toast.LENGTH_LONG).show();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
                 }
-            }
 
-            @Override
-            public void onFailure(Call<UserKey> call, Throwable t) {
-                Toast.makeText(RegisterActivity.this, t.getMessage(), Toast.LENGTH_LONG).show();
-            }
-        });
+                @Override
+                public void onFailure(Call<Object> call, Throwable t) {
+                    Toast.makeText(RegisterActivity.this, t.getMessage(), Toast.LENGTH_LONG).show();
+                }
+            });
+
+
+
+            /*
+            AlertDialog.Builder builder = new AlertDialog.Builder(RegisterActivity.this);
+            builder.setTitle("Successfully registered!");
+            builder.setMessage("Your private key saved: " + kp.getPrivate()
+                    + " | Your public key saved: " + kp.getPublic());
+
+            builder.setPositiveButton("Confirm",
+                    new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            Intent intent = new Intent(RegisterActivity.this, MainActivity.class);
+                            startActivity(intent);
+                        }
+                    });
+            builder.show();
+
+             */
+
+
+        } catch (Exception e) {
+            //TODO: handle exception
+            System.out.println(e.toString());
+            Toast.makeText(RegisterActivity.this, e.toString(), Toast.LENGTH_LONG).show();
+        }
 
     }
 

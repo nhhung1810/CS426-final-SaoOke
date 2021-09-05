@@ -1,13 +1,14 @@
 const { Blockchain, Transaction } = require('./blockchain');
 
 class Campaign {
-    constructor(campaignName, ownerKey, ownerName, targetAmount, expireDate, message) {
+    constructor(campaignName, ownerKey, ownerName, targetAmount, expireDate, description, propaganda = "") {
         this.campaignName = campaignName
         this.ownerKey = ownerKey
         this.ownerName = ownerName
         this.targetAmount = targetAmount
         this.expireDate = expireDate
-        this.message = message
+        this.description = description
+        this.propaganda = propaganda
         this.transactions = []
         this.requestHelpList = []
     }
@@ -79,13 +80,14 @@ class CampaignFactory {
         return campaign
     }
 
-    createCampaign(campaignName, ownerKey, ownerName, targetAmount, expireDate, message) {
+    createCampaign(campaignName, ownerKey, ownerName, targetAmount, expireDate, description, propaganda = "") {
         this.campaignList.forEach(element => {
             if (element.campaignName == campaignName) {
                 throw new Error("This campain name is exists")
             }
         });
-        this.campaignList.push(new Campaign(campaignName, ownerKey, ownerName, targetAmount, expireDate, message))
+        this.campaignList.push(new Campaign(campaignName, ownerKey, ownerName, targetAmount, 
+                expireDate, description, propaganda))
     }
 
     donate(donatorKey, campaignName, transaction, message) {
@@ -136,20 +138,30 @@ class CampaignFactory {
     }
 
     getCampaignInformation(campaignName) {
-        var campaign = this.getCampaignByCampaignName(campaignName)
+        this.campaignList.forEach(element => {
+            if (element.campaignName == campaignName) {
+                return {
+                    "campaignName" : element.campaignName,
+                    "ownerKey" : element.ownerKey,
+                    "ownerName" : element.ownerName,
+                    "description" : element.description,
+                    "targetAmount" : element.targetAmount,
+                    "expireDate" : element.expireDate,
+                    "propaganda" : element.propaganda,
+                    "total_amount" : element.getReceivedAmount()
+                }
+            }
+        });
+        return null;
+    }
 
-        if (campaign == nul) {
-            throw new Error("Campaign does not exists")
-        }
-
-        return {
-            "campaignName" : campaign.campaignName,
-            "ownerKey" : campaign.ownerKey,
-            "ownerName" : campaign.ownerName,
-            "targetAmount" : campaign.targetAmount,
-            "expireDate" : campaign.expireDate,
-            "total_amount" : campaign.getReceivedAmount()
-        }
+    getCampaignKey(campaignName) {
+        this.campaignList.forEach(element => {
+            if (element.campaignName == campaignName) {
+                return element.ownerKey;
+            }
+        });
+        return null;
     }
 
     getCampaignHistory(campaignName) {
@@ -167,7 +179,7 @@ class CampaignFactory {
                 "campaignName" : campaign.campaignName,
                 "campaignOwnerKey" : campaign.campaignOwnerKey,
                 "expireDate" : campaign.expireDate,
-                "message" : campaign.message,
+                "description" : campaign.description,
                 "totalAmount" : campaign.getReceivedAmount()
             })
         });

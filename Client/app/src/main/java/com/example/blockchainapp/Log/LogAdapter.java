@@ -1,4 +1,4 @@
-package com.example.blockchainapp;
+package com.example.blockchainapp.Log;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -8,6 +8,8 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.blockchainapp.R;
 
 public class LogAdapter extends RecyclerView.Adapter<LogAdapter.LogViewHolder> {
 
@@ -52,7 +54,7 @@ public class LogAdapter extends RecyclerView.Adapter<LogAdapter.LogViewHolder> {
         holder.tv_toAddress.setText(log.getToAddress());
         holder.tv_amount.setText(String.valueOf(log.getAmount()));
         holder.tv_timestamp.setText(log.getTimestamp().toString());
-        holder.tv_signature.setText(log.getSignature());
+        holder.tv_signature.setText(log.getSignature().toString());
     }
 
     @Override

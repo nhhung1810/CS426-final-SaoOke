@@ -1,6 +1,6 @@
 const { Transaction } = require("../blockchain")
 
-// POST: CreateCampaign (ownerKey, campaignName, ownerName, targetAmount, expireDate, message)
+// POST: CreateCampaign (ownerKey, campaignName, ownerName, targetAmount, expireDate, description, propaganda)
 // json send via body
 // {
 //     "ownerName" : "username", //=>auto get the existed public key
@@ -16,14 +16,18 @@ module.exports = function (app, userFactory, campaignFactory, mCoin) {
                 console.log("Null Body! Check your params")
                 return false;
             } else if (!req.body.ownerName || !req.body.campaignName
-                || !req.body.target || !req.body.expire || !req.body.msg) {
+                || !req.body.targetAmount || !req.body.expireDate || !req.body.description || !req.body.propaganda) {
                 console.log("Invalid Params! Check your params")
                 return false;
             } else {
                 try {
                     publicKey = userFactory.getKey(req.body.ownerName)
+                    // console.log("\nCreate Campaign with:\n", req.body.ownerName, "\n", publicKey, "\nEnd Create\n")
+                    // createCampaign(campaignName, ownerKey, ownerName, targetAmount, expireDate, message)
                     campaignFactory.createCampaign(req.body.campaignName, publicKey,
-                        req.body.ownerName, req.body.targetAmount, req.body.expireDate, req.body.msg)
+                        req.body.ownerName, req.body.targetAmount, req.body.expireDate, req.body.description, req.body.propaganda)
+                    console.log("\n\nCheck campaign:\n", campaignFactory.getCampaignKey(req.body.campaignName), "\n\n")
+
                     return true
                 } catch (error) {
                     console.log(error.toString())
