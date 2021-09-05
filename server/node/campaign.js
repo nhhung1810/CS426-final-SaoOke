@@ -9,6 +9,7 @@ class Campaign {
         this.expireDate = expireDate
         this.message = message
         this.transactions = []
+        this.requestHelpList = []
     }
 
     getReceivedAmount() {
@@ -48,6 +49,18 @@ class Campaign {
             }
         });
         return donators
+    }
+
+    requestHelp(address, amount, message) {
+        this.requestHelpList.push({
+            "address" : address,
+            "amount" : amount,
+            "message" : message
+        })
+    }
+
+    getRequestHelpList() {
+        return this.requestHelpList;
     }
 }
 
@@ -165,6 +178,23 @@ class CampaignFactory {
             return campaign.getAllDonators
         }
         return null
+    }
+
+    requestHelp(campaignName, address, amount, message) {
+        var campaign = this.getCampaignByCampaignName(campaignName)
+        if (campaign == null) {
+            throw new Error("campaign does not exists")
+        }
+        campaign.requestHelp(address, amount, message)
+        return true
+    }
+
+    getRequestHelpList(campaignName) {
+        var campaign = this.getCampaignByCampaignName(campaignName)
+        if (campaign == null) {
+            throw new Error("Campaign does not exists")
+        }
+        return campaign.getRequestHelpList()
     }
 }
 
