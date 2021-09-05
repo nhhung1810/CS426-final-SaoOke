@@ -63,7 +63,46 @@ public class GrantActivity extends AppCompatActivity {
         String message = messageET.getText().toString();
 
         // TODO: change public key to campaign's name
+        GrantRequest request = new GrantRequest(campaign, toUser, amount, message);
+        request.setSignature(RSAKey.sign(campaign + toUser + amount.toString(), Constants.PRIVATE_KEY));
+        //Transaction transaction = new Transaction(Constants.PUBLIC_KEY, toCampaign, amount, message);
 
+        Call<Object> grantCall = RetrofitUtils.blockchainInterface.ExecutePostGrant(request);
+        grantCall.enqueue(new Callback<Object>() {
+
+            @Override
+            public void onResponse(Call<Object> call, Response<Object> response) {
+                
+            }
+
+            @Override
+            public void onFailure(Call<Object> call, Throwable t) {
+
+            }
+        });
+
+        Call<Object> donationCall = RetrofitUtils.blockchainInterface.ExecutePostDonate(request);
+        donationCall.enqueue(new Callback<Object>() {
+            @Override
+            public void onResponse(Call<Object> call, Response<Object> response) {
+                if (response.code() == 200) {
+                    Toast.makeText(DonationActivity.this,
+                            "You have successfully donated to the campaign!", Toast.LENGTH_LONG).show();
+                } else {
+                    try {
+                        Toast.makeText(DonationActivity.this,
+                                response.errorBody().string(), Toast.LENGTH_LONG).show();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Object> call, Throwable t) {
+                Toast.makeText(DonationActivity.this, t.getMessage(), Toast.LENGTH_LONG).show();
+            }
+        });
         /*
         Transaction transaction = new Transaction(Constants.PUBLIC_KEY, toUser, amount, message);
         String signature = RSAKey.sign(transaction, Constants.PRIVATE_KEY);

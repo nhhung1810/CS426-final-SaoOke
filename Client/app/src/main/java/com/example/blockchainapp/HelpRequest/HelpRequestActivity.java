@@ -43,7 +43,7 @@ public class HelpRequestActivity extends AppCompatActivity {
         et_hr_message = findViewById(R.id.et_hr_message);
 
         ArrayAdapter<String> adapter = new ArrayAdapter<String>
-                (this,android.R.layout.select_dialog_item, Constants.CAMPAIGNS);
+                (this,android.R.layout.select_dialog_item, Constants.CAMPAIGN_LIST);
 
         actv_hr_campaign.setThreshold(1);
         actv_hr_campaign.setAdapter(adapter);
@@ -59,10 +59,10 @@ public class HelpRequestActivity extends AppCompatActivity {
         // TODO: change private key to user's current session
         HelpRequest helpRequest = new HelpRequest(requestedCampaign, Constants.USERNAME, amount, message);
 
-        Call<Boolean> helpRequestCall = RetrofitUtils.blockchainInterface.ExecutePostHelpRequest(helpRequest);
-        helpRequestCall.enqueue(new Callback<Boolean>() {
+        Call<Object> helpRequestCall = RetrofitUtils.blockchainInterface.ExecutePostHelpRequest(helpRequest);
+        helpRequestCall.enqueue(new Callback<Object>() {
             @Override
-            public void onResponse(Call<Boolean> call, Response<Boolean> response) {
+            public void onResponse(Call<Object> call, Response<Object> response) {
                 if (response.code() == 200) {
                     Toast.makeText(HelpRequestActivity.this,
                             "Help request sent successfully!", Toast.LENGTH_LONG).show();
@@ -77,7 +77,7 @@ public class HelpRequestActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<Boolean> call, Throwable t) {
+            public void onFailure(Call<Object> call, Throwable t) {
                 Toast.makeText(HelpRequestActivity.this, t.getMessage(), Toast.LENGTH_LONG).show();
             }
         });

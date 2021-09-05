@@ -181,6 +181,7 @@ public class RegisterActivity extends AppCompatActivity {
                         Constants.SESSION_ACTIVE = true;
 
                         RetrofitUtils.GetBalance();
+                        RetrofitUtils.LoadCampaignNames(Constants.USERNAME);
 
                         AlertDialog.Builder builder = new AlertDialog.Builder(RegisterActivity.this);
                         builder.setTitle("Successfully registered!");
