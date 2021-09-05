@@ -4,7 +4,7 @@ import java.security.PublicKey;
 import java.util.Date;
 
 public class Campaign {
-    private PublicKey ownerKey;
+    private String ownerKey;
     private String campaignName;
     private String ownerName;
     private String description;
@@ -13,7 +13,7 @@ public class Campaign {
     private String propaganda;
     private Long totalAmount;
 
-    public Campaign(PublicKey ownerKey, String campaignName, String ownerName, String description, Long targetAmount, Date expireDate, String propaganda) {
+    public Campaign(String ownerKey, String campaignName, String ownerName, String description, Long targetAmount, Date expireDate, String propaganda) {
         this.ownerKey = ownerKey;
         this.campaignName = campaignName;
         this.ownerName = ownerName;
@@ -21,14 +21,14 @@ public class Campaign {
         this.expireDate = expireDate;
         this.propaganda = propaganda;
         this.description = description;
-        this.targetAmount = Long.valueOf(0);
+        this.totalAmount = Long.valueOf(0);
     }
 
-    public PublicKey getOwnerKey() {
+    public String getOwnerKey() {
         return ownerKey;
     }
 
-    public void setOwnerKey(PublicKey ownerKey) {
+    public void setOwnerKey(String ownerKey) {
         this.ownerKey = ownerKey;
     }
 

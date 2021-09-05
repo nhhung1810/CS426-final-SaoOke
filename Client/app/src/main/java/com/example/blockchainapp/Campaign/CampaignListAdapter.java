@@ -22,10 +22,10 @@ import java.util.List;
 import jnr.ffi.annotations.In;
 
 public class CampaignListAdapter extends RecyclerView.Adapter<CampaignListAdapter.ViewHolder> {
-    private CampaignList list;
+    private Campaign[] list;
     private Context context;
 
-    public CampaignListAdapter(CampaignList list, Context context) {
+    public CampaignListAdapter(Campaign[] list, Context context) {
         this.list = list;
         this.context = context;
     }
@@ -84,7 +84,7 @@ public class CampaignListAdapter extends RecyclerView.Adapter<CampaignListAdapte
 
     @Override
     public void onBindViewHolder(@NonNull @NotNull CampaignListAdapter.ViewHolder holder, int position) {
-        Campaign campaign = list.ListOfCampaign.get(position);
+        Campaign campaign = list[position];
 
         holder.tv_campaignName.setText(campaign.getCampaignName());
         holder.tv_leaderName.setText(campaign.getOwnerName());
@@ -96,7 +96,7 @@ public class CampaignListAdapter extends RecyclerView.Adapter<CampaignListAdapte
         holder.setItemClickListener(new ItemClickListener() {
             @Override
             public void onClick(View view, int position, boolean isLongClick) {
-                String campaignName = list.ListOfCampaign.get(position).getCampaignName();
+                String campaignName = list[position].getCampaignName();
                 Intent intent = new Intent(context, CampaignInformation.class);
                 intent.putExtra("CampaignName", campaignName);
                 context.startActivity(intent);
@@ -106,6 +106,6 @@ public class CampaignListAdapter extends RecyclerView.Adapter<CampaignListAdapte
 
     @Override
     public int getItemCount() {
-        return list.ListOfCampaign.size();
+        return list.length;
     }
 }

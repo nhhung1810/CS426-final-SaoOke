@@ -92,7 +92,7 @@ public class CampaignActivity extends AppCompatActivity {
 
         SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy");
 
-        campaign = new Campaign(Constants.PUBLIC_KEY,
+        campaign = new Campaign(Constants.PUBLIC_KEY.toString(),
                                 et_campaignName.getText().toString(),
                                 Constants.USERNAME,
                                 et_description.getText().toString(),

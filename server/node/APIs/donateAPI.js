@@ -7,7 +7,7 @@ module.exports = function (app, userFactory, campaignFactory, mCoin) {
     // Method: POST
     // json sent via body
     // {
-    //   "from" : "admin",
+    //   "fromUser" : "admin",
     //   "campaignName" : "name",
     //   "amount" : 10,
     //   "signature" : """
@@ -18,13 +18,13 @@ module.exports = function (app, userFactory, campaignFactory, mCoin) {
                 console.log("How about null body");
                 return false;
             }
-            if (!req.body.from || !req.body.campaignName || !req.body.amount || !req.body.signature) {
+            if (!req.body.fromUser || !req.body.campaignName || !req.body.amount || !req.body.signature) {
                 console.log("Invalid transaction params")
                 return false
             }
             else {
                 try {
-                    pubFrom = userFactory.getKey(req.body.from);
+                    pubFrom = userFactory.getKey(req.body.fromUser);
                     console.log("\nDonate:\n")
                     console.log("Donator key:\n ", pubFrom)
                     pubCam = campaignFactory.getCampaignKey(req.body.campaignName)

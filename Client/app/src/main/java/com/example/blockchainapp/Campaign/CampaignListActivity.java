@@ -43,10 +43,10 @@ public class CampaignListActivity extends AppCompatActivity {
 
     private void loadCampaignList() {
 
-        Call<CampaignList> logCall = RetrofitUtils.blockchainInterface.ExecuteGetAllCampaign();
-        logCall.enqueue(new Callback<CampaignList>() {
+        Call<Campaign[]> logCall = RetrofitUtils.blockchainInterface.ExecuteGetAllCampaign();
+        logCall.enqueue(new Callback<Campaign[]>() {
             @Override
-            public void onResponse(Call<CampaignList> call, Response<CampaignList> response) {
+            public void onResponse(Call<Campaign[]> call, Response<Campaign[]> response) {
                 if (response.code() == 200) {
                     Log.d("log callback",response.body().toString());
                     CampaignListAdapter adapter = new CampaignListAdapter(response.body(), CampaignListActivity.this);
@@ -56,7 +56,7 @@ public class CampaignListActivity extends AppCompatActivity {
 
             }
             @Override
-            public void onFailure(Call<CampaignList> call, Throwable t) {
+            public void onFailure(Call<Campaign[]> call, Throwable t) {
                 Toast.makeText(CampaignListActivity.this, t.getMessage(), Toast.LENGTH_LONG).show();
             }
         });

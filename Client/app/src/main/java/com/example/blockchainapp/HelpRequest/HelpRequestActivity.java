@@ -15,7 +15,6 @@ import com.example.blockchainapp.Account.RSAKey;
 import com.example.blockchainapp.Constants;
 import com.example.blockchainapp.R;
 import com.example.blockchainapp.Transaction.Transaction;
-import com.example.blockchainapp.Transaction.TransactionActivity;
 import com.example.blockchainapp.Transaction.TransactionPackage;
 import com.example.blockchainapp.Utils.RetrofitUtils;
 
@@ -79,7 +78,7 @@ public class HelpRequestActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<Boolean> call, Throwable t) {
-                Toast.makeText(TransactionActivity.this, t.getMessage(), Toast.LENGTH_LONG).show();
+                Toast.makeText(HelpRequestActivity.this, t.getMessage(), Toast.LENGTH_LONG).show();
             }
         });
     }

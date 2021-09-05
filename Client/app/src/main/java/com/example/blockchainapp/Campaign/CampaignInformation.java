@@ -60,7 +60,7 @@ public class CampaignInformation extends AppCompatActivity {
                     currentCampaign = response.body();
                     tv_campaignName.setText(currentCampaign.getCampaignName());
                     tv_campaignOwner.setText(currentCampaign.getOwnerName());
-                    tv_campaignOwnerKey.setText(currentCampaign.getOwnerKey().toString());
+                    tv_campaignOwnerKey.setText("..." + currentCampaign.getOwnerKey().toString().substring(45, 65) + "...");
                     tv_description.setText(currentCampaign.getDescription());
                     tv_targetAmount.setText(currentCampaign.getTargetAmount().toString());
                     tv_currentFund.setText(currentCampaign.getTotalAmount().toString());

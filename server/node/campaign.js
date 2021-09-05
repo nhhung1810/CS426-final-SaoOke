@@ -186,7 +186,7 @@ class CampaignFactory {
             result.push({
                 "ownerKey" : campaign.ownerKey,
                 "campaignName" : campaign.campaignName,
-                "ownerKey" : campaign.ownerKey,
+                "ownerName" : campaign.ownerName,
                 "expireDate" : campaign.expireDate,
                 "description" : campaign.description,
                 "targetAmount" : campaign.targetAmount,
