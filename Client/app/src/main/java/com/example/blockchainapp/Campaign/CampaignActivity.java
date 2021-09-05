@@ -5,11 +5,19 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.example.blockchainapp.Constants;
 import com.example.blockchainapp.R;
+import com.example.blockchainapp.Utils.RetrofitUtils;
 
+import java.io.IOException;
 import java.sql.Date;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
 
 public class CampaignActivity extends AppCompatActivity {
     private Campaign campaign;
@@ -45,5 +53,31 @@ public class CampaignActivity extends AppCompatActivity {
                                 Date.valueOf(et_expireDate.getText().toString()),
                                 et_propaganda.getText().toString());
 
+        Call<Boolean> campaignCall = RetrofitUtils.blockchainInterface.ExecutePostCampaign(campaign);
+        campaignCall.enqueue(new Callback<Boolean>() {
+            @Override
+            public void onResponse(Call<Boolean> call, Response<Boolean> response) {
+                if (response.code() == 200) {
+                    Toast.makeText(CampaignActivity.this,
+                                    "Campaign was created successfully!",
+                                    Toast.LENGTH_LONG).show();
+                }
+                else {
+                    try {
+                        Toast.makeText(CampaignActivity.this,
+                                        response.errorBody().string(),
+                                        Toast.LENGTH_LONG).show();
+                    }
+                    catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Boolean> call, Throwable t) {
+                Toast.makeText(CampaignActivity.this, t.getMessage(), Toast.LENGTH_LONG).show();
+            }
+        });
     }
 }

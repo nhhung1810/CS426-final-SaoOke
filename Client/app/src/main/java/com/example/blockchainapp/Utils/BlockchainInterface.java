@@ -1,6 +1,7 @@
 package com.example.blockchainapp.Utils;
 
 import com.example.blockchainapp.Account.UserKey;
+import com.example.blockchainapp.Campaign.Campaign;
 import com.example.blockchainapp.Transaction.Transaction;
 import com.example.blockchainapp.Log.TransactionLogList;
 import com.example.blockchainapp.Transaction.TransactionPackage;
@@ -29,4 +30,6 @@ public interface BlockchainInterface {
     @GET("/transactionsLog")
     Call<TransactionLogList> ExecuteGetTransactionLog();
 
+    @POST("/campaign")
+    Call<Boolean> ExecutePostCampaign(@Body Campaign campaign);
 }
