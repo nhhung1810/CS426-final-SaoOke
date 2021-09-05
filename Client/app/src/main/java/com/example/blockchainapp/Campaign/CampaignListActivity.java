@@ -16,8 +16,17 @@ public class CampaignListActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_campaign_list);
 
+
         recyclerView = findViewById(R.id.rv_campaign);
-        loadCampaignList();
+        String sortType = getIntent().getStringExtra("SORT_TYPE");
+        if (sortType.equals("ALL")) {
+            loadCampaignList();
+        } else if (sortType.equals("USER")) {
+
+        }
+
+
+
     }
 
     private void loadCampaignList() {

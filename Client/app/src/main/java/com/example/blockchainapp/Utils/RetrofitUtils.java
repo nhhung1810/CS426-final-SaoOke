@@ -21,7 +21,7 @@ public class RetrofitUtils {
     public static void GetBalance() {
         //Constants.BALANCE = Long.valueOf(1000);
 
-        Call<Long> balanceCall = RetrofitUtils.blockchainInterface.ExecuteGetBalance(Constants.PUBLIC_KEY);
+        Call<Long> balanceCall = RetrofitUtils.blockchainInterface.ExecuteGetBalance(Constants.USERNAME);
         balanceCall.enqueue(new Callback<Long>() {
             @Override
             public void onResponse(Call<Long> call, Response<Long> response) {

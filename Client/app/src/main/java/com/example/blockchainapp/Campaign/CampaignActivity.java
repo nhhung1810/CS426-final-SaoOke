@@ -17,13 +17,12 @@ import java.sql.Date;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.Retrofit;
 
 public class CampaignActivity extends AppCompatActivity {
     private Campaign campaign;
 
     private EditText et_campaignName;
-    private EditText et_leaderName;
+    private EditText et_description;
     private EditText et_targetAmount;
     private EditText et_expireDate;
     private EditText et_propaganda;
@@ -38,7 +37,7 @@ public class CampaignActivity extends AppCompatActivity {
 
     private void initializeInputs() {
         et_campaignName = findViewById(R.id.et_campaignName);
-        et_leaderName = findViewById(R.id.et_leaderName);
+        et_description = findViewById(R.id.et_description);
         et_targetAmount = findViewById(R.id.et_targetAmount);
         et_expireDate = findViewById(R.id.et_expireDate);
         et_propaganda = findViewById(R.id.et_propaganda);
@@ -48,7 +47,8 @@ public class CampaignActivity extends AppCompatActivity {
     public void HandleCampaignCreation(View view) {
         campaign = new Campaign(Constants.PUBLIC_KEY,
                                 et_campaignName.getText().toString(),
-                                et_leaderName.getText().toString(),
+                                Constants.USERNAME,
+                                et_description.getText().toString(),
                                 Float.parseFloat(et_targetAmount.getText().toString()),
                                 Date.valueOf(et_expireDate.getText().toString()),
                                 et_propaganda.getText().toString());

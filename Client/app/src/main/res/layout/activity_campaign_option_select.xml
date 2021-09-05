@@ -7,7 +7,17 @@
     tools:context=".Campaign.CampaignOptionSelectActivity"
     android:orientation="vertical"
     android:gravity="center"
+    android:layout_marginHorizontal="20sp"
     >
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:minHeight="10dp"
+        android:background="#FF333333"
+        android:scaleType="centerCrop"
+        android:layout_marginBottom="50dp"
+        />
 
     <Button
         android:layout_width="match_parent"
@@ -22,6 +32,13 @@
         android:onClick="createCampaign"
         />
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Create a new campaign to raise fund for a cause. You
+will be prompted to determine the propaganda and expire date also."
+        android:paddingHorizontal="10dp"/>
+
 
     <Button
         android:layout_width="match_parent"
@@ -34,6 +51,41 @@
         android:textSize="20sp"
         android:layout_marginTop="20sp"
         android:onClick="viewCampaignList"
+        />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="View list of available campaigns. You can then determine the
+ owner address and donate to it"
+        android:paddingHorizontal="10dp"/>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
+        android:paddingVertical="20dp"
+        android:text="View your campaigns"
+        android:textColor="@color/gold"
+        android:textStyle="bold"
+        android:textSize="20sp"
+        android:layout_marginTop="20sp"
+        android:onClick="viewYourCampaign"
+        />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="View list of your created campaigns, including the expired and ongoing ones."
+        android:paddingHorizontal="10dp"/>
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:minHeight="10dp"
+        android:background="#FF333333"
+        android:scaleType="centerCrop"
+        android:layout_marginTop="50dp"
         />
 
 </LinearLayout>

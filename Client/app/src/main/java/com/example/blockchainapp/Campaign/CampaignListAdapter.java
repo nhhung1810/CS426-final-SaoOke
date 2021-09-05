@@ -29,6 +29,7 @@ public class CampaignListAdapter extends RecyclerView.Adapter<CampaignListAdapte
     public class ViewHolder extends RecyclerView.ViewHolder {
         TextView tv_campaignName;
         TextView tv_leaderName;
+        TextView tv_description;
         TextView tv_targetAmount;
         TextView tv_expireDate;
         TextView tv_propaganda;
@@ -38,6 +39,7 @@ public class CampaignListAdapter extends RecyclerView.Adapter<CampaignListAdapte
 
             tv_campaignName = itemView.findViewById(R.id.tv_campaignName);
             tv_leaderName = itemView.findViewById(R.id.tv_leaderName);
+            tv_description = itemView.findViewById(R.id.tv_description);
             tv_targetAmount = itemView.findViewById(R.id.tv_targetAmount);
             tv_expireDate = itemView.findViewById(R.id.tv_expireDate);
             tv_propaganda = itemView.findViewById(R.id.tv_propaganda);
@@ -59,6 +61,7 @@ public class CampaignListAdapter extends RecyclerView.Adapter<CampaignListAdapte
 
         holder.tv_campaignName.setText(campaign.getCampaignName());
         holder.tv_leaderName.setText(campaign.getOwnerName());
+        holder.tv_description.setText(campaign.getDescription());
         holder.tv_targetAmount.setText(campaign.getTargetAmount().toString());
         holder.tv_expireDate.setText(campaign.getExpireDate().toString());
         holder.tv_propaganda.setText(campaign.getPropaganda());

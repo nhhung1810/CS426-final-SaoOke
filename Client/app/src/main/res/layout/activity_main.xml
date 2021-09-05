@@ -93,7 +93,7 @@
                             android:textSize="18sp"
                             android:layout_marginTop="12dp"
                             android:textColor="#6f6f6f"
-                            android:text="Transactions"/>
+                            android:text="Donate"/>
 
                     </LinearLayout>
 
@@ -127,7 +127,7 @@
                             android:textSize="18sp"
                             android:layout_marginTop="12dp"
                             android:textColor="#6f6f6f"
-                            android:text="Transfer"/>
+                            android:text="Grant"/>
 
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>
@@ -266,7 +266,7 @@
                             android:textSize="18sp"
                             android:layout_marginTop="12dp"
                             android:textColor="#6f6f6f"
-                            android:text="Settings"/>
+                            android:text="Others"/>
 
                     </LinearLayout>
 

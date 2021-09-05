@@ -7,17 +7,27 @@ public class Campaign {
     private PublicKey ownerKey;
     private String campaignName;
     private String ownerName;
+    private String description;
     private Float targetAmount;
     private Date expireDate;
     private String propaganda;
 
-    public Campaign(PublicKey ownerKey, String campaignName, String ownerName, Float targetAmount, Date expireDate, String propaganda) {
+    public Campaign(PublicKey ownerKey, String campaignName, String ownerName, String description, Float targetAmount, Date expireDate, String propaganda) {
         this.ownerKey = ownerKey;
         this.campaignName = campaignName;
         this.ownerName = ownerName;
         this.targetAmount = targetAmount;
         this.expireDate = expireDate;
         this.propaganda = propaganda;
+        this.description = description;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public String getCampaignName() {
