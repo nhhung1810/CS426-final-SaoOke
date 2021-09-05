@@ -52,9 +52,9 @@ class Campaign {
         return donators
     }
 
-    requestHelp(address, amount, message) {
+    requestHelp(username, amount, message) {
         this.requestHelpList.push({
-            "address" : address,
+            "username" : username,
             "amount" : amount,
             "message" : message
         })
@@ -200,12 +200,12 @@ class CampaignFactory {
         return null
     }
 
-    requestHelp(campaignName, address, amount, message) {
+    requestHelp(campaignName, username, amount, message) {
         var campaign = this.getCampaignByCampaignName(campaignName)
         if (campaign == null) {
             throw new Error("campaign does not exists")
         }
-        campaign.requestHelp(address, amount, message)
+        campaign.requestHelp(username, amount, message)
         return true
     }
 
