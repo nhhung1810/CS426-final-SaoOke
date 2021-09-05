@@ -29,6 +29,7 @@ public class HistoryActivity extends AppCompatActivity {
     }
 
     private void LoadTransactionLog() {
+        // Log.d("log callback","Get logg".toString());
         Call<TransactionLogList> logCall = RetrofitUtils.blockchainInterface.ExecuteGetTransactionLog();
         logCall.enqueue(new Callback<TransactionLogList>() {
             @Override

@@ -1,7 +1,9 @@
 const crypto = require("crypto")
-const debug = require("debug")("blockchain:worker")
-const EC = require('elliptic').ec;
-const ec = new EC('secp256k1');
+const { Verification } = require("./verify")
+
+const verification = new Verification()
+
+
 
 class Transaction{
     constructor(fromAddress, toAddress, amount, signature = ""){
@@ -12,50 +14,23 @@ class Transaction{
         this.timestamp = Date.now()
     }
 
-    calculateHash() {
-        return crypto.createHash("sha256").update(this.fromAddress + this.toAddress + this.amount + this.timestamp).digest('hex')
-    }
-
     calculateHex() {
       return Buffer.from(this.fromAddress + this.toAddress + this.amount, 'utf-8').toString('hex')
     }
 
-    /**
-     * Signs a transaction with the given signingKey (which is an Elliptic keypair
-     * object that contains a private key). The signature is then stored inside the
-     * transaction object and later stored on the blockchain.
-     *
-     * @param {Elliptic keypair} signingKey
-    */
-
-    //take a look at this video about keys: https://www.youtube.com/watch?v=AQDCe585Lnc
-
-    //So, simply explain by HuuHung
-    //When B upload a transaction that A pay B 50$, it must be signed by A
-    //That is signingKey
-    signTransaction(signingKey) {
-        if(signingKey.getPublic('hex') !== this.fromAddress) {
-            throw new Error('You can not sign transaction for other wallet');
-        }
-        
-        const hashtx = this.calculateHex();
-        const sig = signingKey.sign(hashtx, 'hex')
-        
-        this.signature = sig;
-    }
-
     //check signature
     isValid(){
-        //mining reward
         if(this.fromAddress === null) return true;
 
         if(!this.signature || this.signature.length == 0){
             throw new Error('No signature in this transation');
         }
 
-        const publicKey = ec.keyFromPublic(this.fromAddress, 'hex')
-        const msgHex = Buffer.from(this.fromAddress + this.toAddress + this.amount, 'utf-8')
-        return publicKey.verify(this.calculateHex(), this.signature)
+        publicKey = verification.parseKey(this.fromAddress)
+        console.log(publicKey)
+        const msgHex = Buffer.from(this.fromAddress + this.toAddress + this.amount, 'utf-8').toString('hex')
+
+        return verification.verify(msgHex, this.signature, publicKey, 'base64')
     }
 }
 
@@ -98,8 +73,6 @@ class Block {
         this.nonce++;
         this.hash = this.calculateHash();
       }
-  
-      debug(`Block mined: ${this.hash}`);
     }
   
     /**
@@ -161,7 +134,6 @@ class Block {
       const block = new Block(Date.now(), this.pendingTransactions, this.getLatestBlock().hash);
       block.mineBlock(this.difficulty);
   
-      debug('Block successfully mined!');
       this.chain.push(block);
   
       this.pendingTransactions = [];
@@ -182,7 +154,6 @@ class Block {
       const block = new Block(Date.now(), this.pendingTransactions, this.getLatestBlock().hash);
       block.mineBlock(this.difficulty);
   
-      debug('Block successfully mined!');
       this.chain.push(block);
   
       this.pendingTransactions = [];
@@ -201,9 +172,10 @@ class Block {
       }
   
       // Verify the transaction
-      if (!transaction.isValid()) {
-        throw new Error('Cannot add invalid transaction to chain');
-      }
+      // Check before 
+      // if (!transaction.isValid()) {
+      //   throw new Error('Cannot add invalid transaction to chain');
+      // }
       
       if (transaction.amount <= 0) {
         throw new Error('Transaction amount should be higher than 0');
@@ -215,7 +187,6 @@ class Block {
       }
   
       this.pendingTransactions.push(transaction);
-      debug('transaction added: %s', transaction);
     }
   
     /**
@@ -239,7 +210,6 @@ class Block {
         }
       }
   
-      debug('getBalanceOfAdrees: %s', balance);
       return balance;
     }
   
@@ -261,7 +231,6 @@ class Block {
         }
       }
   
-      debug('get transactions for wallet count: %s', txs.length);
       return txs;
     }
   
@@ -290,7 +259,7 @@ class Block {
         if (previousBlock.hash !== currentBlock.previousHash) {
           return false;
         }
-  
+        
         if (!currentBlock.hasValidTransactions()) {
           return false;
         }

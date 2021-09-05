@@ -5,14 +5,20 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.TextView;
 
 import com.example.blockchainapp.Account.AccountActivity;
 import com.example.blockchainapp.Auth.LoginActivity;
-import com.example.blockchainapp.Auth.RegisterActivity;
 import com.example.blockchainapp.Log.HistoryActivity;
 import com.example.blockchainapp.Transaction.TransactionActivity;
 
+import java.text.NumberFormat;
+import java.util.Locale;
+
 public class MainActivity extends AppCompatActivity {
+
+    private TextView tv_username;
+    private TextView tv_balance;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,8 +28,21 @@ public class MainActivity extends AppCompatActivity {
         if (!Constants.SESSION_ACTIVE) {
             Intent intent = new Intent(this, LoginActivity.class);
             startActivity(intent);
+        } else {
+            Initialize();
         }
 
+    }
+
+    private void Initialize() {
+        tv_username = findViewById(R.id.tv_dashboard);
+        tv_balance = findViewById(R.id.tv_balance);
+
+        // BlockchainUtils.GetBalance(tv_balance);
+        Locale locale = new Locale("vi", "VN");
+        NumberFormat currencyFormatter = NumberFormat.getCurrencyInstance(locale);
+        tv_username.setText(Constants.USERNAME + "'s Dashboard");
+        tv_balance.setText(currencyFormatter.format(Constants.BALANCE).toString() + " VNĐ");
     }
 
     public void TransactionTab(View view) {

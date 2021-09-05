@@ -1,12 +1,14 @@
 package com.example.blockchainapp.Auth;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.InputFilter;
@@ -16,12 +18,12 @@ import android.text.TextPaint;
 import android.text.TextWatcher;
 import android.text.method.LinkMovementMethod;
 import android.text.style.ClickableSpan;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.blockchainapp.Account.RSAKey;
 import com.example.blockchainapp.Constants;
 import com.example.blockchainapp.MainActivity;
 import com.example.blockchainapp.R;
@@ -29,13 +31,8 @@ import com.example.blockchainapp.Utils.RetrofitUtils;
 import com.example.blockchainapp.Account.UserAccount;
 import com.example.blockchainapp.Account.UserKey;
 
-import org.json.JSONObject;
-
-import java.io.IOException;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
+import java.security.KeyPair;
+import java.security.MessageDigest;
 
 public class LoginActivity extends AppCompatActivity {
     public UserKey user;
@@ -147,58 +144,101 @@ public class LoginActivity extends AppCompatActivity {
         return true;
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     public void HandleLogin(View view) {
-//        if (!CheckValidCredential()) return;
-//        account = new UserAccount(edt_username.getText().toString(), edt_password.getText().toString());
-//        Call<UserKey> keyCall =  RetrofitUtils.blockchainInterface.ExecutePostLogin(account);
-//        Log.d("Test", "Login called");
-//        keyCall.enqueue(new Callback<UserKey>() {
-//            @Override
-//            public void onResponse(Call<UserKey> call, Response<UserKey> response) {
-//                if (response.code() == 200) {
-//                    user = response.body();
-//                    Constants.PRIVATE_KEY = user.getPrivateKey();
-//                    Constants.PUBLIC_KEY = user.getPublicKey();
-//                    Constants.SESSION_ACTIVE = true;
-//
-//                    AlertDialog.Builder builder = new AlertDialog.Builder(LoginActivity.this);
-//                    builder.setTitle("Successfully registered!");
-//                    builder.setMessage("Your private key is: " + user.getPrivateKey()
-//                            + " | Your public key is: " + user.getPublicKey());
-//                    builder.setPositiveButton("Confirm",
-//                            new DialogInterface.OnClickListener() {
-//                                @Override
-//                                public void onClick(DialogInterface dialog, int which) {
-//                                    Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-//                                    startActivity(intent);
-//                                }
-//                            });
-//                    builder.show();
-//
-//
-//                }
-//                else {
-//                    /*
-//                    try {
-//                        JSONObject jObj = new JSONObject(response.body().toString());
-//                        Toast.makeText(LoginActivity.this, response.body().toString(), Toast.LENGTH_LONG).show();
-//                    } catch (Exception e) {
-//                        Toast.makeText(LoginActivity.this, "Invalid credentials", Toast.LENGTH_LONG).show();
-//                    }
-//                     */
-//                    try {
-//                        Toast.makeText(LoginActivity.this, response.errorBody().string(), Toast.LENGTH_LONG).show();
-//                    } catch (IOException e) {
-//                        e.printStackTrace();
-//                    }
-//                }
-//            }
-//
-//            @Override
-//            public void onFailure(Call<UserKey> call, Throwable t) {
-//                Toast.makeText(LoginActivity.this, t.getMessage(), Toast.LENGTH_LONG).show();
-//            }
-//        });
+        if (!CheckValidCredential()) return;
+        account = new UserAccount(edt_username.getText().toString(), edt_password.getText().toString());
+        KeyPair kp = null;
+        try {
+            MessageDigest md = MessageDigest.getInstance("SHA");
+            SecurityManager.HashMethod hashMethod = SecurityManager.getAppropriateHash();
+            String hashedPassword = SecurityManager.getHashedPassword( hashMethod, account.getPassword() );
+            hashedPassword = hashedPassword.replaceAll("[^a-zA-Z0-9]", "");
+            kp = RSAKey.parseKey(getApplicationContext(), account.getUsername() + "-" + hashedPassword);
+
+            Constants.USERNAME = account.getUsername();
+            System.out.println(Constants.USERNAME);
+            Constants.PRIVATE_KEY = kp.getPrivate();
+            Constants.PUBLIC_KEY = kp.getPublic();
+            Constants.SESSION_ACTIVE = true;
+
+            AlertDialog.Builder builder = new AlertDialog.Builder(LoginActivity.this);
+            builder.setTitle("Successfully registered!");
+            builder.setMessage("Your private key saved: " + kp.getPrivate()
+                    + " | Your public key saved: " + kp.getPublic());
+
+            RetrofitUtils.GetBalance();
+
+            builder.setPositiveButton("Confirm",
+                    new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                            startActivity(intent);
+                        }
+                    });
+            builder.show();
+
+
+        } catch (Exception e) {
+            //TODO: handle exception
+            System.out.println(e.toString());
+            Toast.makeText(LoginActivity.this, e.toString(), Toast.LENGTH_LONG).show();
+        }
+
+        /*
+        Call<UserKey> keyCall =  RetrofitUtils.blockchainInterface.ExecutePostLogin(account);
+        Log.d("Test", "Login called");
+        keyCall.enqueue(new Callback<UserKey>() {
+            @Override
+            public void onResponse(Call<UserKey> call, Response<UserKey> response) {
+                if (response.code() == 200) {
+                    user = response.body();
+                    Constants.PRIVATE_KEY = user.getPrivateKey();
+                    Constants.PUBLIC_KEY = user.getPublicKey();
+                    Constants.SESSION_ACTIVE = true;
+
+                    AlertDialog.Builder builder = new AlertDialog.Builder(LoginActivity.this);
+                    builder.setTitle("Successfully registered!");
+                    builder.setMessage("Your private key is: " + user.getPrivateKey()
+                            + " | Your public key is: " + user.getPublicKey());
+                    builder.setPositiveButton("Confirm",
+                            new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                                    startActivity(intent);
+                                }
+                            });
+                    builder.show();
+
+
+                }
+                else {
+
+                    try {
+                        JSONObject jObj = new JSONObject(response.body().toString());
+                        Toast.makeText(LoginActivity.this, response.body().toString(), Toast.LENGTH_LONG).show();
+                    } catch (Exception e) {
+                        Toast.makeText(LoginActivity.this, "Invalid credentials", Toast.LENGTH_LONG).show();
+                    }
+
+                    try {
+                        Toast.makeText(LoginActivity.this, response.errorBody().string(), Toast.LENGTH_LONG).show();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<UserKey> call, Throwable t) {
+                Toast.makeText(LoginActivity.this, t.getMessage(), Toast.LENGTH_LONG).show();
+            }
+        });
+
+         */
+
 
     }
 

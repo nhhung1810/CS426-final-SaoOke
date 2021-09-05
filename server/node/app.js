@@ -1,16 +1,18 @@
 const express = require('express')
 const { Blockchain, Transaction } = require('./blockchain');
 const { UserFactory } = require('./user')
-const EC = require('elliptic').ec;
-const ec = new EC('secp256k1');
-const debug = require("debug")("main:debug")
-
+const { Verification } = require("./verify")
+// const rs = require('jsrsasign');
+const rsu = require('jsrsasign-util');
 
 const mCoin = new Blockchain();
-const myKey = ec.keyFromPrivate('8955c93d5e5a33af207eed4907ec608ae85fbff89a6b6f795d36a49b26e29b01');
 const userFactory = new UserFactory()
-const myWalletAddress = myKey.getPublic('hex');
 
+//test
+// const verification = new Verification()
+// pub = verification.parseKey("public_key.pem", true)
+// pri = verification.parseKey("private_key_pkcs8.pem", true)
+// myWalletAddress = ver.keyToString(pub)
 
 const app = express()
 const port = 5000
@@ -23,18 +25,17 @@ app.get('/', (req, res) => {
 
 app.listen(port, () => {
   console.log(`Example app listening at http://localhost:${port}`)
-  test()
+  // test()
 })
 
 //param: address = publicKey
 app.post("/balance", function(req, res){
-  // console.log(req);
   if(!req.body || !req.body.address || req.body.address.length === 0){
     res.sendStatus(404)
   }
   else {
     //remerber fix this pls, this should be accept an public key
-    tmp = mCoin.getBalanceOfAddress(myWalletAddress)
+    tmp = mCoin.getBalanceOfAddress(req.body.address)
     res.send(200, tmp)
   }
 
@@ -43,33 +44,39 @@ app.post("/balance", function(req, res){
 // Route: /transaction
 // Method: POST
 // json sent via body
-// {"transaction": {"from" : "privateKey", "to" : "", "amount" :" "}}
 // For example:
 // {
-//   "transaction" : {
-//       "from" : "8955c93d5e5a33af207eed4907ec608ae85fbff89a6b6f795d36a49b26e29b01",
-//       "to" : "someone",
-//       "amount" : 10
-//   },
-//   "signature" : "0xasdfsdf", ///Calculated by (from + to + amount) => HEX
+//   "from" : "admin",
+//   "to" : "hung",
+//   "amount" : 10,
+//   "signature" : "ijA1JX6jnyd487Ba3ZsYCaan2XnuIqXkmx98HGpwFQkpzwzaZ3WskbJyFMGJkyogDYrnPq
+//        j+kCHL+qNJTEwE1gOsS3SWdG6+t78ce6eT0xFkJMS7N0Guu20ln9StCOio4pnKNz0ULH3epCn2VpfsDeS4/HcDJc4vKF2mUk1whM0="
 // }
 app.post('/transaction', function(req, res){
   const trans = (req) => {
+    // console.log(req.body)
     if(!req || !req.body || !req.body.transaction || !req.body.signature) {
       console.log("How about null body");
       return null;
     }
-    if(!req.body.transaction.from 
-        || !req.body.transaction.to || !req.body.transaction.amount){
+    if(!req.body.from || !req.body.to || !req.body.amount || !req.body.signature){
           console.log("Invalid transaction params")
           return null
         }
     else {
-      console.log("New transaction is been created")
-      return new Transaction(req.body.transaction.from, 
-                            req.body.transaction.to, 
-                            req.body.transaction.amount,
-                            req.body.signature)
+      try{
+        publicKey = userFactory.getKey(req.body.from);
+        console.log(publicKey)
+        console.log("New transaction is been created")
+        return new Transaction(publicKey, 
+                                req.body.to, 
+                                req.body.amount,
+                                req.body.signature)
+      } catch(ex){
+        console.log(ex.toString())
+        return null
+      }
+      
     }
   }
 
@@ -79,14 +86,21 @@ app.post('/transaction', function(req, res){
   } else {
     // console.log(tx.signTransaction)
     try {
+      ///backdoor for bots, because can not find rsa library support pkcs8 in golang
+      if (req.body.isbot) {
+          tx.isValid = () => { return true;}
+      }
       if (!tx.isValid()) {
         res.send(405, {"error" : "Invalid signature"})
+        return;
       }
     } catch(err) {
       console.log(err)
       res.send(405, {"error" : "Invalid sign key. Check your 'from' key"})
+      return;
     }
-    
+
+    console.log("\nPassed the valid check!!\n")
     mCoin.addTransaction(tx)
     res.send(200, {"status" : "success"});
   }
@@ -96,25 +110,35 @@ app.post('/transaction', function(req, res){
 // Route: /register
 // Method: POST
 // json sent via body
-// {username: "", password: ""}
+// {username: "", publicKey: "The original PEM"}
+// {
+//   "username" : "admin",
+//   "publicKey" : "-----BEGIN PUBLIC KEY-----\nMIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDGOll
+//    Tab/mVTMs3353mOBwjDp+\nM6LYYHi+ttH7/diA5PA7ZqJ2NtOzZXWjdaCGrqT/f0vkjWxCzhb1UOGZsSH+jVh
+//    K\niAsag+n2e+xzOPoe7xfWqOn3fI2Rt9yGswJcPP0mHUWsnlOuew9T+yyC7RFEFTX7\nRnD6gyYD8gbWvlFfu
+//    wIDAQAB\n-----END PUBLIC KEY-----"
+// }
+
 app.post('/register', function(req, res){
   const register = (req) => {
     if(!req || !req.body) return null;
-    if(!req.body.username || !req.body.password) return null;
+    if(!req.body.username || !req.body.publicKey) return null;
     else {
-      return userFactory.makeUser(req.body.username, req.body.password)
+      return userFactory.makeUser(req.body.username, req.body.publicKey)
     }
   }
 
   try {
-    key = register(req)
-    if(key === null) res.send(404, {
+    flag = register(req)
+    if(flag === null) res.send(404, {
       "error" : "Invalid register process. Check your params"
     })  
-    else res.send(200, {
-      "publicKey": key.getPublic('hex'),
-      "privateKey": key.getPrivate('hex')
-    })
+    else{
+      userFactory.freeMoney(req.body.username, 1000, mCoin)
+      res.send(200, {
+        "status" : "success"
+      })
+    } 
   } catch(err) {
     //case: error at the makeUser, maybe the username is existed
     console.log(err)
@@ -122,8 +146,6 @@ app.post('/register', function(req, res){
       "error" : "Check your username. It may existed"
     })
   }
-  
-
 })
 
 app.get('/transactionsLog', function(req, res) {
@@ -136,52 +158,52 @@ app.get('/transactionsLog', function(req, res) {
 })
 
 //add free money for further test, pass 
-app.post('/free', function(req, res){
-  const trans = (req) => {
-    if(!req || !req.body || !req.body.username || !req.body.amount)
-      return null
-    userFactory.freeMoney(req.body.username, mCoin, req.body.amount)
-    return true
-  }
+// app.post('/free', function(req, res){
+//   const trans = (req) => {
+//     if(!req || !req.body || !req.body.username || !req.body.amount)
+//       return null
+//     userFactory.freeMoney(req.body.username, mCoin, req.body.amount)
+//     return true
+//   }
 
-  tmp = trans(req)
-  if(tmp === true){
-    res.send(200, {
-      "status" : "success"
-    })
-  } else {
-    res.send(404, {
-      "error" : "Invalid, check your params"
-    })
-  }
-})
+//   tmp = trans(req)
+//   if(tmp === true){
+//     res.send(200, {
+//       "status" : "success"
+//     })
+//   } else {
+//     res.send(404, {
+//       "error" : "Invalid, check your params"
+//     })
+//   }
+// })
 
 
-app.post('/login', function(req, res){
-  const check = (req) =>{
-    if(!req || !req.body || !req.body.username || !req.body.password)
-      return null
-    else {
-      return userFactory.authenticate(req.body.username, req.body.password)
-    }
-  }
+// app.post('/login', function(req, res){
+//   const check = (req) =>{
+//     if(!req || !req.body || !req.body.username || !req.body.password)
+//       return null
+//     else {
+//       return userFactory.authenticate(req.body.username, req.body.password)
+//     }
+//   }
 
-  flag = check(req)
-  if(flag === null){
-    res.send(404, {
-      "error" : "Invalid request. Check your params"
-    })
-  } else {
-    if(flag === true) res.send(200, {
-      "status" : "success"
-    }) 
-    else {
-      res.send(405, {
-        "error" : "Invalid Login. Check your username and password"
-      })
-    }
-  }
-})
+//   flag = check(req)
+//   if(flag === null){
+//     res.send(404, {
+//       "error" : "Invalid request. Check your params"
+//     })
+//   } else {
+//     if(flag === true) res.send(200, {
+//       "status" : "success"
+//     }) 
+//     else {
+//       res.send(405, {
+//         "error" : "Invalid Login. Check your username and password"
+//       })
+//     }
+//   }
+// })
 
 app.post('/mine', (req, res) => {
   console.log(req.body)

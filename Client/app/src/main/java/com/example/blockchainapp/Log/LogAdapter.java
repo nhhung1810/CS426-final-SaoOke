@@ -54,7 +54,7 @@ public class LogAdapter extends RecyclerView.Adapter<LogAdapter.LogViewHolder> {
         holder.tv_toAddress.setText(log.getToAddress());
         holder.tv_amount.setText(String.valueOf(log.getAmount()));
         holder.tv_timestamp.setText(log.getTimestamp().toString());
-        holder.tv_signature.setText(log.getSignature());
+        holder.tv_signature.setText(log.getSignature().toString());
     }
 
     @Override
