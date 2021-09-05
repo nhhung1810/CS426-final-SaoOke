@@ -35,21 +35,16 @@ app.post("/balance/:username", function(req, res){
   }
   else {
     //remerber fix this pls, this should be accept an public key
-<<<<<<< HEAD
-    tmp = mCoin.getBalanceOfAddress(req.body.address)
-    res.send(200, tmp)
-=======
     try {
       console.log("Exception! Check if user existed?")
       var publicKey = userFactory.getKey(req.params.username);
       console.log("\nGet balance of:\n", publicKey, "\n")
       var tmp = mCoin.getBalanceOfAddress(publicKey)
-      res.send(200, {"balance" : tmp})
+      res.send(200, tmp)
     } catch (error) {
       res.send(403, {"error" : "Unable to find user"})
     }
     
->>>>>>> origin/hung-api
   }
 
 })
