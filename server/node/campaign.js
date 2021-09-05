@@ -30,35 +30,37 @@ class Campaign {
         this.transactions.forEach(transaction => {
             if (transaction.transaction.toAddress == this.ownerKey) {
                 logs.push({
-                    "amount" : transaction.transaction.amount,
-                    "message" : transaction.message
+                    "amount": transaction.transaction.amount,
+                    "message": transaction.message
                 })
             } else {
                 logs.push({
-                    "amount" : -transaction.transaction.amount,
-                    "message" : transaction.message
+                    "amount": -transaction.transaction.amount,
+                    "message": transaction.message
                 })
             }
         });
         return logs
     }
 
-    getAllDonators() {
+    getAllDonators(userFactory) {
         var donators = []
         this.transactions.forEach(element => {
+            // console.log("\n\n All donors: ", element, "\n\n")
             if (element.transaction.fromAddress != this.ownerKey) {
-                donators.push(JSON.parse(JSON.stringify(element)).transaction.fromAddress)
-                // donators.push(element.transaction.fromAddress)
+                // console.log("\nreaced here")
+                donators.push(userFactory.getUsername(JSON.parse(JSON.stringify(element)).transaction.fromAddress))
             }
         });
+        // console.log(donators)
         return donators
     }
 
     requestHelp(username, amount, message) {
         this.requestHelpList.push({
-            "username" : username,
-            "amount" : amount,
-            "message" : message
+            "username": username,
+            "amount": amount,
+            "message": message
         })
     }
 
@@ -82,14 +84,19 @@ class CampaignFactory {
         return campaign
     }
 
-    getCampaignByOwner(username){
+    getCampaignByOwner(username) {
         var result = []
         this.campaignList.forEach(element => {
-            console.log(element)
             if (element.ownerName == username) {
-                console.log("\nReach here")
-                result.push(JSON.parse(JSON.stringify(element)))
-                console.log(result)
+                result.push({
+                    "campaignName": element.campaignName,
+                    "campaignOwnerKey": element.ownerKey,
+                    "ownerName": element.ownerName,
+                    "description": element.description,
+                    "targetAmount": element.targetAmount,
+                    "expireDate": element.expireDate,
+                    "propaganda": element.propaganda,
+                })
             }
         });
         return result
@@ -103,27 +110,23 @@ class CampaignFactory {
         });
         // console.log("\nCheck internal create Campaign\n", ownerKey);
         var tmp = new Campaign(campaignName, ownerKey, ownerName, targetAmount, expireDate, description, propaganda)
-        this.campaignList.push(tmp) 
+        this.campaignList.push(tmp)
     }
 
     donate(campaignName, transaction, message) {
-        var targetCampaign = null
-        this.campaignList.forEach(element => {
+        var tmp = false;
+        tmp = this.campaignList.forEach(element => {
             if (element.campaignName == campaignName) {
-                targetCampaign = element //campaign
-                break
+                // make new transaction here
+                // console.log("REACHED HERE")
+                element.transactions.push({
+                    "transaction": transaction,
+                    "message": message
+                })
+                return true;
             }
         });
-        if (targetCampaign == null) {
-            throw new Error("Campaign not found");
-        }
-
-        // make new transaction here
-        targetCampaign.transactions.push({
-            "transaction" : transaction,
-            "message" : message
-        })
-        return true;
+        return tmp;
     }
 
     give(campaignName, ownerKey, receiverKey, transaction, message) {
@@ -142,11 +145,11 @@ class CampaignFactory {
         if (campaign.ownerKey != ownerKey) {
             throw new Error("campaign not match")
         }
-    
+
         //make new transaction here
         campaign.push({
-            "transaction" : transaction,
-            "message" : message
+            "transaction": transaction,
+            "message": message
         })
         return true
         //
@@ -158,7 +161,7 @@ class CampaignFactory {
 
         if (result == null) {
             return {
-                "message" : "Campaign does not exists"
+                "message": "Campaign does not exists"
             }
         }
         return {
@@ -178,8 +181,6 @@ class CampaignFactory {
         this.campaignList.forEach(element => {
             // console.log(element)
             if (element.campaignName == campaignName) {
-                // console.log("Reached here")
-                // console.log("\n\nCheck element reached: \n", element)
                 key = JSON.parse(JSON.stringify(element)).ownerKey;
             }
         });
@@ -208,11 +209,10 @@ class CampaignFactory {
         return result
     }
 
-    getAllDonators(campaignName) {
-        var result = []
+    getAllDonators(campaignName, userFactory) {
         var campaign = this.getCampaignByCampaignName(campaignName)
         if (campaign != null) {
-            return campaign.getAllDonators()
+            return JSON.parse(JSON.stringify(campaign.getAllDonators(userFactory)))
         }
         return null
     }
@@ -224,7 +224,7 @@ class CampaignFactory {
         }
         campaign.requestHelp(username, amount, message)
         return {
-            "message" : "Sent help successfully"
+            "message": "Sent help successfully"
         }
     }
 

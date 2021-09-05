@@ -51,6 +51,16 @@ class UserFactory {
         return key
     }
 
+    getUsername(key){
+        var username = null
+        this.userList.forEach((element) => {
+            if (element.publicKey === key){
+                username = JSON.parse(JSON.stringify(element)).username;
+            }
+        })
+        return username
+    }
+
     freeMoney(username, amount, blockchain) {
         let key = null
         this.userList.forEach((element) => {
