@@ -78,7 +78,7 @@ public class CampaignActivity extends AppCompatActivity {
     }
 
     private void updateLabel() {
-        String myFormat = "dd-MM-yyyy"; 
+        String myFormat = "dd-MM-yyyy";
         SimpleDateFormat sdf = new SimpleDateFormat(myFormat);
 
         et_expireDate.setText(sdf.format(myCalendar.getTime()));

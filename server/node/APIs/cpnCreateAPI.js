@@ -5,9 +5,10 @@ const { Transaction } = require("../blockchain")
 // {
 //     "ownerName" : "username", //=>auto get the existed public key
 //     "campaignName" : "name",
-//     "target" : int,
-//     "expire" : "dd-mm-yyyy",
-//     "msg" : "optional" //won't be include in the transaction
+//     "targetAmount" : int,
+//     "expireDate" : "dd-mm-yyyy",
+//     "description" : "long string",
+//     "propaganda" : "optional" //won't be include in the transaction
 // }
 module.exports = function (app, userFactory, campaignFactory, mCoin) {
     app.post("/cpncreate", function (req, res) {
