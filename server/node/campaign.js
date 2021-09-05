@@ -81,6 +81,19 @@ class CampaignFactory {
         return campaign
     }
 
+    getCampaignByOwner(username){
+        var result = []
+        this.campaignList.forEach(element => {
+            console.log(element)
+            if (element.ownerName == username) {
+                console.log("\nReach here")
+                result.push(JSON.parse(JSON.stringify(element)))
+                console.log(result)
+            }
+        });
+        return result
+    }
+
     createCampaign(campaignName, ownerKey, ownerName, targetAmount, expireDate, description, propaganda = "") {
         this.campaignList.forEach(element => {
             if (element.campaignName == campaignName) {

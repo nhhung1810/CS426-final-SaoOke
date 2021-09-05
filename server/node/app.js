@@ -47,6 +47,10 @@ require('./APIs/getRequestHelpListAPI')(app, campaignFactory)
 
 require('./APIs/getAllCampaignAPI')(app, campaignFactory)
 
+require('./APIs/getCamByUserAPI')(app, campaignFactory)
+
+
+
 // GET: CheckCampaignInformation (campaignName) => trả về tất cả thông tin kèm theo số tiền trong chiến dịch
 // GET: CheckHistory(campaign) => trả về các lượt donate và các lượt give của chiến dịch
 // GET: CheckDonator(campaignName) => Danh sách các người donate của chiến dịch
