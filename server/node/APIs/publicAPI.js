@@ -19,6 +19,6 @@ module.exports = function (app, userFactory) {
             res.send(404, "Error")
             return
         }
-        res.send(200, tmp)
+        res.send(200, {"publicKey":tmp})
     })
 }

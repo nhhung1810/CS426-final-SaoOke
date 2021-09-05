@@ -75,6 +75,9 @@ public class GrantActivity extends AppCompatActivity {
                     String toUserPublicKey = response.body().publicKey;
                     try {
                         System.out.println("Obtained public key");
+                        System.out.println(Constants.PUBLIC_KEY.toString());
+                        System.out.println(toUserPublicKey);
+                        System.out.println(amount.toString());
                         request.setSignature(RSAKey.sign(Constants.PUBLIC_KEY.toString() +
                                 toUserPublicKey + amount.toString(), Constants.PRIVATE_KEY));
 
