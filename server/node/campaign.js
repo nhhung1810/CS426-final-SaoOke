@@ -92,24 +92,23 @@ class CampaignFactory {
     }
 
     donate(donatorKey, campaignName, transaction, message) {
-        var targetCampain = null
+        var targetcampaign = null
         this.campaignList.forEach(campaign => {
             if (campaign.campaignName == campaignName) {
-                targetCampain = campaign
+                targetcampaign = campaign
                 break
             }
         });
-        if (targetCampain == null) {
+        if (targetcampaign == null) {
             throw new Error("Campaign not found");
         }
 
         // make new transaction here
-        targetCampain.push({
+        targetcampaign.push({
             "transaction" : transaction,
             "message" : message
         })
         return true;
-        //
     }
 
     give(campaignName, ownerKey, receiverKey, transaction, message) {
