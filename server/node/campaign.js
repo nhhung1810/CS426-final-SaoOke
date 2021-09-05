@@ -129,30 +129,18 @@ class CampaignFactory {
         return tmp;
     }
 
-    give(campaignName, ownerKey, receiverKey, transaction, message) {
-        var campaign = null
-        this.campaignList.forEach(element => {
+    give(campaignName, transaction, message) {
+        var tmp = false;
+        tmp = this.campaignList.forEach(element => {
             if (element.campaignName == campaignName) {
-                campaign = element
-                break
+                element.transactions.push({
+                    "transaction": transaction,
+                    "message": message
+                })
             }
+            return true
         });
-
-        if (campaign == null) {
-            throw new Error("campain not found!")
-        }
-
-        if (campaign.ownerKey != ownerKey) {
-            throw new Error("campaign not match")
-        }
-
-        //make new transaction here
-        campaign.push({
-            "transaction": transaction,
-            "message": message
-        })
-        return true
-        //
+        return tmp
     }
 
     getCampaignInformation(campaignName) {
