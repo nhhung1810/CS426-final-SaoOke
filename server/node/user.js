@@ -55,7 +55,7 @@ class UserFactory{
             if(element.username === username) 
                 key = element.publicKey
         })
-        blockchain.freeMoney(key, 100)
+        blockchain.freeMoney(key, amount)
     }
 
 }

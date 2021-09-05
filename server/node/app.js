@@ -28,15 +28,23 @@ app.listen(port, () => {
   // test()
 })
 
-//param: address = publicKey
-app.post("/balance", function(req, res){
-  if(!req.body || !req.body.address || req.body.address.length === 0){
-    res.sendStatus(404)
+//param: address = username
+app.post("/balance/:username", function(req, res){
+  if(!req.params | !req.params.username){
+    res.send(404, {"error" : "Invalid params"})
   }
   else {
     //remerber fix this pls, this should be accept an public key
-    tmp = mCoin.getBalanceOfAddress(myWalletAddress)
-    res.send(200, tmp)
+    try {
+      console.log("Exception! Check if user existed?")
+      var publicKey = userFactory.getKey(req.params.username);
+      console.log("\nGet balance of:\n", publicKey, "\n")
+      var tmp = mCoin.getBalanceOfAddress(publicKey)
+      res.send(200, {"balance" : tmp})
+    } catch (error) {
+      res.send(403, {"error" : "Unable to find user"})
+    }
+    
   }
 
 })
@@ -85,8 +93,6 @@ app.post('/transaction', function(req, res){
   } else {
     // console.log(tx.signTransaction)
     try {
-      // publicKey = verification.parseKey(userFactory.getKey(req.body.from))
-      // console.log(publicKey)
       if (!tx.isValid()) {
         res.send(405, {"error" : "Invalid signature"})
         return;
@@ -99,6 +105,7 @@ app.post('/transaction', function(req, res){
 
     console.log("\nPassed the valid check!!\n")
     mCoin.addTransaction(tx)
+    mCoin.minePendingTransactions("master-mine")
     res.send(200, {"status" : "success"});
   }
   
@@ -115,7 +122,6 @@ app.post('/transaction', function(req, res){
 //    K\niAsag+n2e+xzOPoe7xfWqOn3fI2Rt9yGswJcPP0mHUWsnlOuew9T+yyC7RFEFTX7\nRnD6gyYD8gbWvlFfu
 //    wIDAQAB\n-----END PUBLIC KEY-----"
 // }
-// TODO: ADD CHECK
 app.post('/register', function(req, res){
   const register = (req) => {
     if(!req || !req.body) return null;
@@ -145,6 +151,20 @@ app.post('/register', function(req, res){
   }
 })
 
+
+// Route: /transactionLog
+// Method: GET
+// {
+//   "logs": [
+//       {
+//           "fromAddress": null,
+//           "toAddress": "-----BEGIN PUBLIC KEY-----\nMIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDGOllTab/mVTMs3353mOBwjDp+\nM6LYYHi+ttH7/diA5PA7ZqJ2NtOzZXWjdaCGrqT/f0vkjWxCzhb1UOGZsSH+jVhK\niAsag+n2e+xzOPoe7xfWqOn3fI2Rt9yGswJcPP0mHUWsnlOuew9T+yyC7RFEFTX7\nRnD6gyYD8gbWvlFfuwIDAQAB\n-----END PUBLIC KEY-----",
+//           "amount": 100,
+//           "signature": "",
+//           "timestamp": 1630810142437
+//       }, ...
+//   ]
+// }
 app.get('/transactionsLog', function(req, res) {
   var transactions = mCoin.getTransactionsLog()
   res.send(200, 
@@ -154,54 +174,7 @@ app.get('/transactionsLog', function(req, res) {
   )
 })
 
-//add free money for further test, pass 
-// app.post('/free', function(req, res){
-//   const trans = (req) => {
-//     if(!req || !req.body || !req.body.username || !req.body.amount)
-//       return null
-//     userFactory.freeMoney(req.body.username, mCoin, req.body.amount)
-//     return true
-//   }
-
-//   tmp = trans(req)
-//   if(tmp === true){
-//     res.send(200, {
-//       "status" : "success"
-//     })
-//   } else {
-//     res.send(404, {
-//       "error" : "Invalid, check your params"
-//     })
-//   }
-// })
-
-
-// app.post('/login', function(req, res){
-//   const check = (req) =>{
-//     if(!req || !req.body || !req.body.username || !req.body.password)
-//       return null
-//     else {
-//       return userFactory.authenticate(req.body.username, req.body.password)
-//     }
-//   }
-
-//   flag = check(req)
-//   if(flag === null){
-//     res.send(404, {
-//       "error" : "Invalid request. Check your params"
-//     })
-//   } else {
-//     if(flag === true) res.send(200, {
-//       "status" : "success"
-//     }) 
-//     else {
-//       res.send(405, {
-//         "error" : "Invalid Login. Check your username and password"
-//       })
-//     }
-//   }
-// })
-
+//inactive
 app.post('/mine', (req, res) => {
   console.log(req.body)
   if (!req || !req.body || !req.body.address) {
@@ -218,48 +191,3 @@ app.post('/mine', (req, res) => {
   }
 })
 
-
-
-/*
-TEST SPACE
-*/
-test = () => {
-    // Mine first block
-  mCoin.minePendingTransactions(myWalletAddress);
-
-  // Create a transaction & sign it with your key
-  const tx1 = new Transaction(myWalletAddress, 'address2', 100);
-  tx1.signTransaction(myKey);
-  mCoin.addTransaction(tx1);
-
-  // Mine block
-  mCoin.minePendingTransactions(myWalletAddress);
-
-  // Create second transaction
-  const tx2 = new Transaction(myWalletAddress, 'address1', 50);
-  tx2.signTransaction(myKey);
-  mCoin.addTransaction(tx2);
-
-  // Mine block
-  mCoin.minePendingTransactions(myWalletAddress);
-
-  console.log();
-  console.log(`Balance of xavier is ${mCoin.getBalanceOfAddress(myWalletAddress)}`);
-
-  // Uncomment this line if you want to test tampering with the chain
-  // mCoin.chain[1].transactions[0].amount = 10;
-
-  // Check if the chain is valid
-  console.log();
-  console.log('Blockchain valid?', mCoin.isChainValid() ? 'Yes' : 'No');
-};
-
-
-app.post('/testkey', (req, res) => {
-  // var publicKey = req.body.publicKey
-  // var signature = req.body.signature
-
-  // var key = ec.keyFromPublic(publicKey, "hex")
-  var a = 123
-  res.send(200, String("sdfsaf"))
-})
