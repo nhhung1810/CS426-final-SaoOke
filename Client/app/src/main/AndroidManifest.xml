@@ -19,7 +19,7 @@
         <activity android:name=".HelpRequest.HelpRequestActivity" />
         <activity android:name=".Campaign.CampaignOptionSelectActivity" />
         <activity android:name=".Campaign.CampaignListActivity" />
-        <activity android:name=".Campaign.GrantActivity" />
+        <activity android:name=".Transaction.GrantActivity" />
         <activity android:name=".Campaign.CampaignActivity" />
         <activity android:name=".Log.HistoryActivity" />
         <activity android:name=".Auth.LoginActivity">

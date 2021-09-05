@@ -1,5 +1,7 @@
 package com.example.blockchainapp;
 
+import com.example.blockchainapp.Campaign.Campaign;
+
 import java.security.PrivateKey;
 import java.security.PublicKey;
 
@@ -9,7 +11,7 @@ public class Constants {
     public static final String RESOURCE_LOCATION = "CharityBlockchain";
 
     // SESSION INFORMATION
-    public static String[] CAMPAIGNS = {"Cuu tro mien trung", "Vien tro COVID-19", "Quy co Hang"};
+    public static String[] CAMPAIGN_LIST;
     public static Long BALANCE = Long.valueOf(1000);
     public static String USERNAME = "";
     public static PrivateKey PRIVATE_KEY;

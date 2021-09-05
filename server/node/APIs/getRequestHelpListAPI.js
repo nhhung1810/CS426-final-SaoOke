@@ -9,7 +9,7 @@ module.exports = function(app, campaignFactory) {
         }
 
         try {
-            res.send(202, campaignFactory.getRequestHelpList(campaignName))
+            res.send(200, campaignFactory.getRequestHelpList(campaignName))
         } catch (err) {
             res.send(404, {"message" : err.message})
         }

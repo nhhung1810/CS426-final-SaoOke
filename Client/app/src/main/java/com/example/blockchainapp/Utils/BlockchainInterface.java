@@ -34,6 +34,9 @@ public interface BlockchainInterface {
     //@POST("/login")
     //Call<UserKey> ExecutePostLogin(@Body UserAccount account);
 
+    @GET("/checkHelpRequests/{campaignName}")
+    Call<HelpRequest[]> ExecuteGetHelpRequest(@Path("campaignName") String campaignName);
+
     @GET("/campaign/{campaignName}")
     Call<Campaign> ExecuteGetCampaignInformation(@Path("campaignName") String campaignName);
 

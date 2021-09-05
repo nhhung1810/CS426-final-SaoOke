@@ -17,10 +17,10 @@ import org.w3c.dom.Text;
 import java.util.List;
 
 public class HelpRequestAdapter extends RecyclerView.Adapter<HelpRequestAdapter.ViewHolder> {
-    private List<HelpRequest> list;
+    private HelpRequest[] list;
     private Context context;
 
-    public HelpRequestAdapter(List<HelpRequest> list, Context context) {
+    public HelpRequestAdapter(HelpRequest[] list, Context context) {
         this.list = list;
         this.context = context;
     }
@@ -52,7 +52,7 @@ public class HelpRequestAdapter extends RecyclerView.Adapter<HelpRequestAdapter.
 
     @Override
     public void onBindViewHolder(@NonNull @NotNull HelpRequestAdapter.ViewHolder holder, int position) {
-        HelpRequest helpRequest = list.get(position);
+        HelpRequest helpRequest = list[position];
 
         holder.tv_hr_campaignName.setText(helpRequest.getCampaignName());
         holder.tv_hr_username.setText(helpRequest.getUsername());
@@ -62,6 +62,6 @@ public class HelpRequestAdapter extends RecyclerView.Adapter<HelpRequestAdapter.
 
     @Override
     public int getItemCount() {
-        return list.size();
+        return list.length;
     }
 }

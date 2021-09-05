@@ -1,4 +1,4 @@
-package com.example.blockchainapp.Campaign;
+package com.example.blockchainapp.Transaction;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
@@ -47,7 +47,7 @@ public class GrantActivity extends AppCompatActivity {
         messageET = findViewById(R.id.et_message);
 
         ArrayAdapter<String> adapter = new ArrayAdapter<String>
-                (this,android.R.layout.select_dialog_item, Constants.CAMPAIGNS);
+                (this,android.R.layout.select_dialog_item, Constants.CAMPAIGN_LIST);
 
         campaignET.setThreshold(1);
         campaignET.setAdapter(adapter);
