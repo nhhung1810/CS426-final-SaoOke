@@ -70,7 +70,7 @@ public class DonationActivity extends AppCompatActivity {
     public void HandleTransaction(View view) throws Exception {
         if (TextUtils.isEmpty(campaignET.getText()) || TextUtils.isEmpty(amountET.getText())) return;
         String toCampaign = campaignET.getText().toString();
-        Float amount = Float.parseFloat(amountET.getText().toString());
+        Long amount = Long.valueOf(amountET.getText().toString());
         String message = messageET.getText().toString();
 
         // TODO: change private key to user's current session
@@ -83,7 +83,7 @@ public class DonationActivity extends AppCompatActivity {
                 if (response.code() == 200) {
                     String toUserPublicKey = response.body().publicKey;
                     try {
-                        request.setSignature(RSAKey.sign(Constants.PUBLIC_KEY.toString() +
+                        request.setSignature(RSAKey.sign(Constants.REAL_PUBLIC_KEY +
                                 toUserPublicKey + amount.toString(), Constants.PRIVATE_KEY));
 
                         Call<Object> donationCall = RetrofitUtils.blockchainInterface.ExecutePostDonate(request);

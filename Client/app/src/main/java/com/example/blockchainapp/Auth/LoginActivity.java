@@ -170,6 +170,7 @@ public class LoginActivity extends AppCompatActivity {
             RetrofitUtils.GetBalance();
             RetrofitUtils.LoadCampaignNames(Constants.USERNAME);
             RetrofitUtils.LoadAllCampaigns();
+            RetrofitUtils.GetRealPublicKey();
 
             builder.setPositiveButton("Confirm",
                     new DialogInterface.OnClickListener() {

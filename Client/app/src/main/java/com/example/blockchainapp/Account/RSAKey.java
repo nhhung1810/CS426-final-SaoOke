@@ -118,6 +118,7 @@ public class RSAKey{
         File file = new File(context.getFilesDir(), Constants.RESOURCE_LOCATION);
         // Log.d("path", file.getAbsolutePath() + "/" + privatePath);
         InputStreamReader isr = new InputStreamReader(new FileInputStream(file.getAbsolutePath() + "/" + publicPath));
+        // System.out.println("File path:" + file.getAbsolutePath() + "/" + publicPath);
         BufferedReader bufferedReader = new BufferedReader(isr);
         StringBuilder sb = new StringBuilder();
         String line = "";
