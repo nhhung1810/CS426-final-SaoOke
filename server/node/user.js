@@ -41,10 +41,12 @@ class UserFactory {
 
     //get key from username. Again, this is a bad idea, only fit for testing and demo
     getKey(username) {
-        let key = null
+        var key = null
         this.userList.forEach((element) => {
-            if (element.username === username)
-                key = element.publicKey
+            if (element.username === username){
+                key = JSON.parse(JSON.stringify(element)).publicKey;
+            }
+                
         })
         return key
     }
