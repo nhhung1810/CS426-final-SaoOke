@@ -135,6 +135,16 @@ class CampaignFactory {
                 }
             }
         });
+        return null;
+    }
+
+    getCampaignKey(campaignName) {
+        this.campaignList.forEach(element => {
+            if (element.campaignName == campaignName) {
+                return element.ownerKey;
+            }
+        });
+        return null;
     }
 
     getCampaignHistory(campaignName) {
