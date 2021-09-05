@@ -2,6 +2,7 @@ package com.example.blockchainapp.Utils;
 
 import android.util.Log;
 
+import com.example.blockchainapp.Account.PublicKey;
 import com.example.blockchainapp.Campaign.Campaign;
 import com.example.blockchainapp.Constants;
 import com.google.gson.Gson;
@@ -11,6 +12,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+import jnr.constants.Constant;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -95,8 +97,30 @@ public class RetrofitUtils {
 
 //        recyclerView.setAdapter(new CampaignListAdapter());
 //        recyclerView.setLayoutManager(new LinearLayoutManager(CampaignListActivity.this));
+    }
 
+    public static void GetRealPublicKey() {
+        Call<PublicKey> publicKeyCall = RetrofitUtils.blockchainInterface.ExecuteGetPublicKey(Constants.USERNAME);
+        publicKeyCall.enqueue(new Callback<PublicKey>() {
+            @Override
+            public void onResponse(Call<PublicKey> call, Response<PublicKey> response) {
+                if (response.code() == 200) {
+                    Constants.REAL_PUBLIC_KEY = response.body().publicKey;
+                    System.out.println("Real just login: " + Constants.REAL_PUBLIC_KEY);
+                } else {
+                    try {
+                        System.out.println(response.errorBody().string());
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
 
+            @Override
+            public void onFailure(Call<PublicKey> call, Throwable t) {
+                System.out.println(t.getMessage());
+            }
+        });
     }
 
     public static void LoadAllCampaigns() {

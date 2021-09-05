@@ -1,4 +1,4 @@
-module.exports = function (app, userFactory) {
+module.exports = function (app, userFactory, campaignFactory) {
     // Route: /public/:username
     // Method: GET
     // Respond as text
@@ -9,16 +9,19 @@ module.exports = function (app, userFactory) {
 
         try {
             console.log("\nCheck username:", req.params.username)
-            var tmp = userFactory.getKey(req.params.username)
-            if(tmp == null){
-                res.send(404, {"error" : "Invalid username"})
-                return
+            var userTmp = userFactory.getKey(req.params.username)
+            if(userTmp == null){
+                userTmp = campaignFactory.getCampaignKey(req.params.username)
+                if(userTmp == null){
+                    res.send(404, {"error" : "Invalid username"})
+                    return
+                }
             }
         } catch (err) {
             console.log("\n", err.toString(), "\n")
             res.send(404, "Error")
             return
         }
-        res.send(200, tmp)
+        res.send(200, {"publicKey":userTmp})
     })
 }

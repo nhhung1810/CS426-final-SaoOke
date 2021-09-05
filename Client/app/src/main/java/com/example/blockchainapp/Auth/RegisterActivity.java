@@ -165,6 +165,8 @@ public class RegisterActivity extends AppCompatActivity {
             String publicPath = name + "-public-key.pem";
             String publicKey = RSAKey.readPublicKey(getApplicationContext(), publicPath);
 
+            //System.out.println("Before register:" + kp.getPublic().toString());
+
             UserKey key = new UserKey(account.getUsername(), publicKey);
             Log.d("Key", publicKey);
 
@@ -183,6 +185,7 @@ public class RegisterActivity extends AppCompatActivity {
                         RetrofitUtils.GetBalance();
                         RetrofitUtils.LoadCampaignNames(Constants.USERNAME);
                         RetrofitUtils.LoadAllCampaigns();
+                        RetrofitUtils.GetRealPublicKey();
 
                         AlertDialog.Builder builder = new AlertDialog.Builder(RegisterActivity.this);
                         builder.setTitle("Successfully registered!");

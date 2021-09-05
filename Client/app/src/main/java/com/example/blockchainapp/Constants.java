@@ -14,6 +14,7 @@ public class Constants {
     public static Campaign[] ALL_CAMPAIGN_LIST = {};
     public static String[] USER_CAMPAIGN_LIST = {"Empty"};
     public static Long BALANCE = Long.valueOf(1000);
+    public static String REAL_PUBLIC_KEY;
     public static String USERNAME = "";
     public static PrivateKey PRIVATE_KEY;
     public static PublicKey PUBLIC_KEY;

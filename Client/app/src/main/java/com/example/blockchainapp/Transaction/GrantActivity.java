@@ -59,15 +59,15 @@ public class GrantActivity extends AppCompatActivity {
         if (TextUtils.isEmpty(campaignET.getText()) || TextUtils.isEmpty(amountET.getText())) return;
         String campaign = campaignET.getText().toString();
         String toUser = toUserET.getText().toString();
-        Float amount = Float.parseFloat(amountET.getText().toString());
+        Long amount = Long.valueOf(amountET.getText().toString());
         String message = messageET.getText().toString();
 
         // TODO: change public key to campaign's name
         GrantRequest request = new GrantRequest(campaign, toUser, amount, message);
         // request.setSignature(RSAKey.sign(campaign + toUser + amount.toString(), Constants.PRIVATE_KEY));
-        // System.out.println("Here:" + campaign);
+        System.out.println("Here:" + toUser);
 
-        Call<PublicKey> publicKeyCall = RetrofitUtils.blockchainInterface.ExecuteGetPublicKey(RetrofitUtils.GetUserByCampaign(campaign));
+        Call<PublicKey> publicKeyCall = RetrofitUtils.blockchainInterface.ExecuteGetPublicKey(toUser);
         publicKeyCall.enqueue(new Callback<PublicKey>() {
             @Override
             public void onResponse(Call<PublicKey> call, Response<PublicKey> response) {
@@ -75,7 +75,10 @@ public class GrantActivity extends AppCompatActivity {
                     String toUserPublicKey = response.body().publicKey;
                     try {
                         System.out.println("Obtained public key");
-                        request.setSignature(RSAKey.sign(Constants.PUBLIC_KEY.toString() +
+                        System.out.println(Constants.REAL_PUBLIC_KEY);
+                        System.out.println(toUserPublicKey);
+                        System.out.println(amount.toString());
+                        request.setSignature(RSAKey.sign(Constants.REAL_PUBLIC_KEY +
                                 toUserPublicKey + amount.toString(), Constants.PRIVATE_KEY));
 
                         Call<Object> grantCall = RetrofitUtils.blockchainInterface.ExecutePostGrant(request);

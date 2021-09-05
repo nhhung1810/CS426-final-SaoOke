@@ -5,11 +5,11 @@ import java.security.PublicKey;
 public class GrantRequest {
     private String campaignName;
     private String receiver;
-    private Float amount;
+    private Long amount;
     private String message;
     private String signature;
 
-    public GrantRequest(String campaignName, String receiver, Float amount, String message) {
+    public GrantRequest(String campaignName, String receiver, Long amount, String message) {
         this.campaignName = campaignName;
         this.receiver = receiver;
         this.amount = amount;
@@ -32,11 +32,11 @@ public class GrantRequest {
         this.receiver = receiver;
     }
 
-    public Float getAmount() {
+    public Long getAmount() {
         return amount;
     }
 
-    public void setAmount(Float amount) {
+    public void setAmount(Long amount) {
         this.amount = amount;
     }
 
