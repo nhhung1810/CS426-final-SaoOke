@@ -14,7 +14,7 @@ class Campaign {
     }
 
     getReceivedAmount() {
-        amount = 0;
+        var amount = 0;
         this.transactions.forEach(transaction => {
             if (this.ownerKey == transaction.transaction.toAddress) {
                 amount += transaction.transaction.amount;
@@ -83,11 +83,12 @@ class CampaignFactory {
     createCampaign(campaignName, ownerKey, ownerName, targetAmount, expireDate, description, propaganda = "") {
         this.campaignList.forEach(element => {
             if (element.campaignName == campaignName) {
-                throw new Error("This campain name is exists")
+                throw new Error("This campaign name is exists")
             }
         });
-        this.campaignList.push(new Campaign(campaignName, ownerKey, ownerName, targetAmount, 
-                expireDate, description, propaganda))
+        // console.log("\nCheck internal create Campaign\n", ownerKey);
+        var tmp = new Campaign(campaignName, ownerKey, ownerName, targetAmount, expireDate, description, propaganda)
+        this.campaignList.push(tmp) 
     }
 
     donate(donatorKey, campaignName, transaction, message) {
@@ -156,12 +157,16 @@ class CampaignFactory {
     }
 
     getCampaignKey(campaignName) {
+        var key = null
         this.campaignList.forEach(element => {
+            // console.log(element)
             if (element.campaignName == campaignName) {
-                return element.ownerKey;
+                // console.log("Reached here")
+                // console.log("\n\nCheck element reached: \n", element)
+                key = JSON.parse(JSON.stringify(element)).ownerKey;
             }
         });
-        return null;
+        return key;
     }
 
     getCampaignHistory(campaignName) {
@@ -177,12 +182,13 @@ class CampaignFactory {
         this.campaignList.forEach(campaign => {
             result.push({
                 "campaignName" : campaign.campaignName,
-                "campaignOwnerKey" : campaign.campaignOwnerKey,
+                "campaignOwnerKey" : campaign.ownerKey,
                 "expireDate" : campaign.expireDate,
                 "description" : campaign.description,
                 "totalAmount" : campaign.getReceivedAmount()
             })
         });
+        return result
     }
 
     getAllDonators(campaignName) {

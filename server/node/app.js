@@ -33,7 +33,7 @@ require('./APIs/registerAPI')(app, userFactory, mCoin)
 
 require('./APIs/transactionlogAPI')(app, mCoin)
 
-require('./APIs/cpnCreateAPI')(app, userFactory, campaignFactory, mCoin)
+require('./APIs/cpnCreateAPI')(app, userFactory, campaignFactory)
 
 require('./APIs/donateAPI')(app, userFactory, campaignFactory, mCoin)
 
