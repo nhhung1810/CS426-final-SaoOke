@@ -19,11 +19,23 @@ class UserFactory{
         this.userList.forEach(function(element) {
         if(username == element.username){
             throw new Error("Existed this member")
+        }})
+
+        var isValid = null
+        try {
+            const verification = new Verification()
+            isValid = verification.parseKey(publicKey)
+        } catch (error) {
+            console.log(error.toString())
+            return null
         }
-        })
-        let tmp = new User(username, publicKey)
-        this.userList.push(tmp)
-        return true
+
+        if(isValid != null){
+            let tmp = new User(username, publicKey)
+            this.userList.push(tmp)
+            return true
+        } else return null;
+        
     }
 
 

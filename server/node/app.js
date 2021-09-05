@@ -115,7 +115,7 @@ app.post('/transaction', function(req, res){
 //    K\niAsag+n2e+xzOPoe7xfWqOn3fI2Rt9yGswJcPP0mHUWsnlOuew9T+yyC7RFEFTX7\nRnD6gyYD8gbWvlFfu
 //    wIDAQAB\n-----END PUBLIC KEY-----"
 // }
-
+// TODO: ADD CHECK
 app.post('/register', function(req, res){
   const register = (req) => {
     if(!req || !req.body) return null;
