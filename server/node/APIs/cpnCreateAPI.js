@@ -23,6 +23,7 @@ module.exports = function (app, userFactory, campaignFactory, mCoin) {
             } else {
                 try {
                     publicKey = userFactory.getKey(req.body.ownerName)
+                    console.log("\nCreate Campaign with:\n", req.body.ownerName, "\n", publicKey, "\nEnd Create\n")
                     campaignFactory.createCampaign(req.body.campaignName, publicKey,
                         req.body.ownerName, req.body.targetAmount, req.body.expireDate, req.body.description, req.body.propaganda)
                     return true
