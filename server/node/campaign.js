@@ -1,3 +1,4 @@
+const { Blockchain, Transaction } = require('./blockchain');
 
 class Campaign {
     constructor(campaignName, ownerKey, ownerName, targetAmount, expireDate, message) {
@@ -37,8 +38,8 @@ class CampaignFactory {
         this.campaignList.push(new Campaign(campaignName, ownerKey, ownerName, targetAmount, expireDate, message))
     }
 
-    donate(donatorKey, campaignName, amount, message) {
-        targetCampain = null
+    donate(donatorKey, campaignName, transaction, message) {
+        var targetCampain = null
         this.campaignList.forEach(campaign => {
             if (campaign.campaignName == campaignName) {
                 targetCampain = campaign
@@ -50,13 +51,37 @@ class CampaignFactory {
         }
 
         // make new transaction here
-        
+        targetCampain.push({
+            "transaction" : transaction,
+            "message" : message
+        })
+        return true;
         //
     }
 
-    give(ownerKey, receiverKey, amount, message) {
+    give(campaignName, ownerKey, receiverKey, transaction, message) {
+        var campaign = null
+        this.campaignList.forEach(element => {
+            if (element.campaignName == campaignName) {
+                campaign = element
+                break
+            }
+        });
 
+        if (campaign == null) {
+            throw new Error("campain not found!")
+        }
+
+        if (campaign.ownerKey != ownerKey) {
+            throw new Error("campaign not match")
+        }
+    
         //make new transaction here
+        campaign.push({
+            "transaction" : transaction,
+            "message" : message
+        })
+        return true
         //
     }
 
