@@ -8,6 +8,7 @@ const rsu = require('jsrsasign-util');
 
 const mCoin = new Blockchain();
 const userFactory = new UserFactory()
+const campaignFactory = new CampaignFactory()
 
 
 const app = express()
@@ -32,6 +33,8 @@ require('./APIs/registerAPI')(app, userFactory, mCoin)
 
 require('./APIs/transactionlogAPI')(app, mCoin)
 
+require('./APIs/cpnCreateAPI')(app, userFactory, campaignFactory, mCoin)
+
 // TODO
 // POST: CreateCampaign (ownerKey, campaignName, ownerName, targetAmount, expireDate, message)
 
@@ -44,4 +47,3 @@ require('./APIs/transactionlogAPI')(app, mCoin)
 // GET: CheckAllCampaigns => lấy tất cả thông tin chiến dịch sẵn có
 // GET: CheckDonator(campaignName) => Danh sách các người donate của chiến dịch
 // GET: CheckHelpRequests => Danh sách các người đã đăng yêu cầu từ thiện
-

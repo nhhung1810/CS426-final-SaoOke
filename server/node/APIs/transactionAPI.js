@@ -25,7 +25,7 @@ module.exports = function (app, userFactory, mCoin) {
             else {
                 try {
                     publicKey = userFactory.getKey(req.body.from);
-                    console.log(publicKey)
+                    // console.log(publicKey)
                     console.log("New transaction is been created")
                     return new Transaction(publicKey,
                         req.body.to,
