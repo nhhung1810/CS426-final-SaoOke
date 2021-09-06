@@ -31,12 +31,14 @@ class Campaign {
             if (transaction.transaction.toAddress == this.ownerKey) {
                 logs.push({
                     "amount": transaction.transaction.amount,
-                    "message": transaction.message
+                    "message": transaction.message,
+                    "timestamp" : transaction.transaction.timestamp
                 })
             } else {
                 logs.push({
                     "amount": -transaction.transaction.amount,
-                    "message": transaction.message
+                    "message": transaction.message,
+                    "timestamp" : transaction.transaction.timestamp
                 })
             }
         });

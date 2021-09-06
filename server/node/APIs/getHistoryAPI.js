@@ -6,7 +6,7 @@ module.exports = function(app, campaignFactory) {
         }
 
         try {
-            res.send(200, campaignFactory.getCampaignHistory(campaignName))
+            res.send(200, campaignFactory.getCampaignHistory(req.params.campaignName))
         } catch (err) {
             res.send(404, {"message" : err.message})
         }
