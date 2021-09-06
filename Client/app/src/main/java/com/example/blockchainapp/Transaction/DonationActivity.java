@@ -71,9 +71,23 @@ public class DonationActivity extends AppCompatActivity {
 
     }
 
+    private boolean CheckValidTransaction() {
+        if (TextUtils.isEmpty(campaignET.getText()) || TextUtils.isEmpty(amountET.getText())) {
+            Toast.makeText(DonationActivity.this,
+                   "Please enter a valid campaign name and a valid money amount.", Toast.LENGTH_LONG).show();
+            return false;
+        }
+        if (Long.valueOf(amountET.getText().toString()) < Constants.BALANCE) {
+            Toast.makeText(DonationActivity.this,
+                    "Please recheck your balance, it is insufficient compared to the input amount.", Toast.LENGTH_LONG).show();
+            return false;
+        }
+        return true;
+    }
+
     @RequiresApi(api = Build.VERSION_CODES.O)
     public void HandleTransaction(View view) throws Exception {
-        if (TextUtils.isEmpty(campaignET.getText()) || TextUtils.isEmpty(amountET.getText())) return;
+        if (!CheckValidTransaction()) return;
         String toCampaign = campaignET.getText().toString();
         Long amount = Long.valueOf(amountET.getText().toString());
         String message = messageET.getText().toString();

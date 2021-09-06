@@ -58,10 +58,24 @@ public class GrantActivity extends AppCompatActivity {
         campaignET.setTextColor(Color.BLACK);
     }
 
+    private boolean CheckValidTransaction() {
+        if (TextUtils.isEmpty(campaignET.getText()) || TextUtils.isEmpty(amountET.getText()) || TextUtils.isEmpty(toUserET.getText())) {
+            Toast.makeText(GrantActivity.this,
+                    "Please enter a valid campaign name, a valid username and a valid money amount.", Toast.LENGTH_LONG).show();
+            return false;
+        }
+        if (Long.valueOf(amountET.getText().toString()) < Constants.BALANCE) {
+            Toast.makeText(GrantActivity.this,
+                    "Please recheck your campaign's balance, it is insufficient compared to the input amount.", Toast.LENGTH_LONG).show();
+            return false;
+        }
+        return true;
+    }
+
     @RequiresApi(api = Build.VERSION_CODES.O)
     public void HandleGrant(View view) throws Exception {
 
-        if (TextUtils.isEmpty(campaignET.getText()) || TextUtils.isEmpty(amountET.getText())) return;
+        if (!CheckValidTransaction()) return;
         String campaign = campaignET.getText().toString();
         String toUser = toUserET.getText().toString();
         Long amount = Long.valueOf(amountET.getText().toString());
