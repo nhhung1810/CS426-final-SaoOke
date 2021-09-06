@@ -5,9 +5,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Transaction.GrantActivity">
+    tools:context=".Transaction.GrantActivity"
+    android:background="@color/background"
+    >
 
     <ImageView
+        android:id="@+id/iv_grant_cover"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:minHeight="200dp"
@@ -76,20 +79,20 @@
                 android:inputType="text"
                 android:singleLine="true"/>
 
-            <Button
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="20dp"
-                android:paddingVertical="20dp"
-                android:text="Grant your money"
-                android:textColor="@color/gold"
-                android:textStyle="bold"
-                android:textSize="20sp"
-                android:layout_marginTop="20sp"
-                android:onClick="HandleGrant"/>
         </LinearLayout>
 
 
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
+            android:paddingVertical="20dp"
+            android:text="Grant your money"
+            android:textColor="@color/background"
+            android:textStyle="bold"
+            android:textSize="20sp"
+            android:layout_marginTop="20sp"
+            android:onClick="HandleGrant"/>
 
     </LinearLayout>
 

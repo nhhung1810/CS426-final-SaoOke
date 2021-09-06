@@ -8,6 +8,7 @@
     tools:context=".Account.AccountActivity">
 
     <ImageView
+        android:id="@+id/iv_account_cover"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:minHeight="200dp"
@@ -56,7 +57,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Refresh balance"
-                android:textColor="@color/gold"
+                android:textColor="@color/background"
                 android:textStyle="bold"
                 android:onClick="HandleRefreshBalance"/>
             <TextView
@@ -70,7 +71,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Integrate bank (coming soon)"
-                android:textColor="@color/gold"
+                android:textColor="@color/background"
                 android:textStyle="bold"
                 android:layout_marginTop="10dp"
                 android:onClick="HandleRefreshBalance"/>
@@ -85,7 +86,7 @@
                 android:layout_height="wrap_content"
                 android:text="Add money to account (coming soon)"
                 android:layout_marginTop="10dp"
-                android:textColor="@color/gold"
+                android:textColor="@color/background"
                 android:textStyle="bold"
                 android:onClick="HandleRefreshBalance"/>
             <TextView
@@ -100,7 +101,7 @@
                 android:layout_height="wrap_content"
                 android:text="Make a transaction (coming soon)"
                 android:layout_marginTop="10dp"
-                android:textColor="@color/gold"
+                android:textColor="@color/background"
                 android:textStyle="bold"
                 android:onClick="HandleRefreshBalance"/>
 
@@ -111,7 +112,6 @@
                 android:textAlignment="center"
                 />
         </LinearLayout>
-
 
 
     </LinearLayout>

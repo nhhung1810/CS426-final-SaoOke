@@ -5,9 +5,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Campaign.CampaignActivity">
+    tools:context=".Campaign.CampaignActivity"
+    android:background="@color/background"
+    >
 
     <ImageView
+        android:id="@+id/iv_campaign_cover"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:minHeight="200dp"
@@ -20,7 +23,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-
+        android:paddingHorizontal="20dp"
         android:layout_centerVertical="true">
 
         <ImageView
@@ -84,20 +87,19 @@
                 android:inputType="text"
                 android:singleLine="true"/>
 
-            <Button
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="20dp"
-                android:paddingVertical="20dp"
-                android:text="ADD NEW CAMPAIGN"
-                android:textColor="@color/gold"
-                android:textStyle="bold"
-                android:textSize="20sp"
-                android:layout_marginTop="20sp"
-                android:onClick="HandleCampaignCreation"/>
         </LinearLayout>
 
 
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
+            android:paddingVertical="20dp"
+            android:text="ADD NEW CAMPAIGN"
+            android:textColor="@color/background"
+            android:textStyle="bold"
+            android:textSize="20sp"
+            android:onClick="HandleCampaignCreation"/>
 
     </LinearLayout>
 

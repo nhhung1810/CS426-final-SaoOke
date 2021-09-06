@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity"
-
+    android:background="@drawable/background_gradient"
     android:scrollbars="none">
 
     <FrameLayout
@@ -15,6 +15,7 @@
 
         android:minHeight="1000dp">
         <ImageView
+            android:id="@+id/iv_main_cover"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:minHeight="250dp"
@@ -99,7 +100,6 @@
                         android:layout_height="72dp"
                         android:layout_alignParentRight="true"
                         android:src="@drawable/ic_person"
-                        android:onClick="changeAvatar"
                         />
 
                     <Button
@@ -500,6 +500,7 @@
                 android:text="MORE FEATURES COMING SOON!"
                 android:textStyle="bold"
                 android:textSize="20dp"
+                android:layout_marginBottom="20dp"
                 android:textAlignment="center"/>
 
 
