@@ -68,20 +68,31 @@ or donate to an existing one."
                     android:textSize="12dp"
                     android:textColor="@color/white"/>
 
-                <Button
+                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Logout"
-                    android:layout_below="@id/person"
+                    android:gravity="center"
+                    android:orientation="vertical"
                     android:layout_alignParentRight="true"
-                    android:onClick="Logout"/>
+                    >
 
-                <ImageView
-                    android:id="@+id/person"
-                    android:layout_width="72dp"
-                    android:layout_height="72dp"
-                    android:layout_alignParentRight="true"
-                    android:src="@drawable/ic_person"/>
+                    <ImageView
+                        android:id="@+id/person"
+                        android:layout_width="72dp"
+                        android:layout_height="72dp"
+                        android:layout_alignParentRight="true"
+                        android:src="@drawable/ic_person" />
+
+                    <Button
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/person"
+                        android:layout_alignParentRight="true"
+                        android:onClick="Logout"
+                        android:text="Logout" />
+
+                </LinearLayout>
+
             </RelativeLayout>
 
             <GridLayout
@@ -118,7 +129,7 @@ or donate to an existing one."
                             android:layout_width="80dp"
                             android:layout_height="80dp"
                             android:src="@drawable/ic_transaction"/>
-                        
+
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"

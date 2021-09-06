@@ -32,8 +32,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Please specify the name of the campaign
-             (including a short description of it)."
+            android:text="Please specify the name of the campaign\n(including a short description of it)."
             android:textAlignment="center"
             android:textSize="20sp"
             android:layout_marginBottom="20dp"/>
