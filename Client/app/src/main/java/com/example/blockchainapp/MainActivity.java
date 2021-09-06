@@ -93,4 +93,11 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(this, GrantActivity.class);
         startActivity(intent);
     }
+
+    public void Logout(View view) {
+        Constants.SESSION_ACTIVE = false;
+        Intent intent = new Intent(this, LoginActivity.class);
+        startActivity(intent);
+    }
+
 }

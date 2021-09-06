@@ -15,6 +15,7 @@ import android.text.InputFilter;
 import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.TextPaint;
+import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.text.method.LinkMovementMethod;
 import android.text.style.ClickableSpan;
@@ -48,6 +49,11 @@ public class LoginActivity extends AppCompatActivity {
         handleAlreadyHaveAccountButton();
         initializeTypingNotifications();
 
+    }
+
+    @Override
+    public void onBackPressed() {
+        //super.onBackPressed();
     }
 
     private void initializeTypingNotifications() {
@@ -141,7 +147,14 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private boolean CheckValidCredential() {
+
+        if (TextUtils.isEmpty(edt_username.getText()) || TextUtils.isEmpty(edt_password.getText())) {
+            Toast.makeText(LoginActivity.this, "None of the field should be left blank", Toast.LENGTH_LONG).show();
+            return false;
+        }
+
         return true;
+
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)

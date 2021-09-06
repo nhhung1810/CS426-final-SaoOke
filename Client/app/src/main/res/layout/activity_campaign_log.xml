@@ -22,7 +22,7 @@
         <AutoCompleteTextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/et_lr_campaignName"
+            android:id="@+id/actv_lr_campaignName"
             android:hint="Cuu tro mien Trung..."/>
 
         <Button

@@ -4,17 +4,22 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.blockchainapp.Constants;
 import com.example.blockchainapp.HelpRequest.HelpRequestActivity;
 import com.example.blockchainapp.R;
 import com.example.blockchainapp.Utils.RetrofitUtils;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -24,8 +29,8 @@ public class CampaignLogActivity extends AppCompatActivity {
 
     private RecyclerView rv_log;
     private TextView tv_donatorList;
-    private TextView tv_campaignName;
-
+    // private TextView tv_campaignName;
+    private AutoCompleteTextView actv_campaignList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,14 +43,31 @@ public class CampaignLogActivity extends AppCompatActivity {
     private void Initialize() {
         rv_log = findViewById(R.id.rv_campaignLog);
         tv_donatorList = findViewById(R.id.tv_lr_donatorList);
-        tv_campaignName = findViewById(R.id.et_lr_campaignName);
+        actv_campaignList = findViewById(R.id.actv_lr_campaignName);
+
+        Campaign[] campaigns = Constants.ALL_CAMPAIGN_LIST;
+        ArrayList<String> campaignNames = new ArrayList<>();
+        for (int i = 0; i < campaigns.length; ++i) {
+            campaignNames.add(campaigns[i].getCampaignName());
+        }
+
+        String[] listCampaign = new String[campaignNames.size()];
+        campaignNames.toArray(listCampaign);
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>
+                (this,android.R.layout.select_dialog_item, listCampaign);
+
+        actv_campaignList.setThreshold(1);
+        actv_campaignList.setAdapter(adapter);
+        actv_campaignList.setTextColor(Color.BLACK);
+
     }
 
     public void HandlePrintLog(View view) {
 
         // Get the campaign logs
         Call<CampaignLog[]> campaignHistoryCall = RetrofitUtils.blockchainInterface.
-                ExecuteGetCampaignHistory(tv_campaignName.getText().toString());
+                ExecuteGetCampaignHistory(actv_campaignList.getText().toString());
 
         campaignHistoryCall.enqueue(new Callback<CampaignLog[]>() {
             @Override
@@ -72,7 +94,7 @@ public class CampaignLogActivity extends AppCompatActivity {
         });
 
         Call<String[]> donatorCall = RetrofitUtils.blockchainInterface.
-                ExecuteGetDonatorList(tv_campaignName.getText().toString());
+                ExecuteGetDonatorList(actv_campaignList.getText().toString());
         donatorCall.enqueue(new Callback<String[]>() {
             @Override
             public void onResponse(Call<String[]> call, Response<String[]> response) {

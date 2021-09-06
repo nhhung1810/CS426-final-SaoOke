@@ -13,6 +13,7 @@ import android.text.InputFilter;
 import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.TextPaint;
+import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.text.method.LinkMovementMethod;
 import android.text.style.ClickableSpan;
@@ -145,8 +146,31 @@ public class RegisterActivity extends AppCompatActivity {
         textView.setHighlightColor(Color.TRANSPARENT);
     }
 
+    @Override
+    public void onBackPressed() {
+        //super.onBackPressed();
+    }
+
     private boolean CheckValidCredential() {
+
+        if (TextUtils.isEmpty(edt_username.getText()) || TextUtils.isEmpty(edt_password.getText())
+                || TextUtils.isEmpty(edt_confirmPassword.getText())) {
+            Toast.makeText(RegisterActivity.this, "None of the field should be left blank", Toast.LENGTH_LONG).show();
+            return false;
+        }
+
+        if (edt_username.getText().toString().length() < 6 || edt_password.getText().toString().length() < 6) {
+            Toast.makeText(RegisterActivity.this, "Username and password need to have at least 6 characters", Toast.LENGTH_LONG).show();
+            return false;
+        }
+
+        if (!edt_password.getText().toString().equals(edt_confirmPassword.getText().toString())) {
+            Toast.makeText(RegisterActivity.this, "Passwords are not matching.", Toast.LENGTH_LONG).show();
+            return false;
+        }
+
         return true;
+
     }
 
     public void HandleRegister(View view) {
