@@ -65,7 +65,7 @@ func (b *Bot) Register() {
 		"publicKey": b.publicKey,
 	}
 	jsonValue, _ := json.Marshal(params)
-	resp, err := http.Post("http://localhost:5000/register", "application/json", bytes.NewBuffer(jsonValue))
+	resp, err := http.Post("http://server:5000/register", "application/json", bytes.NewBuffer(jsonValue))
 	if err != nil {
 		println(err.Error())
 		return
@@ -82,7 +82,7 @@ func (b *Bot) Mine() {
 		"address": b.privateKey,
 	}
 	jsonValue, _ := json.Marshal(params)
-	resp, err := http.Post("http://localhost:5000/mine", "application/json", bytes.NewBuffer(jsonValue))
+	resp, err := http.Post("http://server:5000/mine", "application/json", bytes.NewBuffer(jsonValue))
 	if err != nil {
 		fmt.Print(err.Error())
 		return
@@ -108,7 +108,7 @@ func (b *Bot) Mine() {
 }
 
 func (b *Bot) getBalance() int {
-	resp, err := http.Post("http://localhost:5000/balance/"+b.username, "application/json", nil)
+	resp, err := http.Post("http://server:5000/balance/"+b.username, "application/json", nil)
 	if err != nil {
 		println(err.Error())
 		return 0
@@ -185,7 +185,7 @@ func (b *Bot) SendRandom() {
 
 	jsonValue, _ := json.Marshal(requestParams)
 	println(string(jsonValue))
-	resp, err := http.Post("http://localhost:5000/transaction", "application/json", bytes.NewBuffer(jsonValue))
+	resp, err := http.Post("http://server:5000/transaction", "application/json", bytes.NewBuffer(jsonValue))
 
 	if err != nil {
 		println(err.Error())
@@ -201,12 +201,124 @@ func (b *Bot) SendRandom() {
 	println(bodyString)
 }
 
+func (b *Bot) getRandomCampaign() string {
+	resp, err := http.Get("http://server:5000/campaigns")
+	if err != nil {
+		panic(err.Error())
+	}
+
+	body, err := ioutil.ReadAll(resp.Body)
+	if err != nil {
+		panic(err.Error())
+	}
+
+	type campaign_t struct {
+		CampaignName     string
+		CampaignOwnerKey string
+		ExpireDate       string
+		Description      string
+		TargetAmount     interface{}
+		Propaganda       string
+		TotalAmount      interface{}
+	}
+
+	var campaigns []campaign_t
+
+	err = json.Unmarshal(body, &campaigns)
+	if err != nil {
+		panic(err.Error())
+	}
+	resp.Body.Close()
+
+	// println(string(body))
+	// fmt.Printf("Campaign : %+v", campaigns[0])
+	// println(campaigns[0].CampaignName)
+	if len(campaigns) == 0 {
+		return ""
+	}
+	return campaigns[Utils.RandIntInRange(0, len(campaigns))].CampaignName
+}
+
+func (b *Bot) Donate() {
+	targetCampaign := b.getRandomCampaign()
+	if targetCampaign == "" {
+		print("No campaign found")
+		return
+	}
+
+	toAddress := targetCampaign
+	fromAddress := b.username
+	balance := b.getBalance()
+	if balance == 0 {
+		return
+	}
+	amount := Utils.RandIntInRange(0, balance)
+	if amount == 0 {
+		amount = balance
+	}
+	msg := []byte(fromAddress + toAddress + strconv.Itoa(amount))
+
+	msgHash := sha256.New()
+	_, err := msgHash.Write(msg)
+	if err != nil {
+		panic(err)
+	}
+	msgHashSum := msgHash.Sum(nil)
+	block, _ := pem.Decode([]byte(b.privateKey))
+	privateKey, err := x509.ParsePKCS1PrivateKey(block.Bytes)
+
+	if err != nil {
+		panic(err.Error())
+	}
+
+	signature, err := rsa.SignPSS(rand.Reader, privateKey, crypto.SHA256, msgHashSum, nil)
+	if err != nil {
+		panic(err)
+	}
+
+	requestParams := map[string]interface{}{
+		"from":         fromAddress,
+		"campaignName": toAddress,
+		"amount":       amount,
+		"signature":    base64.StdEncoding.EncodeToString(signature),
+		"isbot":        true,
+	}
+
+	// fmt.Print("Hex: ", hex.EncodeToString(signature))
+
+	jsonValue, _ := json.Marshal(requestParams)
+	println(string(jsonValue))
+	resp, err := http.Post("http://server:5000/donate", "application/json", bytes.NewBuffer(jsonValue))
+
+	if err != nil {
+		panic(err.Error())
+	}
+
+	_, err = io.ReadAll(resp.Body)
+	if err != nil {
+		panic(err.Error())
+	}
+	// bodyString := string(body)
+
+	println("Bot " + b.username + " donated " + strconv.Itoa(amount) + " to " + targetCampaign)
+}
 func (b *Bot) Run() {
 	b.Register()
-	b.getBalance()
+	// b.getBalance()
+	// for {
+	// b.Mine()
+	// 	b.SendRandom()
+	// 	time.Sleep(5 * time.Second)
+	// }
 	for {
+		if b.getBalance() == 0 {
+			break
+		}
+		b.Donate()
 		b.Mine()
-		b.SendRandom()
-		time.Sleep(5 * time.Second)
+
+		time.Sleep(time.Duration(Utils.RandIntInRange(0, 10)) * time.Second)
 	}
+
+	// println(b.getRandomCampaign())
 }

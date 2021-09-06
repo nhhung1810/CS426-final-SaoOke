@@ -2,21 +2,21 @@ package main
 
 import (
 	"container/list"
-	"os"
-	"strconv"
 	"time"
 	"worker/Bot"
 )
 
 func main() {
-	args := os.Args[1:]
+	// args := os.Args[1:]
 	// fmt.Print(args)
 	var numBot int64
-	if args != nil {
-		numBot, _ = strconv.ParseInt(args[0], 10, 64)
-	} else {
-		numBot = 5
-	}
+	// if args != nil {
+	// 	numBot, _ = strconv.ParseInt(args[0], 10, 64)
+	// } else {
+	// 	numBot = 5
+	// }
+
+	numBot = 5
 
 	for {
 		queue := list.New()
