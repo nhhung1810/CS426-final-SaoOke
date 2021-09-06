@@ -84,7 +84,7 @@ public class MainActivity extends AppCompatActivity {
         // BlockchainUtils.GetBalance(tv_balance);
         Locale locale = new Locale("vi", "VN");
         NumberFormat currencyFormatter = NumberFormat.getCurrencyInstance(locale);
-        tv_username.setText(Constants.USERNAME + "'s Dashboard");
+        tv_username.setText("Welcome to SAOOKE, " + Constants.USERNAME + ".");
         tv_balance.setText(currencyFormatter.format(Constants.BALANCE).toString() + " VNĐ");
     }
 

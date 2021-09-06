@@ -15,7 +15,7 @@
         android:orientation="vertical"
         android:paddingHorizontal="20dp"
         android:paddingVertical="20dp"
-        android:background="@drawable/rounded_corners"
+        android:background="@color/background"
         >
 
         <LinearLayout

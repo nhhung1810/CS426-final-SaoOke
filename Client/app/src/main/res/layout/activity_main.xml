@@ -41,13 +41,13 @@
 
                     <TextView
                         android:id="@+id/tv_dashboard"
+                        android:maxWidth="300dp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textSize="25sp"
                         android:textStyle="bold"
                         android:textColor="@color/white"
-                        android:text="FinisTP's Dashboard"/>
-
+                        android:text="Welcome to SAOOKE, tanphat"/>
 
 
                     <TextView
@@ -96,8 +96,8 @@
 
                     <ImageView
                         android:id="@+id/person"
-                        android:layout_width="72dp"
-                        android:layout_height="72dp"
+                        android:layout_width="110dp"
+                        android:layout_height="110dp"
                         android:layout_alignParentRight="true"
                         android:src="@drawable/ic_person"
                         />
