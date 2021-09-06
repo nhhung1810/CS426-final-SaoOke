@@ -2,7 +2,7 @@
 
 ## Deployment
 
-0. OS: Windows 10
+Prequisite: OS: Windows 10
 1. Install docker-compose: https://docs.docker.com/compose/install/
 2. cd to the directory, run command:
 ```
