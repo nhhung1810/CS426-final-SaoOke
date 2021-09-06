@@ -1,4 +1,4 @@
-# cs426-final-Mcoin
+# CS426-final-SaoOke
 
 ## Deployment
 
