@@ -207,7 +207,7 @@ public class RSAKey{
         // from + to + amount
         // System.out.println("Signature: " + text);
         // String toBeHashed = Constants.PUBLIC_KEY.toString() + transaction.getToUser() + transaction.getAmount();
-        privateSignature.update(text.getBytes());
+        privateSignature.update(Hex.encode(text.getBytes()));
 
         byte[] signature = privateSignature.sign();
 

@@ -64,7 +64,7 @@ public class GrantActivity extends AppCompatActivity {
                     "Please enter a valid campaign name, a valid username and a valid money amount.", Toast.LENGTH_LONG).show();
             return false;
         }
-        if (Long.valueOf(amountET.getText().toString()) < Constants.BALANCE) {
+        if (Long.valueOf(amountET.getText().toString()) > Constants.BALANCE) {
             Toast.makeText(GrantActivity.this,
                     "Please recheck your campaign's balance, it is insufficient compared to the input amount.", Toast.LENGTH_LONG).show();
             return false;

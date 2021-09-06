@@ -13,28 +13,28 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.BlockchainApp">
-        <activity android:name=".Campaign.CampaignLogActivity"></activity>
-        <activity android:name=".HelpRequest.HelpRequestOptionSelectActivity" />
-        <activity android:name=".Campaign.CampaignInformation" />
-        <activity android:name=".LandingScreen.LandingScreenActivity">
+        <activity android:name=".Campaign.CampaignLogActivity" android:screenOrientation="portrait"></activity>
+        <activity android:name=".HelpRequest.HelpRequestOptionSelectActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".Campaign.CampaignInformation" android:screenOrientation="portrait" />
+        <activity android:name=".LandingScreen.LandingScreenActivity" android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".HelpRequest.HelpRequestListActivity" />
-        <activity android:name=".HelpRequest.HelpRequestActivity" />
-        <activity android:name=".Campaign.CampaignOptionSelectActivity" />
-        <activity android:name=".Campaign.CampaignListActivity" />
-        <activity android:name=".Transaction.GrantActivity" />
-        <activity android:name=".Campaign.CampaignActivity" />
-        <activity android:name=".Log.HistoryActivity" />
-        <activity android:name=".Auth.LoginActivity"></activity>
-        <activity android:name=".Account.AccountActivity" />
-        <activity android:name=".Transaction.DonationActivity" />
-        <activity android:name=".Auth.RegisterActivity" />
-        <activity android:name=".MainActivity" />
+        <activity android:name=".HelpRequest.HelpRequestListActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".HelpRequest.HelpRequestActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".Campaign.CampaignOptionSelectActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".Campaign.CampaignListActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".Transaction.GrantActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".Campaign.CampaignActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".Log.HistoryActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".Auth.LoginActivity" android:screenOrientation="portrait"></activity>
+        <activity android:name=".Account.AccountActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".Transaction.DonationActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".Auth.RegisterActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".MainActivity" android:screenOrientation="portrait"/>
     </application>
 
 </manifest>
