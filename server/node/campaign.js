@@ -30,12 +30,16 @@ class Campaign {
         this.transactions.forEach(transaction => {
             if (transaction.transaction.toAddress == this.ownerKey) {
                 logs.push({
+                    "from" : transaction.transaction.fromAddress,
+                    "to" : transaction.transaction.toAddress,
                     "amount": transaction.transaction.amount,
                     "message": transaction.message,
                     "timestamp" : transaction.transaction.timestamp
                 })
             } else {
                 logs.push({
+                    "from" : transaction.transaction.fromAddress,
+                    "to" : transaction.transaction.toAddress,
                     "amount": -transaction.transaction.amount,
                     "message": transaction.message,
                     "timestamp" : transaction.transaction.timestamp
