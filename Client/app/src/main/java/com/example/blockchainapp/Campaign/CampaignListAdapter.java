@@ -86,6 +86,8 @@ public class CampaignListAdapter extends RecyclerView.Adapter<CampaignListAdapte
     public void onBindViewHolder(@NonNull @NotNull CampaignListAdapter.ViewHolder holder, int position) {
         Campaign campaign = list[position];
 
+        System.out.println("Here");
+
         holder.tv_campaignName.setText(campaign.getCampaignName());
         holder.tv_leaderName.setText(campaign.getOwnerName());
         holder.tv_description.setText(campaign.getDescription());
