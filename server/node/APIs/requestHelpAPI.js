@@ -27,6 +27,7 @@ module.exports = function(app, campaignFactory) {
         try {
             res.send(200, campaignFactory.requestHelp(campaignName, username, amount, message))
         } catch (err) {
+            console.log(err.toString())
             res.send(404, "Can not send request help")
         }
     })
