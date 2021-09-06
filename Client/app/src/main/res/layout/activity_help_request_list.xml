@@ -6,7 +6,9 @@
     android:layout_height="match_parent"
     tools:context=".HelpRequest.HelpRequestListActivity"
     android:orientation="vertical"
-    android:paddingHorizontal="20dp">
+    android:paddingHorizontal="20dp"
+    android:background="@color/background"
+    >
 
     <TextView
         android:layout_width="match_parent"

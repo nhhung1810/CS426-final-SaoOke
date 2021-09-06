@@ -15,7 +15,7 @@
         android:theme="@style/Theme.BlockchainApp">
         <activity android:name=".Campaign.CampaignLogActivity"></activity>
         <activity android:name=".HelpRequest.HelpRequestOptionSelectActivity"/>
-        <activity android:name=".Campaign.CampaignInformation" />
+        <activity android:name=".Campaign.CampaignInformation"/>
         <activity android:name=".LandingScreen.LandingScreenActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -28,10 +28,10 @@
         <activity android:name=".Campaign.CampaignOptionSelectActivity"/>
         <activity android:name=".Campaign.CampaignListActivity"/>
         <activity android:name=".Transaction.GrantActivity"/>
-        <activity android:name=".Campaign.CampaignActivity"/>
+        <activity android:name=".Campaign.CampaignActivity" android:screenOrientation="portrait"/>
         <activity android:name=".Log.HistoryActivity"/>
         <activity android:name=".Auth.LoginActivity"></activity>
-        <activity android:name=".Account.AccountActivity"/>
+        <activity android:name=".Account.AccountActivity" android:screenOrientation="portrait"/>
         <activity android:name=".Transaction.DonationActivity"/>
         <activity android:name=".Auth.RegisterActivity"/>
         <activity android:name=".MainActivity"/>

@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.blockchainapp.Auth.RegisterActivity;
@@ -39,6 +40,12 @@ public class HelpRequestActivity extends AppCompatActivity {
         setContentView(R.layout.activity_help_request);
 
         initializeInputs();
+        initializeCover();
+    }
+
+    private void initializeCover() {
+        ImageView cover = findViewById(R.id.iv_hr_cover);
+        cover.setImageResource(R.drawable.hr_cover);
     }
 
     private void initializeInputs() {

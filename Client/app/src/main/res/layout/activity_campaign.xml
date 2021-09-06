@@ -5,12 +5,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Campaign.CampaignActivity">
+    tools:context=".Campaign.CampaignActivity"
+    android:background="@color/background"
+    >
 
     <ImageView
+        android:id="@+id/iv_campaign_cover"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:minHeight="200dp"
+        android:layout_height="250dp"
         android:background="#FF333333"
         android:scaleType="centerCrop"
         />
@@ -33,6 +35,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Please specify the name of the campaign\n(including a short description of it)."
+            android:textStyle="bold"
             android:textAlignment="center"
             android:textSize="20sp"
             android:layout_marginBottom="20dp"/>
