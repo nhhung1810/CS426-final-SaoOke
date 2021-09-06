@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     tools:context=".Log.HistoryActivity"
     android:orientation="vertical"
-    android:background="@color/background"
+    android:background="@drawable/background_gradient"
     >
 
     <androidx.recyclerview.widget.RecyclerView

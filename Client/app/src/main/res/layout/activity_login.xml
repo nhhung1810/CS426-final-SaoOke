@@ -17,8 +17,9 @@
         <ImageView
             android:id="@+id/iv_login_cover"
             android:layout_width="match_parent"
-            android:layout_height="250dp"
-            android:background="#FF333333"
+            android:layout_height="match_parent"
+            android:minHeight="200dp"
+            android:background="@drawable/background_gradient"
             android:scaleType="centerCrop"
             />
 
@@ -38,9 +39,10 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:textStyle="bold"
                     android:text="Welcome to SAOOKE!"
                     android:textSize="25sp"
-                    android:textColor="@color/white"
+                    android:textColor="@color/black"
                     />
 
             </RelativeLayout>
@@ -139,7 +141,13 @@
                 android:gravity="center"
                 />
 
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:src="@drawable/chicken01"/>
+
         </LinearLayout>
+
 
     </FrameLayout>
 

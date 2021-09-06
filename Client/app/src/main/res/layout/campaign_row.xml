@@ -2,19 +2,20 @@
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
+    app:cardElevation="26dp"
+    app:cardCornerRadius="12dp"
     android:layout_marginVertical="10sp"
-    android:layout_marginHorizontal="10sp"
-    >
+    android:layout_marginHorizontal="10sp">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:paddingHorizontal="10sp"
-        android:paddingVertical="15sp"
-        android:background="@drawable/border_line"
-        android:backgroundTint="@color/background"
+        android:paddingHorizontal="20dp"
+        android:paddingVertical="20dp"
+        android:background="@color/background"
         >
 
         <LinearLayout

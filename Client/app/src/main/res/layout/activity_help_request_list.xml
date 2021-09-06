@@ -7,8 +7,7 @@
     tools:context=".HelpRequest.HelpRequestListActivity"
     android:orientation="vertical"
     android:paddingHorizontal="20dp"
-    android:background="@color/background"
-    >
+    android:background="@drawable/background_gradient">
 
     <TextView
         android:layout_width="match_parent"

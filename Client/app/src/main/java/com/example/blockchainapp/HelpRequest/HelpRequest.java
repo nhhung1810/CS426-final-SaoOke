@@ -3,10 +3,10 @@ package com.example.blockchainapp.HelpRequest;
 public class HelpRequest {
     private String campaignName;
     private String username;
-    private Float amount;
+    private Long amount;
     private String message;
 
-    public HelpRequest(String campaignName, String username, Float amount, String message) {
+    public HelpRequest(String campaignName, String username, Long amount, String message) {
         this.campaignName = campaignName;
         this.username = username;
         this.amount = amount;
@@ -29,11 +29,11 @@ public class HelpRequest {
         this.username = username;
     }
 
-    public Float getAmount() {
+    public Long getAmount() {
         return amount;
     }
 
-    public void setAmount(Float amount) {
+    public void setAmount(Long amount) {
         this.amount = amount;
     }
 

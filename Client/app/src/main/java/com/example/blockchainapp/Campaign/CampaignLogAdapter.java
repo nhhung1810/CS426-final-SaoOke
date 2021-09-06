@@ -17,6 +17,8 @@ import com.example.blockchainapp.Utils.ItemClickListener;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.sql.Date;
+import java.sql.Timestamp;
 import java.util.List;
 
 import jnr.ffi.annotations.In;
@@ -67,7 +69,11 @@ public class CampaignLogAdapter extends RecyclerView.Adapter<CampaignLogAdapter.
         holder.tv_to.setText(campaignLog.getTo());
         holder.tv_amount.setText(campaignLog.getAmount().toString());
         holder.tv_message.setText(campaignLog.getMessage());
-        holder.tv_timestamp.setText(campaignLog.getTimestamp());
+
+        Timestamp timestamp = new Timestamp(Long.valueOf(campaignLog.getTimestamp()));
+        Date date = new Date(timestamp.getTime());
+
+        holder.tv_timestamp.setText(date.toString());
 
     }
 

@@ -15,8 +15,10 @@ import android.widget.Toast;
 import com.example.blockchainapp.Campaign.Campaign;
 import com.example.blockchainapp.Constants;
 import com.example.blockchainapp.R;
+import com.example.blockchainapp.Transaction.DonationActivity;
 import com.example.blockchainapp.Utils.RetrofitUtils;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 import retrofit2.Call;
@@ -93,10 +95,21 @@ public class HelpRequestListActivity extends AppCompatActivity {
         helpCall.enqueue(new Callback<HelpRequest[]>() {
             @Override
             public void onResponse(Call<HelpRequest[]> call, Response<HelpRequest[]> response) {
-                Log.d("log callback",response.body().toString());
-                HelpRequestAdapter adapter = new HelpRequestAdapter(response.body(), HelpRequestListActivity.this);
-                recyclerView.setAdapter(adapter);
-                recyclerView.setLayoutManager(new LinearLayoutManager(HelpRequestListActivity.this));
+
+                if (response.code() == 200) {
+                    Log.d("log callback",response.body().toString());
+                    HelpRequestAdapter adapter = new HelpRequestAdapter(response.body(), HelpRequestListActivity.this, campaignName);
+                    recyclerView.setAdapter(adapter);
+                    recyclerView.setLayoutManager(new LinearLayoutManager(HelpRequestListActivity.this));
+                } else {
+                    try {
+                        Toast.makeText(HelpRequestListActivity.this,
+                                response.errorBody().string(), Toast.LENGTH_LONG).show();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+
             }
 
             @Override
