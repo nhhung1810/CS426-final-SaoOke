@@ -113,6 +113,10 @@ public class CampaignActivity extends AppCompatActivity {
                     Toast.makeText(CampaignActivity.this,
                                     "Campaign was created successfully!",
                                     Toast.LENGTH_LONG).show();
+
+                    RetrofitUtils.LoadAllCampaigns();
+                    RetrofitUtils.LoadCampaignNames(Constants.USERNAME);
+
                     AlertDialog.Builder builder = new AlertDialog.Builder(CampaignActivity.this);
                     builder.setTitle("Created campaign successfully!");
                     builder.setMessage("You can now inform everyone to donate to your campaign.");
