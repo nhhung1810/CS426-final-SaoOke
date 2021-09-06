@@ -57,7 +57,7 @@ public class RetrofitUtils {
 
             @Override
             public void onFailure(Call<Long> call, Throwable t) {
-                System.out.println("Error obtaining balance.");
+                System.out.println(t.getMessage());
                 Constants.BALANCE = Long.valueOf(1000);
             }
         });
@@ -71,7 +71,7 @@ public class RetrofitUtils {
             @Override
             public void onResponse(Call<Campaign[]> call, Response<Campaign[]> response) {
                 if (response.code() == 200) {
-                    Log.d("log callback",response.body().toString());
+                    // Log.d("log callback",response.body().toString());
                     Campaign[] campaigns = response.body();
                     ArrayList<String> campaignNames = new ArrayList<>();
                     for (int i = 0; i < campaigns.length; ++i) {
@@ -82,7 +82,7 @@ public class RetrofitUtils {
                 }
                 else {
                     try {
-                        System.out.println(response.errorBody().string());
+                        System.out.println("Load cpn names: " + response.errorBody().string());
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
@@ -91,7 +91,7 @@ public class RetrofitUtils {
             }
             @Override
             public void onFailure(Call<Campaign[]> call, Throwable t) {
-                System.out.println(t.getMessage());
+                System.out.println("Get campaign names: " + t.getMessage());
             }
         });
 
@@ -109,7 +109,7 @@ public class RetrofitUtils {
                     System.out.println("Real just login: " + Constants.REAL_PUBLIC_KEY);
                 } else {
                     try {
-                        System.out.println(response.errorBody().string());
+                        System.out.println("Get all cpns: " + response.errorBody().string());
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
@@ -146,7 +146,7 @@ public class RetrofitUtils {
             }
             @Override
             public void onFailure(Call<Campaign[]> call, Throwable t) {
-                System.out.println(t.getMessage());
+                System.out.println("Get all campaigns:" + t.getMessage());
             }
         });
 

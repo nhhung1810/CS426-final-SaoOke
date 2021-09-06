@@ -9,7 +9,7 @@ module.exports = function (app, campaignFactory) {
         try {
             console.log("\nCheck username:", req.params.username)
             var tmp = campaignFactory.getCampaignByOwner(req.params.username)
-            if(tmp == null || tmp.length < 1){
+            if(tmp == null){
                 res.send(404, {"error" : "Invalid username"})
                 return
             }

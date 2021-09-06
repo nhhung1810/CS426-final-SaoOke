@@ -183,17 +183,19 @@ public class LoginActivity extends AppCompatActivity {
 
             AlertDialog.Builder builder = new AlertDialog.Builder(LoginActivity.this);
             builder.setTitle("Successfully logged in!");
-            builder.setMessage("Your private key saved: " + kp.getPrivate()
-                    + " | Your public key saved: " + kp.getPublic());
+            builder.setMessage("Your key is well preserved. Please do not touch the internal storage.");
 
             RetrofitUtils.GetBalance();
             RetrofitUtils.LoadCampaignNames(Constants.USERNAME);
             RetrofitUtils.LoadAllCampaigns();
 
+
+
             builder.setPositiveButton("Confirm",
                     new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
+                            // System.out.println("Clicked here");
                             Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                             startActivity(intent);
                         }

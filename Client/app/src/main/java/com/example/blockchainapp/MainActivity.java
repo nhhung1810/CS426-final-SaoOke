@@ -31,6 +31,15 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         // loadLandingScreen(3000);
+
+        if (!Constants.SESSION_ACTIVE) {
+            Intent intent = new Intent(this, LoginActivity.class);
+            startActivity(intent);
+        } else {
+            Initialize();
+        }
+        
+
     }
 
     private void loadLandingScreen(int timeLimit) {
@@ -56,6 +65,8 @@ public class MainActivity extends AppCompatActivity {
     private void Initialize() {
         tv_username = findViewById(R.id.tv_dashboard);
         tv_balance = findViewById(R.id.tv_balance);
+
+
 
         // BlockchainUtils.GetBalance(tv_balance);
         Locale locale = new Locale("vi", "VN");
