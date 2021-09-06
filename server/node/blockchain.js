@@ -25,9 +25,12 @@ class Transaction{
         if(!this.signature || this.signature.length == 0){
             throw new Error('No signature in this transation');
         }
-
+        console.log("\n IS VALID CHECK:\n")
+        console.log(this.fromAddress)
         publicKey = verification.parseKey(this.fromAddress)
+        
         // console.log(publicKey)
+        console.log(this.toAddress)
         
         const msgHex = Buffer.from(this.fromAddress + this.toAddress + this.amount, 'utf-8').toString('hex')
 

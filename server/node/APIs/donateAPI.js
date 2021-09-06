@@ -47,11 +47,12 @@ module.exports = function (app, userFactory, campaignFactory, mCoin) {
         }
 
         tx = trans(req)
-        if (req.body.isbot) {
-            tx.isValid = () => {
-                return true
-            }
-        }
+        // if (req.body.isbot) {
+        //     tx.isValid = () => {
+        //         return true
+        //     }
+        // }
+
         if (tx === null) {
             res.send(404, { "error": "Exception! Check your campaign name" })
             return
