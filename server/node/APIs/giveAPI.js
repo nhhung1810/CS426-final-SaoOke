@@ -60,7 +60,7 @@ module.exports = function (app, userFactory, campaignFactory, mCoin) {
             return;
         }
 
-        console.log("\nPassed the valid check!!\n")
+        // console.log("\nPassed the valid check!!\n")
         mCoin.addTransaction(tx)
         if(campaignFactory.give(req.body.campaignName, tx, "") == false){
             console.log("How the fck the flow reach here?")

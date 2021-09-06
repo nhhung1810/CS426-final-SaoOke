@@ -23,7 +23,7 @@ module.exports = function (app, mCoin) {
 
     //inactive
     app.post('/mine', (req, res) => {
-        console.log(req.body)
+        // console.log(req.body)
         if (!req || !req.body || !req.body.address) {
             res.send(404, {
                 "status": "failed",
