@@ -42,7 +42,7 @@ public class RetrofitUtils {
             public void onResponse(Call<Long> call, Response<Long> response) {
 
                 if (response.code() == 200) {
-                    Constants.BALANCE = Long.valueOf(response.code());
+                    Constants.BALANCE = Long.valueOf(response.body());
                 } else {
                     Constants.BALANCE = Long.valueOf(1000);
                     System.out.println("Balance: " + Constants.BALANCE);

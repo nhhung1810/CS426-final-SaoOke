@@ -66,7 +66,7 @@ public class HelpRequestActivity extends AppCompatActivity {
     public void requestHelp(View view) throws Exception {
         if (TextUtils.isEmpty(actv_hr_campaign.getText()) || TextUtils.isEmpty(actv_hr_campaign.getText())) return;
         String requestedCampaign = actv_hr_campaign.getText().toString();
-        Float amount = Float.parseFloat(et_hr_amount.getText().toString());
+        Long amount = Long.valueOf(et_hr_amount.getText().toString());
         String message = et_hr_message.getText().toString();
 
         // TODO: change private key to user's current session

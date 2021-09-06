@@ -53,6 +53,10 @@ public class DonationActivity extends AppCompatActivity {
         amountET = findViewById(R.id.et_amount);
         messageET = findViewById(R.id.et_message);
 
+        if (!TextUtils.isEmpty(getIntent().getStringExtra("CampaignName"))) {
+            campaignET.setText(getIntent().getStringExtra("CampaignName"));
+        }
+
         Campaign[] campaigns = Constants.ALL_CAMPAIGN_LIST;
         ArrayList<String> campaignNames = new ArrayList<>();
         for (int i = 0; i < campaigns.length; ++i) {
@@ -112,6 +116,8 @@ public class DonationActivity extends AppCompatActivity {
                                 if (response.code() == 200) {
                                     Toast.makeText(DonationActivity.this,
                                             "You have successfully donated to the campaign " + toCampaign + "!", Toast.LENGTH_LONG).show();
+
+                                    RetrofitUtils.GetBalance();
 
                                     AlertDialog.Builder builder = new AlertDialog.Builder(DonationActivity.this);
                                     builder.setTitle("Successfully donated!");
