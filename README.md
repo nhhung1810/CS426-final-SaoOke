@@ -45,3 +45,6 @@ $ npm install <missing-lib>
 ```
 - If Docker Desktop (in Windows 10) doesn't start properly, there may be a virtualization service conflict between Docker and Virtual Device (VD). This problem has occured when I install Nox Player as an alternative virtual device to Android Virtual Device (AVD). If you did install Nox or any alternative VDs, go to start menu and search for vitrualization features and turn it on (as Nox turn it off) and restart 1-2 times an check Docker Desktop again. It should functions properly by now.
 
+Screenshots
+
+
