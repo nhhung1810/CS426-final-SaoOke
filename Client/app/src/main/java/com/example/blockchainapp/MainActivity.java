@@ -21,8 +21,6 @@ import java.text.NumberFormat;
 import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity {
-    private static final int LANDING_SCREEN_REQUEST_CODE = 0;
-
     private TextView tv_username;
     private TextView tv_balance;
 
@@ -37,28 +35,6 @@ public class MainActivity extends AppCompatActivity {
             startActivity(intent);
         } else {
             Initialize();
-        }
-        
-
-    }
-
-    private void loadLandingScreen(int timeLimit) {
-        Intent intent = new Intent(this, LandingScreenActivity.class);
-        intent.putExtra("timeLimit", timeLimit);
-        startActivityForResult(intent, LANDING_SCREEN_REQUEST_CODE);
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable @org.jetbrains.annotations.Nullable Intent data) {
-        switch (requestCode) {
-            case LANDING_SCREEN_REQUEST_CODE:
-                if (!Constants.SESSION_ACTIVE) {
-                    Intent intent = new Intent(this, LoginActivity.class);
-                    startActivity(intent);
-                } else {
-                    Initialize();
-                }
-                break;
         }
     }
 
