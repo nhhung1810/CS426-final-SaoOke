@@ -1,4 +1,4 @@
-package com.example.blockchainapp.Account;
+package com.example.blockchainapp.User;
 
 public class UserAccount {
     private String username;

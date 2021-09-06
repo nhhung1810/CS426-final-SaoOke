@@ -28,8 +28,8 @@ import com.example.blockchainapp.Constants;
 import com.example.blockchainapp.MainActivity;
 import com.example.blockchainapp.R;
 import com.example.blockchainapp.Utils.RetrofitUtils;
-import com.example.blockchainapp.Account.UserAccount;
-import com.example.blockchainapp.Account.UserKey;
+import com.example.blockchainapp.User.UserAccount;
+import com.example.blockchainapp.User.UserKey;
 
 import java.security.KeyPair;
 import java.security.MessageDigest;

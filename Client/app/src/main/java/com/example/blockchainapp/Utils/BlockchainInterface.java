@@ -1,14 +1,12 @@
 package com.example.blockchainapp.Utils;
 
 import com.example.blockchainapp.Account.PublicKey;
-import com.example.blockchainapp.Account.UserKey;
+import com.example.blockchainapp.User.UserKey;
 import com.example.blockchainapp.Campaign.Campaign;
-import com.example.blockchainapp.Campaign.CampaignList;
 import com.example.blockchainapp.Campaign.CampaignLog;
 import com.example.blockchainapp.Transaction.DonationRequest;
 import com.example.blockchainapp.HelpRequest.HelpRequest;
 import com.example.blockchainapp.Transaction.GrantRequest;
-import com.example.blockchainapp.Transaction.Transaction;
 import com.example.blockchainapp.Log.TransactionLogList;
 import com.example.blockchainapp.Transaction.TransactionPackage;
 
