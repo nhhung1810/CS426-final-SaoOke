@@ -93,7 +93,7 @@
                             android:textSize="18sp"
                             android:layout_marginTop="12dp"
                             android:textColor="#6f6f6f"
-                            android:text="Transactions"/>
+                            android:text="Donate"/>
 
                     </LinearLayout>
 
@@ -127,7 +127,7 @@
                             android:textSize="18sp"
                             android:layout_marginTop="12dp"
                             android:textColor="#6f6f6f"
-                            android:text="Transfer"/>
+                            android:text="Grant"/>
 
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>
@@ -203,14 +203,16 @@
                 </androidx.cardview.widget.CardView>
 
                 <androidx.cardview.widget.CardView
-                    android:id="@+id/cv_event"
+                    android:id="@+id/cv_campaign"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_columnWeight="1"
                     android:layout_rowWeight="1"
                     app:cardElevation="6dp"
                     app:cardCornerRadius="12dp"
-                    android:layout_margin="12dp">
+                    android:layout_margin="12dp"
+                    android:onClick="CampaignTab"
+                    >
 
                     <LinearLayout
                         android:gravity="center"
@@ -222,7 +224,7 @@
                         <ImageView
                             android:layout_width="80dp"
                             android:layout_height="80dp"
-                            android:src="@drawable/ic_event"/>
+                            android:src="@drawable/ic_campaign"/>
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -230,7 +232,7 @@
                             android:textSize="18sp"
                             android:layout_marginTop="12dp"
                             android:textColor="#6f6f6f"
-                            android:text="Events"/>
+                            android:text="Campaign"/>
 
                     </LinearLayout>
 
@@ -264,7 +266,7 @@
                             android:textSize="18sp"
                             android:layout_marginTop="12dp"
                             android:textColor="#6f6f6f"
-                            android:text="Settings"/>
+                            android:text="Others"/>
 
                     </LinearLayout>
 
