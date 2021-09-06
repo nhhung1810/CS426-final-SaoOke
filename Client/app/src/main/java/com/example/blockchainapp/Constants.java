@@ -6,7 +6,7 @@ import java.security.PrivateKey;
 import java.security.PublicKey;
 
 public class Constants {
-    public static final String BASE_URL = "http://192.168.108.106:5000";
+    public static final String BASE_URL = "https://mcoin-mobile.herokuapp.com/";
     public static final int PORT = 5000;
     public static final String RESOURCE_LOCATION = "CharityBlockchain";
 
