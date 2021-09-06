@@ -7,8 +7,12 @@ import androidx.core.content.ContextCompat;
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -22,6 +26,8 @@ import com.example.blockchainapp.HelpRequest.HelpRequestOptionSelectActivity;
 import com.example.blockchainapp.Log.HistoryActivity;
 import com.example.blockchainapp.Transaction.DonationActivity;
 
+import java.io.File;
+import java.io.FileOutputStream;
 import java.text.NumberFormat;
 import java.util.Locale;
 
@@ -43,14 +49,23 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         // loadLandingScreen(3000);
 
-        storagePermission = new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE};
-        avatar = findViewById(R.id.person);
+        initializeAvatar();
 
         if (!Constants.SESSION_ACTIVE) {
             Intent intent = new Intent(this, LoginActivity.class);
             startActivity(intent);
         } else {
             Initialize();
+        }
+    }
+
+    private void initializeAvatar() {
+        storagePermission = new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE};
+        avatar = findViewById(R.id.person);
+        File file = new File(this.getFilesDir().toString() + '/' + Constants.RESOURCE_LOCATION + "/avatar.png");
+        if (file.exists()) {
+            Bitmap bitmap = BitmapFactory.decodeFile(file.getAbsolutePath());
+            avatar.setImageBitmap(bitmap);
         }
     }
 
@@ -162,6 +177,21 @@ public class MainActivity extends AppCompatActivity {
                 if (resultCode == RESULT_OK) {
                     Uri resultUri = result.getUri();
                     avatar.setImageURI(resultUri);
+                    File folder = new File(this.getFilesDir(), Constants.RESOURCE_LOCATION);
+                    if (!folder.exists()) {
+                        folder.mkdir();
+                    }
+                    File writeFile = new File(folder.getAbsolutePath() + "/avatar.png");
+                    Log.d("File", writeFile.getAbsolutePath());
+                    try {
+                        FileOutputStream fout = new FileOutputStream(writeFile);
+                        Bitmap bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), resultUri);
+                        bitmap.compress(Bitmap.CompressFormat.JPEG, 90, fout);
+                        fout.flush();
+                        fout.close();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                 } else if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
                     Exception error = result.getError();
                     Toast.makeText(this, "" + error, Toast.LENGTH_SHORT).show();
