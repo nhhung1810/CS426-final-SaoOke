@@ -30,13 +30,19 @@ class Campaign {
         this.transactions.forEach(transaction => {
             if (transaction.transaction.toAddress == this.ownerKey) {
                 logs.push({
+                    "from" : transaction.transaction.fromAddress,
+                    "to" : transaction.transaction.toAddress,
                     "amount": transaction.transaction.amount,
-                    "message": transaction.message
+                    "message": transaction.message,
+                    "timestamp" : transaction.transaction.timestamp
                 })
             } else {
                 logs.push({
+                    "from" : transaction.transaction.fromAddress,
+                    "to" : transaction.transaction.toAddress,
                     "amount": -transaction.transaction.amount,
-                    "message": transaction.message
+                    "message": transaction.message,
+                    "timestamp" : transaction.transaction.timestamp
                 })
             }
         });
@@ -129,30 +135,18 @@ class CampaignFactory {
         return tmp;
     }
 
-    give(campaignName, ownerKey, receiverKey, transaction, message) {
-        var campaign = null
-        this.campaignList.forEach(element => {
+    give(campaignName, transaction, message) {
+        var tmp = false;
+        tmp = this.campaignList.forEach(element => {
             if (element.campaignName == campaignName) {
-                campaign = element
-                break
+                element.transactions.push({
+                    "transaction": transaction,
+                    "message": message
+                })
             }
+            return true
         });
-
-        if (campaign == null) {
-            throw new Error("campain not found!")
-        }
-
-        if (campaign.ownerKey != ownerKey) {
-            throw new Error("campaign not match")
-        }
-
-        //make new transaction here
-        campaign.push({
-            "transaction": transaction,
-            "message": message
-        })
-        return true
-        //
+        return tmp
     }
 
     getCampaignInformation(campaignName) {

@@ -5,5 +5,23 @@ services:
     build: ./server/node
     ports:
       - "5000:5000"
+    networks:
+      - my-network
     volumes: 
       - ./server/node:/app
+
+  worker:
+    build: ./Workers
+    networks:
+      - my-network
+    volumes: 
+      - ./Workers:/worker
+    links:
+      - server:server
+    ports: 
+      - 80:80
+
+networks:
+  my-network:
+    name: my-network
+    driver: bridge

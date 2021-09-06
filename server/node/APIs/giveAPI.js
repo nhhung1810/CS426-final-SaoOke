@@ -49,7 +49,7 @@ module.exports = function (app, userFactory, campaignFactory, mCoin) {
         }
 
         try {
-            console.log(tx)
+            // console.log(tx)
             if (!tx.isValid()) {
                 res.send(403, { "error": "Invalid signature" })
                 return;
@@ -62,6 +62,9 @@ module.exports = function (app, userFactory, campaignFactory, mCoin) {
 
         console.log("\nPassed the valid check!!\n")
         mCoin.addTransaction(tx)
+        if(campaignFactory.give(req.body.campaignName, tx, "") == false){
+            console.log("How the fck the flow reach here?")
+        }
         mCoin.minePendingTransactions("master-mine")
         res.send(200, { "status": "success" });
     })

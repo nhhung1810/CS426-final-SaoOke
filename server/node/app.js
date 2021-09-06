@@ -59,5 +59,5 @@ require('./APIs/publicAPI')(app, userFactory, campaignFactory)
 // GET: CheckHelpRequests => Danh sách các người đã đăng yêu cầu từ thiện
 require('./APIs/getDonatorsAPI')(app, campaignFactory, userFactory)
 
-require('./APIs/getHistoryAPI')(app, campaignFactory)
+require('./APIs/getHistoryAPI')(app, campaignFactory, userFactory)
 
