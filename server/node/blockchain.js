@@ -27,7 +27,7 @@ class Transaction{
         }
 
         publicKey = verification.parseKey(this.fromAddress)
-        console.log(publicKey)
+        // console.log(publicKey)
         
         const msgHex = Buffer.from(this.fromAddress + this.toAddress + this.amount, 'utf-8').toString('hex')
 

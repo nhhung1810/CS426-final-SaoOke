@@ -26,7 +26,7 @@ module.exports = function (app, userFactory, mCoin) {
                 try {
                     publicKey = userFactory.getKey(req.body.from);
                     // console.log(publicKey)
-                    console.log("New transaction is been created")
+                    // console.log("New transaction is been created")
                     return new Transaction(publicKey,
                         req.body.to,
                         req.body.amount,
@@ -60,7 +60,7 @@ module.exports = function (app, userFactory, mCoin) {
                 return;
             }
             console.log(tx)
-            console.log("\nPassed the valid check!!\n")
+            // console.log("\nPassed the valid check!!\n")
             mCoin.addTransaction(tx)
             mCoin.minePendingTransactions("master-mine")
             res.send(200, { "status": "success" });

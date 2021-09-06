@@ -56,7 +56,7 @@ module.exports = function (app, userFactory, campaignFactory) {
                 res.send(404, { "error": "Invalid params or error in getKey" })
                 return
             } else {
-                console.log(campaignFactory.getAllCampaign())
+                // console.log(campaignFactory.getAllCampaign())
                 res.send(200, { "status": "success" })
                 return
             }

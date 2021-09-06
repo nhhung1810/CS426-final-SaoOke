@@ -12,7 +12,7 @@ module.exports = function (app, userFactory, mCoin) {
     // }
     app.post('/register', function (req, res) {
         const register = (req) => {
-            console.log("ok")
+            // console.log("ok")
 
             if (!req || !req.body) return null;
             if (!req.body.username || !req.body.publicKey) return null;
@@ -22,7 +22,7 @@ module.exports = function (app, userFactory, mCoin) {
         }
 
         try {
-            console.log("ok")
+            // console.log("ok")
 
             var flag = register(req)
             if (flag === null) res.send(404, {

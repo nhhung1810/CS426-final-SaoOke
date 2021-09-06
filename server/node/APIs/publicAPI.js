@@ -8,7 +8,7 @@ module.exports = function (app, userFactory, campaignFactory) {
         }
 
         try {
-            console.log("\nCheck username:", req.params.username)
+            // console.log("\nCheck username:", req.params.username)
             var userTmp = userFactory.getKey(req.params.username)
             if(userTmp == null){
                 userTmp = campaignFactory.getCampaignKey(req.params.username)

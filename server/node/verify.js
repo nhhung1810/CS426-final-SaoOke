@@ -9,7 +9,7 @@ class Verification {
         sig.updateHex(msg);
 
         var isValid = null;
-        console.log(msg)
+        // console.log(msg)
         if (format == "base64") isValid = sig.verify(Buffer.from(signature, "base64").toString("hex"));
         else if (format == "hex") isValid = sig.verify(signature);
         if (isValid) {
