@@ -14,12 +14,14 @@ import (
 	"io"
 	"io/ioutil"
 	"net/http"
+	"os"
 	"strconv"
 	"time"
 	"worker/Utils"
 )
 
 var BotAddress []string
+var endpointURL string
 
 type Bot struct {
 	username   string
@@ -65,7 +67,7 @@ func (b *Bot) Register() {
 		"publicKey": b.publicKey,
 	}
 	jsonValue, _ := json.Marshal(params)
-	resp, err := http.Post("http://server:5000/register", "application/json", bytes.NewBuffer(jsonValue))
+	resp, err := http.Post(endpointURL+"/register", "application/json", bytes.NewBuffer(jsonValue))
 	if err != nil {
 		println(err.Error())
 		return
@@ -82,7 +84,7 @@ func (b *Bot) Mine() {
 		"address": b.privateKey,
 	}
 	jsonValue, _ := json.Marshal(params)
-	resp, err := http.Post("http://server:5000/mine", "application/json", bytes.NewBuffer(jsonValue))
+	resp, err := http.Post(endpointURL+"/mine", "application/json", bytes.NewBuffer(jsonValue))
 	if err != nil {
 		fmt.Print(err.Error())
 		return
@@ -108,7 +110,7 @@ func (b *Bot) Mine() {
 }
 
 func (b *Bot) getBalance() int {
-	resp, err := http.Post("http://server:5000/balance/"+b.username, "application/json", nil)
+	resp, err := http.Post(endpointURL+"/balance/"+b.username, "application/json", nil)
 	if err != nil {
 		println(err.Error())
 		return 0
@@ -185,7 +187,7 @@ func (b *Bot) SendRandom() {
 
 	jsonValue, _ := json.Marshal(requestParams)
 	println(string(jsonValue))
-	resp, err := http.Post("http://server:5000/transaction", "application/json", bytes.NewBuffer(jsonValue))
+	resp, err := http.Post(endpointURL+"/transaction", "application/json", bytes.NewBuffer(jsonValue))
 
 	if err != nil {
 		println(err.Error())
@@ -202,7 +204,7 @@ func (b *Bot) SendRandom() {
 }
 
 func (b *Bot) getRandomCampaign() string {
-	resp, err := http.Get("http://server:5000/campaigns")
+	resp, err := http.Get(endpointURL + "/campaigns")
 	if err != nil {
 		panic(err.Error())
 	}
@@ -288,7 +290,7 @@ func (b *Bot) Donate() {
 
 	jsonValue, _ := json.Marshal(requestParams)
 	println(string(jsonValue))
-	resp, err := http.Post("http://server:5000/donate", "application/json", bytes.NewBuffer(jsonValue))
+	resp, err := http.Post(endpointURL+"/donate", "application/json", bytes.NewBuffer(jsonValue))
 
 	if err != nil {
 		panic(err.Error())
@@ -303,6 +305,10 @@ func (b *Bot) Donate() {
 	println("Bot " + b.username + " donated " + strconv.Itoa(amount) + " to " + targetCampaign)
 }
 func (b *Bot) Run() {
+	endpointURL = os.Getenv("ENDPOINT_URL")
+	if len(endpointURL) == 0 {
+		endpointURL = "http://server:5000"
+	}
 	b.Register()
 	// b.getBalance()
 	// for {
