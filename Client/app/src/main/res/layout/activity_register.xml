@@ -16,9 +16,9 @@
 
         <ImageView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:minHeight="200dp"
-            android:background="#FF333333"
+            android:background="@drawable/background_gradient"
             android:scaleType="centerCrop"
             />
 
@@ -40,7 +40,8 @@
                     android:layout_height="wrap_content"
                     android:text="Create new account"
                     android:textSize="25sp"
-                    android:textColor="@color/white"
+                    android:textStyle="bold"
+                    android:textColor="@color/black"
                     />
 
             </RelativeLayout>
@@ -140,6 +141,7 @@
 
                     <Button
                         android:id="@+id/btn_register"
+                        android:paddingVertical="20dp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:gravity="center"
@@ -148,8 +150,7 @@
                         android:textColor="@color/white"
                         android:backgroundTint="#FF333333"
                         android:textSize="18sp"
-                        android:onClick="HandleRegister"
-                        />
+                        android:onClick="HandleRegister" />
 
                 </LinearLayout>
 
@@ -163,6 +164,11 @@
                 android:textColor="#6f6f6f"
                 android:gravity="center"
                 />
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="152dp"
+                android:src="@drawable/chicken01" />
 
         </LinearLayout>
 

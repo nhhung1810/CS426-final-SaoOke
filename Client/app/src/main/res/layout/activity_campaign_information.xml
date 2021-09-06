@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Campaign.CampaignInformation">
+    tools:context=".Campaign.CampaignInformation"
+    android:background="@color/gold">
 
     <LinearLayout
         android:layout_width="match_parent"

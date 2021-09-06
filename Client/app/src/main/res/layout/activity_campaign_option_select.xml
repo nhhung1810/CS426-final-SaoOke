@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -7,26 +7,24 @@
     tools:context=".Campaign.CampaignOptionSelectActivity"
     android:orientation="vertical"
     android:gravity="center"
-    android:layout_marginHorizontal="20sp"
     android:scrollbars="none"
+    android:background="@drawable/background_gradient"
     >
     <LinearLayout
+        android:layout_centerInParent="true"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/rounded_corners"
+        android:layout_marginHorizontal="20sp"
+        android:paddingVertical="20dp"
+        android:paddingHorizontal="20dp"
         android:orientation="vertical">
-        <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:minHeight="53dp"
-            android:background="#FF333333"
-            android:scaleType="centerCrop"
-
-            />
 
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingVertical="20dp"
+            android:layout_marginTop="20dp"
             android:text="Create a campaign"
             android:textColor="@color/gold"
             android:textStyle="bold"
@@ -98,18 +96,10 @@ will be prompted to determine the propaganda and expire date also."
             android:text="Output list of transaction history, including donations and grants of a certain campaign."
             android:paddingHorizontal="10dp"/>
 
-        <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:minHeight="50dp"
-            android:background="#FF333333"
-            android:scaleType="centerCrop"
-            android:layout_marginTop="20dp"
-            />
     </LinearLayout>
 
 
 
 
 
-</ScrollView>
+</RelativeLayout>
