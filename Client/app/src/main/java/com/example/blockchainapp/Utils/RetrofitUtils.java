@@ -11,8 +11,10 @@ import com.google.gson.GsonBuilder;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.concurrent.TimeUnit;
 
 import jnr.constants.Constant;
+import okhttp3.OkHttpClient;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -22,11 +24,18 @@ import retrofit2.converter.scalars.ScalarsConverterFactory;
 
 public class RetrofitUtils {
 
+    public static OkHttpClient okHttpClient = new OkHttpClient.Builder()
+            .connectTimeout(1, TimeUnit.MINUTES)
+            .readTimeout(1, TimeUnit.MINUTES)
+            .writeTimeout(1, TimeUnit.MINUTES)
+            .build();
+
     public static Gson gson = new GsonBuilder()
             .setLenient()
             .create();
 
     public static Retrofit retrofit = new Retrofit.Builder()
+                .client(okHttpClient)
                 .baseUrl(Constants.BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .addConverterFactory(ScalarsConverterFactory.create())
@@ -42,7 +51,7 @@ public class RetrofitUtils {
             public void onResponse(Call<Long> call, Response<Long> response) {
 
                 if (response.code() == 200) {
-                    Constants.BALANCE = Long.valueOf(response.code());
+                    Constants.BALANCE = Long.valueOf(response.body());
                 } else {
                     Constants.BALANCE = Long.valueOf(1000);
                     System.out.println("Balance: " + Constants.BALANCE);

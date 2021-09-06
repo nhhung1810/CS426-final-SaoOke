@@ -11,6 +11,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.blockchainapp.R;
 
+import java.sql.Date;
+import java.sql.Timestamp;
+
+
 public class LogAdapter extends RecyclerView.Adapter<LogAdapter.LogViewHolder> {
 
     TransactionLogList transactionLogList;
@@ -53,7 +57,11 @@ public class LogAdapter extends RecyclerView.Adapter<LogAdapter.LogViewHolder> {
         holder.tv_fromAddress.setText(log.getFromAddress());
         holder.tv_toAddress.setText(log.getToAddress());
         holder.tv_amount.setText(String.valueOf(log.getAmount()));
-        holder.tv_timestamp.setText(log.getTimestamp().toString());
+
+        Timestamp timestamp = new Timestamp(Long.valueOf(log.getTimestamp()));
+        Date date = new Date(timestamp.getTime());
+
+        holder.tv_timestamp.setText(date.toString());
         holder.tv_signature.setText(log.getSignature().toString());
     }
 

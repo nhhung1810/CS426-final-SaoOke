@@ -72,9 +72,9 @@ func (b *Bot) Register() {
 		println(err.Error())
 		return
 	} else {
-		body, _ := ioutil.ReadAll(resp.Body)
+		_, _ = ioutil.ReadAll(resp.Body)
 		resp.Body.Close()
-		println(string(body))
+		// println(string(body))
 		BotAddress = append(BotAddress, b.username)
 	}
 }
@@ -96,7 +96,7 @@ func (b *Bot) Mine() {
 	} else {
 		resp.Body.Close()
 		var responseParams map[string]interface{}
-		println(string(body))
+		// println(string(body))
 		json.Unmarshal(body, &responseParams)
 
 		status, _ := responseParams["status"].(string)
@@ -186,21 +186,23 @@ func (b *Bot) SendRandom() {
 	// fmt.Print("Hex: ", hex.EncodeToString(signature))
 
 	jsonValue, _ := json.Marshal(requestParams)
-	println(string(jsonValue))
-	resp, err := http.Post(endpointURL+"/transaction", "application/json", bytes.NewBuffer(jsonValue))
+
+	// println(string(jsonValue))
+	resp, err := http.Post("http://server:5000/transaction", "application/json", bytes.NewBuffer(jsonValue))
+
 
 	if err != nil {
 		println(err.Error())
 		return
 	}
 
-	body, err := io.ReadAll(resp.Body)
+	_, err = io.ReadAll(resp.Body)
 	if err != nil {
 		println(err.Error())
 		return
 	}
-	bodyString := string(body)
-	println(bodyString)
+	// bodyString := string(body)
+	// println(bodyString)
 }
 
 func (b *Bot) getRandomCampaign() string {
@@ -289,8 +291,10 @@ func (b *Bot) Donate() {
 	// fmt.Print("Hex: ", hex.EncodeToString(signature))
 
 	jsonValue, _ := json.Marshal(requestParams)
-	println(string(jsonValue))
-	resp, err := http.Post(endpointURL+"/donate", "application/json", bytes.NewBuffer(jsonValue))
+
+	// println(string(jsonValue))
+	resp, err := http.Post("http://server:5000/donate", "application/json", bytes.NewBuffer(jsonValue))
+
 
 	if err != nil {
 		panic(err.Error())

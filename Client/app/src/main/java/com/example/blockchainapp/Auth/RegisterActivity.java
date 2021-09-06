@@ -20,6 +20,7 @@ import android.text.style.ClickableSpan;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -53,7 +54,12 @@ public class RegisterActivity extends AppCompatActivity {
 
         handleAlreadyHaveAccountButton();
         initializeTypingNotifications();
+        initializeCover();
+    }
 
+    private void initializeCover() {
+        ImageView cover = findViewById(R.id.iv_register_cover);
+        cover.setImageResource(R.drawable.register_cover);
     }
 
     private void initializeTypingNotifications() {

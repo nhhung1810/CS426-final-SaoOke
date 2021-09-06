@@ -2,13 +2,16 @@ package com.example.blockchainapp.Campaign;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.blockchainapp.Constants;
 import com.example.blockchainapp.R;
 import com.example.blockchainapp.Transaction.DonationActivity;
+import com.example.blockchainapp.Transaction.GrantActivity;
 import com.example.blockchainapp.Utils.RetrofitUtils;
 
 import java.io.IOException;
@@ -89,4 +92,11 @@ public class CampaignInformation extends AppCompatActivity {
         });
 
     }
+
+    public void HandleDonate(View view) {
+        Intent intent = new Intent(this, DonationActivity.class);
+        intent.putExtra("CampaignName", currentCampaign.getCampaignName());
+        startActivity(intent);
+    }
+
 }

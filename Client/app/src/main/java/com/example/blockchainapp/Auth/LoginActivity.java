@@ -21,6 +21,7 @@ import android.text.method.LinkMovementMethod;
 import android.text.style.ClickableSpan;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -48,7 +49,12 @@ public class LoginActivity extends AppCompatActivity {
 
         handleAlreadyHaveAccountButton();
         initializeTypingNotifications();
+        initializeCover();
+    }
 
+    private void initializeCover() {
+        ImageView cover = findViewById(R.id.iv_login_cover);
+        cover.setImageResource(R.drawable.login_cover);
     }
 
     @Override

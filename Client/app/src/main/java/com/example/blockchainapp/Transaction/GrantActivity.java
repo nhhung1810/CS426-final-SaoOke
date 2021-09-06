@@ -14,6 +14,7 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.blockchainapp.Account.PublicKey;
@@ -42,6 +43,12 @@ public class GrantActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_donate);
         Initialize();
+        initializeCover();
+    }
+
+    private void initializeCover() {
+        ImageView cover = findViewById(R.id.iv_grant_cover);
+        cover.setImageResource(R.drawable.grant_cover);
     }
 
     private void Initialize() {
@@ -49,6 +56,15 @@ public class GrantActivity extends AppCompatActivity {
         toUserET = findViewById(R.id.et_toUser);;
         amountET = findViewById(R.id.et_amount);
         messageET = findViewById(R.id.et_message);
+
+        if (!TextUtils.isEmpty(getIntent().getStringExtra("CampaignName"))
+        && !TextUtils.isEmpty(getIntent().getStringExtra("ToUser"))) {
+            campaignET.setText(getIntent().getStringExtra("CampaignName"));
+            toUserET.setText(getIntent().getStringExtra("ToUser"));
+            Long amount = getIntent().getLongExtra("Amount", 0);
+            amountET.setText(amount.toString());
+        }
+
 
         ArrayAdapter<String> adapter = new ArrayAdapter<String>
                 (this,android.R.layout.select_dialog_item, Constants.USER_CAMPAIGN_LIST);
@@ -93,12 +109,14 @@ public class GrantActivity extends AppCompatActivity {
                 if (response.code() == 200) {
                     String toUserPublicKey = response.body().publicKey;
                     try {
-                        System.out.println("Obtained public key");
-                        System.out.println(Constants.REAL_PUBLIC_KEY);
-                        System.out.println(toUserPublicKey);
-                        System.out.println(amount.toString());
+                        // System.out.println("Obtained public key");
+                        // System.out.println(Constants.REAL_PUBLIC_KEY);
+                        // System.out.println(toUserPublicKey);
+                        // System.out.println(amount.toString());
                         request.setSignature(RSAKey.sign(Constants.REAL_PUBLIC_KEY +
                                 toUserPublicKey + amount.toString(), Constants.PRIVATE_KEY));
+
+
 
                         Call<Object> grantCall = RetrofitUtils.blockchainInterface.ExecutePostGrant(request);
                         grantCall.enqueue(new Callback<Object>() {
@@ -107,6 +125,8 @@ public class GrantActivity extends AppCompatActivity {
                                 if (response.code() == 200) {
                                     Toast.makeText(GrantActivity.this,
                                             "You have successfully granted the fund to " + toUser + "!", Toast.LENGTH_LONG).show();
+
+                                    RetrofitUtils.GetBalance();
 
                                     AlertDialog.Builder builder = new AlertDialog.Builder(GrantActivity.this);
                                     builder.setTitle("Successfully granted!");

@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.blockchainapp.Auth.RegisterActivity;
@@ -39,6 +40,12 @@ public class HelpRequestActivity extends AppCompatActivity {
         setContentView(R.layout.activity_help_request);
 
         initializeInputs();
+        initializeCover();
+    }
+
+    private void initializeCover() {
+        ImageView cover = findViewById(R.id.iv_hr_cover);
+        cover.setImageResource(R.drawable.hr_cover);
     }
 
     private void initializeInputs() {
@@ -66,7 +73,7 @@ public class HelpRequestActivity extends AppCompatActivity {
     public void requestHelp(View view) throws Exception {
         if (TextUtils.isEmpty(actv_hr_campaign.getText()) || TextUtils.isEmpty(actv_hr_campaign.getText())) return;
         String requestedCampaign = actv_hr_campaign.getText().toString();
-        Float amount = Float.parseFloat(et_hr_amount.getText().toString());
+        Long amount = Long.valueOf(et_hr_amount.getText().toString());
         String message = et_hr_message.getText().toString();
 
         // TODO: change private key to user's current session

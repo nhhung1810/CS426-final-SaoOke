@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.blockchainapp.Constants;
@@ -22,6 +23,12 @@ public class AccountActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_account);
         Initialize();
+        initializeCover();
+    }
+
+    private void initializeCover() {
+        ImageView cover = findViewById(R.id.iv_account_cover);
+        cover.setImageResource(R.drawable.account_cover);
     }
 
     private void Initialize() {

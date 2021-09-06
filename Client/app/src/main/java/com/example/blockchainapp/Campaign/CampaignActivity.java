@@ -11,6 +11,7 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.blockchainapp.Auth.RegisterActivity;
@@ -49,6 +50,12 @@ public class CampaignActivity extends AppCompatActivity {
         setContentView(R.layout.activity_campaign);
 
         initializeInputs();
+        initializeCover();
+    }
+
+    private void initializeCover() {
+        ImageView cover = findViewById(R.id.iv_campaign_cover);
+        cover.setImageResource(R.drawable.campaign_cover);
     }
 
     private void initializeInputs() {

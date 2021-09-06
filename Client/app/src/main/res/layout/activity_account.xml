@@ -8,97 +8,111 @@
     tools:context=".Account.AccountActivity">
 
     <ImageView
+        android:id="@+id/iv_account_cover"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:minHeight="200dp"
-        android:background="#FF333333"
+        android:background="@drawable/background_gradient"
         android:scaleType="centerCrop"
         />
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:orientation="vertical"
         android:layout_centerVertical="true"
-        android:layout_marginHorizontal="20sp">
+        >
 
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:src="@drawable/ic_balance_account"
             android:minHeight="200dp"
-            app:tint="@color/gold"/>
+            app:tint="@color/black"/>
 
-        <TextView
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Your current balance"
-            android:textAlignment="center"
-            android:textSize="20sp"/>
-        <TextView
-            android:id="@+id/tv_currentBalance"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:text="8.000.000 VNĐ"
-            android:textAlignment="center"
-            android:textSize="40sp"
-            android:textStyle="bold"/>
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Refresh balance"
-            android:textColor="@color/gold"
-            android:textStyle="bold"
-            android:onClick="HandleRefreshBalance"/>
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Get the latest account balance."
-            android:textAlignment="center"
-            />
+            android:orientation="vertical"
+            android:paddingHorizontal="20dp"
+            android:paddingVertical="20dp"
+            android:background="@drawable/rounded_corners">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Your current balance"
+                android:textAlignment="center"
+                android:textSize="20sp"/>
+            <TextView
+                android:id="@+id/tv_currentBalance"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:text="8.000.000 VNĐ"
+                android:textColor="@color/black"
+                android:textAlignment="center"
+                android:textSize="40sp"
+                android:textStyle="bold"/>
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Refresh balance"
+                android:textColor="@color/background"
+                android:textStyle="bold"
+                android:onClick="HandleRefreshBalance"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Get the latest account balance."
+                android:textAlignment="center"
+                />
 
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Integrate bank (coming soon)"
-            android:textColor="@color/gold"
-            android:textStyle="bold"
-            android:onClick="HandleRefreshBalance"/>
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Set up connection between your wallet and a preferred bank account."
-            android:textAlignment="center" />
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Integrate bank (coming soon)"
+                android:textColor="@color/background"
+                android:textStyle="bold"
+                android:layout_marginTop="10dp"
+                android:onClick="HandleRefreshBalance"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Set up connection between your wallet and a preferred bank account."
+                android:textAlignment="center" />
 
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Add money to account (coming soon)"
-            android:textColor="@color/gold"
-            android:textStyle="bold"
-            android:onClick="HandleRefreshBalance"/>
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Add money to your blockchain account."
-            android:textAlignment="center"
-            />
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Add money to account (coming soon)"
+                android:layout_marginTop="10dp"
+                android:textColor="@color/background"
+                android:textStyle="bold"
+                android:onClick="HandleRefreshBalance"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Add money to your blockchain account."
+                android:textAlignment="center"
+                />
 
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Make a transaction (coming soon)"
-            android:textColor="@color/gold"
-            android:textStyle="bold"
-            android:onClick="HandleRefreshBalance"/>
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Make a transaction (coming soon)"
+                android:layout_marginTop="10dp"
+                android:textColor="@color/background"
+                android:textStyle="bold"
+                android:onClick="HandleRefreshBalance"/>
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Transfer money to a third-party service."
-            android:textAlignment="center"
-            />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Transfer money to a third-party service."
+                android:textAlignment="center"
+                />
+        </LinearLayout>
+
 
     </LinearLayout>
 

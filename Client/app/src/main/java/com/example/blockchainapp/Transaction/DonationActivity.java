@@ -15,6 +15,7 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.blockchainapp.Account.PublicKey;
@@ -46,12 +47,22 @@ public class DonationActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_transaction);
         Initialize();
+        initializeCover();
+    }
+
+    private void initializeCover() {
+        ImageView cover = findViewById(R.id.iv_donate_cover);
+        cover.setImageResource(R.drawable.donate_cover);
     }
 
     private void Initialize() {
         campaignET = findViewById(R.id.actv_campaign);
         amountET = findViewById(R.id.et_amount);
         messageET = findViewById(R.id.et_message);
+
+        if (!TextUtils.isEmpty(getIntent().getStringExtra("CampaignName"))) {
+            campaignET.setText(getIntent().getStringExtra("CampaignName"));
+        }
 
         Campaign[] campaigns = Constants.ALL_CAMPAIGN_LIST;
         ArrayList<String> campaignNames = new ArrayList<>();
@@ -112,6 +123,8 @@ public class DonationActivity extends AppCompatActivity {
                                 if (response.code() == 200) {
                                     Toast.makeText(DonationActivity.this,
                                             "You have successfully donated to the campaign " + toCampaign + "!", Toast.LENGTH_LONG).show();
+
+                                    RetrofitUtils.GetBalance();
 
                                     AlertDialog.Builder builder = new AlertDialog.Builder(DonationActivity.this);
                                     builder.setTitle("Successfully donated!");

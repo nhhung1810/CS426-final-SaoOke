@@ -7,7 +7,8 @@
     tools:context=".HelpRequest.HelpRequestOptionSelectActivity"
     android:orientation="vertical"
     android:gravity="center"
-    android:layout_marginHorizontal="20sp"
+    android:paddingHorizontal="20sp"
+    android:background="@drawable/grant_cover"
     >
 
     <ImageView
@@ -19,46 +20,55 @@
         android:layout_marginBottom="50dp"
         />
 
-    <Button
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="20dp"
-        android:paddingVertical="20dp"
-        android:text="Create a help request"
-        android:textColor="@color/gold"
-        android:textStyle="bold"
-        android:textSize="20sp"
-        android:layout_marginTop="20sp"
-        android:onClick="createHelpRequest"
-        />
+        android:orientation="vertical"
+        android:background="@drawable/rounded_corners"
+        android:paddingHorizontal="20sp"
+        android:paddingVertical="20sp">
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
+            android:paddingVertical="20dp"
+            android:text="Create a help request"
+            android:textColor="@color/background"
+            android:textStyle="bold"
+            android:textSize="20sp"
+            android:layout_marginTop="20sp"
+            android:onClick="createHelpRequest"
+            />
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Create a new help request, please clearly identify
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Create a new help request, please clearly identify
         the campaign you want to seek help from and justify your needs."
-        android:paddingHorizontal="10dp"/>
+            android:paddingHorizontal="10dp"/>
 
 
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="20dp"
-        android:paddingVertical="20dp"
-        android:text="View list of requests"
-        android:textColor="@color/gold"
-        android:textStyle="bold"
-        android:textSize="20sp"
-        android:layout_marginTop="20sp"
-        android:onClick="viewHelpRequestList"
-        />
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
+            android:paddingVertical="20dp"
+            android:text="View list of requests"
+            android:textColor="@color/background"
+            android:textStyle="bold"
+            android:textSize="20sp"
+            android:layout_marginTop="20sp"
+            android:onClick="viewHelpRequestList"
+            />
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="List of the available requests. If you are a campaign owner,
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="List of the available requests. If you are a campaign owner,
 please look for the ones that seek help from your campaign and grant them financial support."
-        android:paddingHorizontal="10dp"/>
+            android:paddingHorizontal="10dp"
+            android:layout_marginBottom="20dp"/>
+    </LinearLayout>
 
 
     <ImageView

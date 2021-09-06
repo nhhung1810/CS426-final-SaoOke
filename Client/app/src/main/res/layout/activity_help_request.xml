@@ -6,12 +6,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".HelpRequest.HelpRequestActivity"
+    android:background="@color/background"
     >
 
     <ImageView
+        android:id="@+id/iv_hr_cover"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:minHeight="200dp"
+        android:layout_height="250dp"
         android:background="#FF333333"
         android:scaleType="centerCrop"
         />
@@ -31,6 +32,7 @@
             android:src="@drawable/help_request"
             android:scaleX="0.7"
             android:scaleY="0.7"
+            android:layout_gravity="center"
             />
 
         <TextView
@@ -70,7 +72,7 @@
             android:layout_marginBottom="20dp"
             android:paddingVertical="20dp"
             android:text="Request help"
-            android:textColor="@color/gold"
+            android:textColor="@color/background"
             android:textStyle="bold"
             android:textSize="20sp"
             android:layout_marginTop="20sp"
