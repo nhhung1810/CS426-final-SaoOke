@@ -1,8 +1,11 @@
 package com.example.blockchainapp.Transaction;
 
 import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
@@ -15,7 +18,9 @@ import android.widget.Toast;
 
 import com.example.blockchainapp.Account.PublicKey;
 import com.example.blockchainapp.Account.RSAKey;
+import com.example.blockchainapp.Auth.RegisterActivity;
 import com.example.blockchainapp.Constants;
+import com.example.blockchainapp.MainActivity;
 import com.example.blockchainapp.R;
 import com.example.blockchainapp.Utils.RetrofitUtils;
 
@@ -88,6 +93,19 @@ public class GrantActivity extends AppCompatActivity {
                                 if (response.code() == 200) {
                                     Toast.makeText(GrantActivity.this,
                                             "You have successfully granted the fund to " + toUser + "!", Toast.LENGTH_LONG).show();
+
+                                    AlertDialog.Builder builder = new AlertDialog.Builder(GrantActivity.this);
+                                    builder.setTitle("Successfully granted!");
+                                    builder.setMessage("Thank you for the good deed, the needed person will receive the fund soon.");
+                                    builder.setPositiveButton("Confirm",
+                                            new DialogInterface.OnClickListener() {
+                                                @Override
+                                                public void onClick(DialogInterface dialog, int which) {
+                                                    Intent intent = new Intent(GrantActivity.this, MainActivity.class);
+                                                    startActivity(intent);
+                                                }
+                                            });
+                                    builder.show();
                                 } else {
                                     try {
                                         Toast.makeText(GrantActivity.this,

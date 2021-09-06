@@ -51,6 +51,12 @@
             android:textColor="@color/gold"
             android:textStyle="bold"
             android:onClick="HandleRefreshBalance"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Get the latest account balance."
+            android:textAlignment="center"
+            />
 
         <Button
             android:layout_width="match_parent"
@@ -59,6 +65,11 @@
             android:textColor="@color/gold"
             android:textStyle="bold"
             android:onClick="HandleRefreshBalance"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Set up connection between your wallet and a preferred bank account."
+            android:textAlignment="center" />
 
         <Button
             android:layout_width="match_parent"
@@ -67,6 +78,12 @@
             android:textColor="@color/gold"
             android:textStyle="bold"
             android:onClick="HandleRefreshBalance"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Add money to your blockchain account."
+            android:textAlignment="center"
+            />
 
         <Button
             android:layout_width="match_parent"
@@ -75,6 +92,14 @@
             android:textColor="@color/gold"
             android:textStyle="bold"
             android:onClick="HandleRefreshBalance"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Transfer money to a third-party service."
+            android:textAlignment="center"
+            />
+
     </LinearLayout>
 
 

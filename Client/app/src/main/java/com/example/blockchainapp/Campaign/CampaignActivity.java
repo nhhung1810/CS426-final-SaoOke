@@ -1,8 +1,11 @@
 package com.example.blockchainapp.Campaign;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.DatePickerDialog;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -10,7 +13,9 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.blockchainapp.Auth.RegisterActivity;
 import com.example.blockchainapp.Constants;
+import com.example.blockchainapp.MainActivity;
 import com.example.blockchainapp.R;
 import com.example.blockchainapp.Utils.RetrofitUtils;
 
@@ -108,6 +113,18 @@ public class CampaignActivity extends AppCompatActivity {
                     Toast.makeText(CampaignActivity.this,
                                     "Campaign was created successfully!",
                                     Toast.LENGTH_LONG).show();
+                    AlertDialog.Builder builder = new AlertDialog.Builder(CampaignActivity.this);
+                    builder.setTitle("Created campaign successfully!");
+                    builder.setMessage("You can now inform everyone to donate to your campaign.");
+                    builder.setPositiveButton("Confirm",
+                            new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    Intent intent = new Intent(CampaignActivity.this, MainActivity.class);
+                                    startActivity(intent);
+                                }
+                            });
+                    builder.show();
                 }
                 else {
                     try {

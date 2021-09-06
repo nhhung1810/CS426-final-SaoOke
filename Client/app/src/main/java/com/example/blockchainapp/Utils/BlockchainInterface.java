@@ -4,6 +4,7 @@ import com.example.blockchainapp.Account.PublicKey;
 import com.example.blockchainapp.Account.UserKey;
 import com.example.blockchainapp.Campaign.Campaign;
 import com.example.blockchainapp.Campaign.CampaignList;
+import com.example.blockchainapp.Campaign.CampaignLog;
 import com.example.blockchainapp.Transaction.DonationRequest;
 import com.example.blockchainapp.HelpRequest.HelpRequest;
 import com.example.blockchainapp.Transaction.GrantRequest;
@@ -42,6 +43,12 @@ public interface BlockchainInterface {
 
     @GET("/campaigns")
     Call<Campaign[]> ExecuteGetAllCampaign();
+
+    @GET("/getCampaignHistory/{campaignName}")
+    Call<CampaignLog[]> ExecuteGetCampaignHistory(@Path("campaignName") String campaignName);
+
+    @GET("/getDonators/{campaignName}")
+    Call<String[]> ExecuteGetDonatorList(@Path("campaignName") String campaignName);
 
     @GET("/public/{username}")
     Call<PublicKey> ExecuteGetPublicKey(@Path("username") String username);

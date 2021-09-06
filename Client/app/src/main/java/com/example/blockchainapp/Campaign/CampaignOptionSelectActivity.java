@@ -32,4 +32,9 @@ public class CampaignOptionSelectActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    public void viewCampaignLog(View view) {
+        Intent intent = new Intent(this, CampaignLogActivity.class);
+        startActivity(intent);
+    }
+
 }

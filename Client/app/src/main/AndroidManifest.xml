@@ -13,7 +13,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.BlockchainApp">
-        <activity android:name=".HelpRequest.HelpRequestOptionSelectActivity"></activity>
+        <activity android:name=".Campaign.CampaignLogActivity"></activity>
+        <activity android:name=".HelpRequest.HelpRequestOptionSelectActivity" />
         <activity android:name=".Campaign.CampaignInformation" />
         <activity android:name=".LandingScreen.LandingScreenActivity">
             <intent-filter>
@@ -29,9 +30,7 @@
         <activity android:name=".Transaction.GrantActivity" />
         <activity android:name=".Campaign.CampaignActivity" />
         <activity android:name=".Log.HistoryActivity" />
-        <activity android:name=".Auth.LoginActivity">
-
-        </activity>
+        <activity android:name=".Auth.LoginActivity"></activity>
         <activity android:name=".Account.AccountActivity" />
         <activity android:name=".Transaction.DonationActivity" />
         <activity android:name=".Auth.RegisterActivity" />

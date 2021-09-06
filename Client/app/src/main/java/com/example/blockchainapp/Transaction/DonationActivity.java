@@ -1,8 +1,11 @@
 package com.example.blockchainapp.Transaction;
 
 import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Path;
 import android.os.Build;
@@ -16,8 +19,10 @@ import android.widget.Toast;
 
 import com.example.blockchainapp.Account.PublicKey;
 import com.example.blockchainapp.Account.RSAKey;
+import com.example.blockchainapp.Auth.RegisterActivity;
 import com.example.blockchainapp.Campaign.Campaign;
 import com.example.blockchainapp.Constants;
+import com.example.blockchainapp.MainActivity;
 import com.example.blockchainapp.R;
 import com.example.blockchainapp.Utils.RetrofitUtils;
 
@@ -93,6 +98,19 @@ public class DonationActivity extends AppCompatActivity {
                                 if (response.code() == 200) {
                                     Toast.makeText(DonationActivity.this,
                                             "You have successfully donated to the campaign " + toCampaign + "!", Toast.LENGTH_LONG).show();
+
+                                    AlertDialog.Builder builder = new AlertDialog.Builder(DonationActivity.this);
+                                    builder.setTitle("Successfully donated!");
+                                    builder.setMessage("Thank you for your good deed, the campaign owner will receive the money soon.");
+                                    builder.setPositiveButton("Confirm",
+                                            new DialogInterface.OnClickListener() {
+                                                @Override
+                                                public void onClick(DialogInterface dialog, int which) {
+                                                    Intent intent = new Intent(DonationActivity.this, MainActivity.class);
+                                                    startActivity(intent);
+                                                }
+                                            });
+                                    builder.show();
                                 } else {
                                     try {
                                         Toast.makeText(DonationActivity.this,
