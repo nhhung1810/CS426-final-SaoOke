@@ -59,7 +59,7 @@ class Campaign {
             }
         });
         // console.log(donators)
-        return donators
+        return [... new Set(donators)]
     }
 
     requestHelp(username, amount, message) {
