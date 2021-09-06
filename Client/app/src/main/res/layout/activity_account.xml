@@ -8,9 +8,9 @@
     tools:context=".Account.AccountActivity">
 
     <ImageView
+        android:id="@+id/iv_account_cover"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:minHeight="200dp"
+        android:layout_height="250dp"
         android:background="#FF333333"
         android:scaleType="centerCrop"
         />
@@ -27,7 +27,7 @@
             android:layout_height="wrap_content"
             android:src="@drawable/ic_balance_account"
             android:minHeight="200dp"
-            app:tint="@color/gold"/>
+            app:tint="@color/background"/>
 
         <TextView
             android:layout_width="match_parent"
@@ -48,7 +48,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Refresh balance"
-            android:textColor="@color/gold"
+            android:textColor="@color/background"
             android:textStyle="bold"
             android:onClick="HandleRefreshBalance"/>
         <TextView
@@ -62,7 +62,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Integrate bank (coming soon)"
-            android:textColor="@color/gold"
+            android:textColor="@color/background"
             android:textStyle="bold"
             android:onClick="HandleRefreshBalance"/>
         <TextView
@@ -75,7 +75,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Add money to account (coming soon)"
-            android:textColor="@color/gold"
+            android:textColor="@color/background"
             android:textStyle="bold"
             android:onClick="HandleRefreshBalance"/>
         <TextView
@@ -89,7 +89,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Make a transaction (coming soon)"
-            android:textColor="@color/gold"
+            android:textColor="@color/background"
             android:textStyle="bold"
             android:onClick="HandleRefreshBalance"/>
 

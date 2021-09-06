@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity"
-    android:background="@color/gold"
+    android:background="@color/background"
     android:scrollbars="none">
 
     <FrameLayout
@@ -14,9 +14,9 @@
         android:layout_height="wrap_content"
         android:minHeight="1000dp">
         <ImageView
+            android:id="@+id/iv_main_cover"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:minHeight="250dp"
+            android:layout_height="250dp"
             android:background="#FF333333"
             android:scaleType="centerCrop"/>
 
@@ -82,7 +82,6 @@ or donate to an existing one."
                         android:layout_height="72dp"
                         android:layout_alignParentRight="true"
                         android:src="@drawable/ic_person"
-                        android:onClick="changeAvatar"
                         />
 
                     <Button

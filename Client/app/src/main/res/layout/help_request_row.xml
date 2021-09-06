@@ -14,7 +14,7 @@
         android:paddingHorizontal="10sp"
         android:paddingVertical="15sp"
         android:background="@drawable/border_line"
-        android:backgroundTint="@color/gold"
+        android:backgroundTint="@color/background"
         >
 
         <LinearLayout

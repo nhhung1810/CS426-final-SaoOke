@@ -36,9 +36,9 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        // loadLandingScreen(3000);
 
         initializeAvatar();
+        initializeCover();
 
         if (!Constants.SESSION_ACTIVE) {
             Intent intent = new Intent(this, LoginActivity.class);
@@ -48,10 +48,31 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    private void initializeCover() {
+        ImageView cover = findViewById(R.id.iv_main_cover);
+        cover.setImageResource(R.drawable.main_cover);
+    }
+
     private void initializeAvatar() {
         avatar = findViewById(R.id.person);
         handler = new ImageChangeHandler(this, avatar, "avatar.png");
         handler.initializeImage();
+        avatar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                handler.pickImage();
+            }
+        });
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull @NotNull String[] permissions, @NonNull @NotNull int[] grantResults) {
+        handler.handleOnRequestPermissionsResult(requestCode, permissions, grantResults);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable @org.jetbrains.annotations.Nullable Intent data) {
+        handler.handleOnActivityResult(requestCode, resultCode, data);
     }
 
     private void Initialize() {
@@ -101,19 +122,5 @@ public class MainActivity extends AppCompatActivity {
         Constants.SESSION_ACTIVE = false;
         Intent intent = new Intent(this, LoginActivity.class);
         startActivity(intent);
-    }
-
-    public void changeAvatar(View view) {
-        handler.pickImage();
-    }
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull @NotNull String[] permissions, @NonNull @NotNull int[] grantResults) {
-        handler.handleOnRequestPermissionsResult(requestCode, permissions, grantResults);
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable @org.jetbrains.annotations.Nullable Intent data) {
-        handler.handleOnActivityResult(requestCode, resultCode, data);
     }
 }

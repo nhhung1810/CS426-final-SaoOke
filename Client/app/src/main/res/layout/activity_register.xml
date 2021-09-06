@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".Auth.RegisterActivity"
-    android:background="@color/gold"
+    android:background="@color/background"
     >
 
     <FrameLayout

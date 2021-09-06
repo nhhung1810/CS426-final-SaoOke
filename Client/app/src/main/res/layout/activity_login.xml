@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".Auth.LoginActivity"
-    android:background="@color/gold"
+    android:background="@color/background"
     >
 
     <FrameLayout
@@ -15,9 +15,9 @@
         >
 
         <ImageView
+            android:id="@+id/iv_login_cover"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:minHeight="200dp"
+            android:layout_height="250dp"
             android:background="#FF333333"
             android:scaleType="centerCrop"
             />
