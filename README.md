@@ -56,7 +56,6 @@ npm install <missing-lib>
 
 ## Screenshots
   
-
 <p align="center">
   <img src="https://user-images.githubusercontent.com/29631037/132644140-905349ec-c6bb-4c68-abd2-9a07aee4ae3c.png" alt="Screenshot 1" width="200dp"/>
   <img src="https://user-images.githubusercontent.com/29631037/132644146-f0969153-eb32-4248-a009-c055fa97cb89.png" alt="Screenshot 2" width="200dp"/>
@@ -71,3 +70,10 @@ npm install <missing-lib>
   <img src="https://user-images.githubusercontent.com/29631037/132644206-75832921-2891-47cf-ae33-e6273f92ef86.png" alt="Screenshot 11" width="200dp"/>
   <img src="https://user-images.githubusercontent.com/29631037/132644211-78cafc53-cfdb-43a5-a969-505233fac48f.png" alt="Screenshot 12" width="200dp"/>
 </p>
+
+## Team Members (LinkedIn Profiles)
+
+- [Nguyễn Hữu Hưng](https://www.linkedin.com/in/nhhung1810/) (student ID: 19125046)
+- [Từ Tấn Phát](https://www.linkedin.com/in/finistp/) (student ID: 19125064)
+- [Nguyễn Ngọc Cường](https://www.linkedin.com/in/ngoccuongpvc/) (student ID: 19125002)
+- [Khấu Đặng Nhật Minh](https://www.linkedin.com/in/wolfris/) (student ID: 19125011)
